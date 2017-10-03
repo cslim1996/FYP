@@ -1,0 +1,20 @@
+VenueSize == 0 && numberOfPaper < 8 -> invigilatorRequired = 2
+VenueSize == 0 && numberOfPaper >= 8 && numberOfProgram < 13 -> invigilatorRequired = 3
+VenueSize == 0 && numberOfPaper >= 13 -> invigilatorRequired = 4
+VenueSize == 1 && numberOfPaper < 15 -> invigilatorRequired = 4
+VenueSize == 1 && numberOfPaper >= 13 -> invigilatorRequired = 5
+VenueSize == 2 && numberOfPaper < 16 -> invigilatorRequired = 4
+VenueSize == 2 && numberOfPaper >= 13 -> invigilatorRequired = 5
+VenueSize == 3 && numberOfPaper < 13 -> invigilatorRequired = 3
+VenueSize == 3 && numberOfPaper >= 13 -> invigilatorRequired = 4
+VenueSize == 4 && duration == 1 -> invigilatorRequired = 13
+VenueSize == 4 && duration != 1 -> invigilatorRequired = 12
+VenueSize == 5 && duration == 1 -> invigilatorRequired = 9
+VenueSize == 5 && duration != 1 -> invigilatorRequired = 8
+roomUsed >= 9
+Date != 5 || period != 2 || isMuslim != 1 || gender != 1
+numOfMale < 1
+numOfFemale < 1
+PercentageOfExperienceInvigilator > 0.6
+PercentageOfExperienceReliefInvigilator > 0.6
+numOfMale < 3

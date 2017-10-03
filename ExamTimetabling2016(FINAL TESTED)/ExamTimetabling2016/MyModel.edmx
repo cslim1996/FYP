@@ -1,0 +1,714 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Block">
+          <Key>
+            <PropertyRef Name="BlockCode" />
+          </Key>
+          <Property Name="BlockCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="TotalFloor" Type="int" />
+          <Property Name="Campus" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseCode" />
+          </Key>
+          <Property Name="CourseCode" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="CourseTitle" Type="varchar" MaxLength="100" />
+          <Property Name="CourseType" Type="char" MaxLength="1" />
+          <Property Name="AcademicYear" Type="varchar" MaxLength="7" />
+          <Property Name="Session" Type="int" />
+          <Property Name="Technical" Type="char" MaxLength="1" />
+          <Property Name="DoubleSeating" Type="char" MaxLength="1" />
+          <Property Name="SimultaneousPaper" Type="char" MaxLength="1" />
+          <Property Name="CnblPaper" Type="char" MaxLength="1" />
+          <Property Name="SpecificRoom" Type="char" MaxLength="1" />
+          <Property Name="SpecificTimeslot" Type="char" MaxLength="1" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="ExamWeight" Type="decimal" Precision="3" Scale="2" />
+          <Property Name="CGPA" Type="char" MaxLength="1" />
+          <Property Name="CreditHours" Type="int" />
+        </EntityType>
+        <EntityType Name="Examination">
+          <Key>
+            <PropertyRef Name="TimeslotID" />
+            <PropertyRef Name="VenueID" />
+            <PropertyRef Name="CourseCode" />
+            <PropertyRef Name="ProgrammeCode" />
+            <PropertyRef Name="PaperType" />
+            <PropertyRef Name="Year" />
+          </Key>
+          <Property Name="TimeslotID" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="VenueID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="CourseCode" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="ProgrammeCode" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="PaperType" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="ExamType" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="SitFrom" Type="int" />
+          <Property Name="SitTo" Type="int" />
+        </EntityType>
+        <EntityType Name="InvigilationDuty">
+          <Key>
+            <PropertyRef Name="InvigilationDutyID" />
+          </Key>
+          <Property Name="InvigilationDutyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimeslotID" Type="varchar" MaxLength="8" />
+          <Property Name="VenueID" Type="varchar" MaxLength="5" />
+          <Property Name="Location" Type="varchar" MaxLength="20" />
+          <Property Name="StaffID" Type="int" />
+          <Property Name="CatOfInvi" Type="varchar" MaxLength="15" />
+          <Property Name="Duration" Type="int" />
+        </EntityType>
+        <EntityType Name="PaperExamined">
+          <Key>
+            <PropertyRef Name="StaffID" />
+            <PropertyRef Name="CourseCode" />
+          </Key>
+          <Property Name="StaffID" Type="int" Nullable="false" />
+          <Property Name="CourseCode" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Deadline" Type="date" />
+          <Property Name="FacultyCode" Type="char" MaxLength="1" />
+          <Property Name="PaperType" Type="char" MaxLength="1" />
+          <Property Name="LvlOfProgramme" Type="char" MaxLength="1" />
+          <Property Name="MaterialsByDECA" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="RoomCode" />
+          </Key>
+          <Property Name="RoomCode" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Floor" Type="int" />
+          <Property Name="Function" Type="varchar" MaxLength="20" />
+          <Property Name="VenueID" Type="varchar" MaxLength="5" />
+          <Property Name="BlockCode" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="10" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Gender" Type="char" MaxLength="1" />
+          <Property Name="Position" Type="varchar" MaxLength="30" />
+          <Property Name="FacultyCode" Type="char" MaxLength="1" />
+          <Property Name="Department" Type="varchar" MaxLength="10" />
+          <Property Name="isMuslim" Type="char" MaxLength="1" />
+          <Property Name="isTakingSTSPhD" Type="char" MaxLength="1" />
+          <Property Name="TypeOfEmploy" Type="char" MaxLength="1" />
+          <Property Name="NoOfSatSession" Type="int" />
+          <Property Name="NoAsQuarantineInvi" Type="int" />
+          <Property Name="NoAsReliefInvi" Type="int" />
+          <Property Name="NoOfExtraSession" Type="int" />
+          <Property Name="isChiefInvi" Type="char" MaxLength="1" />
+          <Property Name="isInviAbove2Years" Type="char" MaxLength="1" />
+          <Property Name="isInvi" Type="char" MaxLength="1" />
+          <Property Name="isExam" Type="char" MaxLength="1" />
+          <Property Name="Status" Type="varchar" MaxLength="11" />
+          <Property Name="UserID" Type="varchar" MaxLength="20" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="40" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="11" />
+          <Property Name="UniqueCode" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="VenueID" />
+          </Key>
+          <Property Name="VenueID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="30" />
+          <Property Name="Capacity" Type="int" />
+          <Property Name="Floor" Type="int" />
+          <Property Name="MaximumProgramme" Type="int" />
+          <Property Name="PreferencePaper" Type="varchar" MaxLength="20" />
+          <Property Name="EastOrWest" Type="char" MaxLength="1" />
+          <Property Name="ExitLocation" Type="varchar" MaxLength="20" />
+          <Property Name="MaxColumn" Type="int" />
+          <Property Name="MaxRow" Type="int" />
+        </EntityType>
+        <Association Name="FK_Examination_ToCourse">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Examination" Type="Self.Examination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseCode" />
+            </Principal>
+            <Dependent Role="Examination">
+              <PropertyRef Name="CourseCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Examination_ToVenue">
+          <End Role="Venue" Type="Self.Venue" Multiplicity="1" />
+          <End Role="Examination" Type="Self.Examination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueID" />
+            </Principal>
+            <Dependent Role="Examination">
+              <PropertyRef Name="VenueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvigilationDuty_ToStaff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="InvigilationDuty" Type="Self.InvigilationDuty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="InvigilationDuty">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvigilationDuty_ToVenue">
+          <End Role="Venue" Type="Self.Venue" Multiplicity="0..1" />
+          <End Role="InvigilationDuty" Type="Self.InvigilationDuty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueID" />
+            </Principal>
+            <Dependent Role="InvigilationDuty">
+              <PropertyRef Name="VenueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaperExamined_ToCourse">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="PaperExamined" Type="Self.PaperExamined" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseCode" />
+            </Principal>
+            <Dependent Role="PaperExamined">
+              <PropertyRef Name="CourseCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaperExamined_ToStaff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="PaperExamined" Type="Self.PaperExamined" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="PaperExamined">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Room_ToBlock">
+          <End Role="Block" Type="Self.Block" Multiplicity="0..1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Block">
+              <PropertyRef Name="BlockCode" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="BlockCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Room_ToVenue">
+          <End Role="Venue" Type="Self.Venue" Multiplicity="0..1" />
+          <End Role="Room" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="VenueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="Block" EntityType="Self.Block" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Examination" EntityType="Self.Examination" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InvigilationDuty" EntityType="Self.InvigilationDuty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaperExamined" EntityType="Self.PaperExamined" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Venue" EntityType="Self.Venue" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Examination_ToCourse" Association="Self.FK_Examination_ToCourse">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Examination" EntitySet="Examination" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Examination_ToVenue" Association="Self.FK_Examination_ToVenue">
+            <End Role="Venue" EntitySet="Venue" />
+            <End Role="Examination" EntitySet="Examination" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvigilationDuty_ToStaff" Association="Self.FK_InvigilationDuty_ToStaff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="InvigilationDuty" EntitySet="InvigilationDuty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvigilationDuty_ToVenue" Association="Self.FK_InvigilationDuty_ToVenue">
+            <End Role="Venue" EntitySet="Venue" />
+            <End Role="InvigilationDuty" EntitySet="InvigilationDuty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaperExamined_ToCourse" Association="Self.FK_PaperExamined_ToCourse">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="PaperExamined" EntitySet="PaperExamined" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaperExamined_ToStaff" Association="Self.FK_PaperExamined_ToStaff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="PaperExamined" EntitySet="PaperExamined" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Room_ToBlock" Association="Self.FK_Room_ToBlock">
+            <End Role="Block" EntitySet="Block" />
+            <End Role="Room" EntitySet="Room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Room_ToVenue" Association="Self.FK_Room_ToVenue">
+            <End Role="Venue" EntitySet="Venue" />
+            <End Role="Room" EntitySet="Room" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Block2">
+          <Key>
+            <PropertyRef Name="BlockCode" />
+          </Key>
+          <Property Name="BlockCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TotalFloor" Type="Int32" />
+          <Property Name="Campus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_ToBlock" FromRole="Block" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="Course2">
+          <Key>
+            <PropertyRef Name="CourseCode" />
+          </Key>
+          <Property Name="CourseCode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CourseTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CourseType" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="AcademicYear" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Session" Type="Int32" />
+          <Property Name="Technical" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DoubleSeating" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="SimultaneousPaper" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CnblPaper" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="SpecificRoom" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="SpecificTimeslot" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="ExamWeight" Type="Decimal" Precision="3" Scale="2" />
+          <Property Name="CGPA" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CreditHours" Type="Int32" />
+          <NavigationProperty Name="Examinations" Relationship="Self.FK_Examination_ToCourse" FromRole="Course" ToRole="Examination" />
+          <NavigationProperty Name="PaperExamineds" Relationship="Self.FK_PaperExamined_ToCourse" FromRole="Course" ToRole="PaperExamined" />
+        </EntityType>
+        <EntityType Name="Examination2">
+          <Key>
+            <PropertyRef Name="TimeslotID" />
+            <PropertyRef Name="VenueID" />
+            <PropertyRef Name="CourseCode" />
+            <PropertyRef Name="ProgrammeCode" />
+            <PropertyRef Name="PaperType" />
+            <PropertyRef Name="Year" />
+          </Key>
+          <Property Name="TimeslotID" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VenueID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CourseCode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProgrammeCode" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PaperType" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="ExamType" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="SitFrom" Type="Int32" />
+          <Property Name="SitTo" Type="Int32" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_Examination_ToCourse" FromRole="Examination" ToRole="Course" />
+          <NavigationProperty Name="Venue" Relationship="Self.FK_Examination_ToVenue" FromRole="Examination" ToRole="Venue" />
+        </EntityType>
+        <EntityType Name="InvigilationDuty2">
+          <Key>
+            <PropertyRef Name="InvigilationDutyID" />
+          </Key>
+          <Property Name="InvigilationDutyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimeslotID" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="VenueID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="StaffID" Type="Int32" />
+          <Property Name="CatOfInvi" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Duration" Type="Int32" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_InvigilationDuty_ToStaff" FromRole="InvigilationDuty" ToRole="Staff" />
+          <NavigationProperty Name="Venue" Relationship="Self.FK_InvigilationDuty_ToVenue" FromRole="InvigilationDuty" ToRole="Venue" />
+        </EntityType>
+        <EntityType Name="PaperExamined2">
+          <Key>
+            <PropertyRef Name="StaffID" />
+            <PropertyRef Name="CourseCode" />
+          </Key>
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <Property Name="CourseCode" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Deadline" Type="DateTime" Precision="0" />
+          <Property Name="FacultyCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PaperType" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="LvlOfProgramme" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MaterialsByDECA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK_PaperExamined_ToCourse" FromRole="PaperExamined" ToRole="Course" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_PaperExamined_ToStaff" FromRole="PaperExamined" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Room2">
+          <Key>
+            <PropertyRef Name="RoomCode" />
+          </Key>
+          <Property Name="RoomCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Floor" Type="Int32" />
+          <Property Name="Function" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VenueID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="BlockCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Block" Relationship="Self.FK_Room_ToBlock" FromRole="Room" ToRole="Block" />
+          <NavigationProperty Name="Venue" Relationship="Self.FK_Room_ToVenue" FromRole="Room" ToRole="Venue" />
+        </EntityType>
+        <EntityType Name="Staff2">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FacultyCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Department" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="isMuslim" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="isTakingSTSPhD" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="TypeOfEmploy" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="NoOfSatSession" Type="Int32" />
+          <Property Name="NoAsQuarantineInvi" Type="Int32" />
+          <Property Name="NoAsReliefInvi" Type="Int32" />
+          <Property Name="NoOfExtraSession" Type="Int32" />
+          <Property Name="isChiefInvi" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="isInviAbove2Years" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="isInvi" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="isExam" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="UniqueCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="InvigilationDuties" Relationship="Self.FK_InvigilationDuty_ToStaff" FromRole="Staff" ToRole="InvigilationDuty" />
+          <NavigationProperty Name="PaperExamineds" Relationship="Self.FK_PaperExamined_ToStaff" FromRole="Staff" ToRole="PaperExamined" />
+        </EntityType>
+        <EntityType Name="Venue2">
+          <Key>
+            <PropertyRef Name="VenueID" />
+          </Key>
+          <Property Name="VenueID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Capacity" Type="Int32" />
+          <Property Name="Floor" Type="Int32" />
+          <Property Name="MaximumProgramme" Type="Int32" />
+          <Property Name="PreferencePaper" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EastOrWest" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ExitLocation" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MaxColumn" Type="Int32" />
+          <Property Name="MaxRow" Type="Int32" />
+          <NavigationProperty Name="Examinations" Relationship="Self.FK_Examination_ToVenue" FromRole="Venue" ToRole="Examination" />
+          <NavigationProperty Name="InvigilationDuties" Relationship="Self.FK_InvigilationDuty_ToVenue" FromRole="Venue" ToRole="InvigilationDuty" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK_Room_ToVenue" FromRole="Venue" ToRole="Room" />
+        </EntityType>
+        <Association Name="FK_Room_ToBlock">
+          <End Role="Block" Type="Database1Model.Block2" Multiplicity="0..1" />
+          <End Role="Room" Type="Database1Model.Room2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Block">
+              <PropertyRef Name="BlockCode" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="BlockCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Examination_ToCourse">
+          <End Role="Course" Type="Database1Model.Course2" Multiplicity="1" />
+          <End Role="Examination" Type="Database1Model.Examination2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseCode" />
+            </Principal>
+            <Dependent Role="Examination">
+              <PropertyRef Name="CourseCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaperExamined_ToCourse">
+          <End Role="Course" Type="Database1Model.Course2" Multiplicity="1" />
+          <End Role="PaperExamined" Type="Database1Model.PaperExamined2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseCode" />
+            </Principal>
+            <Dependent Role="PaperExamined">
+              <PropertyRef Name="CourseCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Examination_ToVenue">
+          <End Role="Venue" Type="Database1Model.Venue2" Multiplicity="1" />
+          <End Role="Examination" Type="Database1Model.Examination2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueID" />
+            </Principal>
+            <Dependent Role="Examination">
+              <PropertyRef Name="VenueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvigilationDuty_ToStaff">
+          <End Role="Staff" Type="Database1Model.Staff2" Multiplicity="0..1" />
+          <End Role="InvigilationDuty" Type="Database1Model.InvigilationDuty2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="InvigilationDuty">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InvigilationDuty_ToVenue">
+          <End Role="Venue" Type="Database1Model.Venue2" Multiplicity="0..1" />
+          <End Role="InvigilationDuty" Type="Database1Model.InvigilationDuty2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueID" />
+            </Principal>
+            <Dependent Role="InvigilationDuty">
+              <PropertyRef Name="VenueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PaperExamined_ToStaff">
+          <End Role="Staff" Type="Database1Model.Staff2" Multiplicity="1" />
+          <End Role="PaperExamined" Type="Database1Model.PaperExamined2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="PaperExamined">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Room_ToVenue">
+          <End Role="Venue" Type="Database1Model.Venue2" Multiplicity="0..1" />
+          <End Role="Room" Type="Database1Model.Room2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueID" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="VenueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Block2" EntityType="Database1Model.Block2" />
+          <EntitySet Name="Course2" EntityType="Database1Model.Course2" />
+          <EntitySet Name="Examination2" EntityType="Database1Model.Examination2" />
+          <EntitySet Name="InvigilationDuty2" EntityType="Database1Model.InvigilationDuty2" />
+          <EntitySet Name="PaperExamined2" EntityType="Database1Model.PaperExamined2" />
+          <EntitySet Name="Room2" EntityType="Database1Model.Room2" />
+          <EntitySet Name="Staff2" EntityType="Database1Model.Staff2" />
+          <EntitySet Name="Venue2" EntityType="Database1Model.Venue2" />
+          <AssociationSet Name="FK_Room_ToBlock" Association="Self.FK_Room_ToBlock">
+            <End Role="Block" EntitySet="Block2" />
+            <End Role="Room" EntitySet="Room2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Examination_ToCourse" Association="Self.FK_Examination_ToCourse">
+            <End Role="Course" EntitySet="Course2" />
+            <End Role="Examination" EntitySet="Examination2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaperExamined_ToCourse" Association="Self.FK_PaperExamined_ToCourse">
+            <End Role="Course" EntitySet="Course2" />
+            <End Role="PaperExamined" EntitySet="PaperExamined2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Examination_ToVenue" Association="Self.FK_Examination_ToVenue">
+            <End Role="Venue" EntitySet="Venue2" />
+            <End Role="Examination" EntitySet="Examination2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvigilationDuty_ToStaff" Association="Self.FK_InvigilationDuty_ToStaff">
+            <End Role="Staff" EntitySet="Staff2" />
+            <End Role="InvigilationDuty" EntitySet="InvigilationDuty2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InvigilationDuty_ToVenue" Association="Self.FK_InvigilationDuty_ToVenue">
+            <End Role="Venue" EntitySet="Venue2" />
+            <End Role="InvigilationDuty" EntitySet="InvigilationDuty2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PaperExamined_ToStaff" Association="Self.FK_PaperExamined_ToStaff">
+            <End Role="Staff" EntitySet="Staff2" />
+            <End Role="PaperExamined" EntitySet="PaperExamined2" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Room_ToVenue" Association="Self.FK_Room_ToVenue">
+            <End Role="Venue" EntitySet="Venue2" />
+            <End Role="Room" EntitySet="Room2" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities">
+          <EntitySetMapping Name="Block2">
+            <EntityTypeMapping TypeName="Database1Model.Block2">
+              <MappingFragment StoreEntitySet="Block">
+                <ScalarProperty Name="BlockCode" ColumnName="BlockCode" />
+                <ScalarProperty Name="TotalFloor" ColumnName="TotalFloor" />
+                <ScalarProperty Name="Campus" ColumnName="Campus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Course2">
+            <EntityTypeMapping TypeName="Database1Model.Course2">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="CourseTitle" ColumnName="CourseTitle" />
+                <ScalarProperty Name="CourseType" ColumnName="CourseType" />
+                <ScalarProperty Name="AcademicYear" ColumnName="AcademicYear" />
+                <ScalarProperty Name="Session" ColumnName="Session" />
+                <ScalarProperty Name="Technical" ColumnName="Technical" />
+                <ScalarProperty Name="DoubleSeating" ColumnName="DoubleSeating" />
+                <ScalarProperty Name="SimultaneousPaper" ColumnName="SimultaneousPaper" />
+                <ScalarProperty Name="CnblPaper" ColumnName="CnblPaper" />
+                <ScalarProperty Name="SpecificRoom" ColumnName="SpecificRoom" />
+                <ScalarProperty Name="SpecificTimeslot" ColumnName="SpecificTimeslot" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="ExamWeight" ColumnName="ExamWeight" />
+                <ScalarProperty Name="CGPA" ColumnName="CGPA" />
+                <ScalarProperty Name="CreditHours" ColumnName="CreditHours" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Examination2">
+            <EntityTypeMapping TypeName="Database1Model.Examination2">
+              <MappingFragment StoreEntitySet="Examination">
+                <ScalarProperty Name="TimeslotID" ColumnName="TimeslotID" />
+                <ScalarProperty Name="VenueID" ColumnName="VenueID" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="ProgrammeCode" ColumnName="ProgrammeCode" />
+                <ScalarProperty Name="PaperType" ColumnName="PaperType" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ExamType" ColumnName="ExamType" />
+                <ScalarProperty Name="SitFrom" ColumnName="SitFrom" />
+                <ScalarProperty Name="SitTo" ColumnName="SitTo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InvigilationDuty2">
+            <EntityTypeMapping TypeName="Database1Model.InvigilationDuty2">
+              <MappingFragment StoreEntitySet="InvigilationDuty">
+                <ScalarProperty Name="InvigilationDutyID" ColumnName="InvigilationDutyID" />
+                <ScalarProperty Name="TimeslotID" ColumnName="TimeslotID" />
+                <ScalarProperty Name="VenueID" ColumnName="VenueID" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="CatOfInvi" ColumnName="CatOfInvi" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaperExamined2">
+            <EntityTypeMapping TypeName="Database1Model.PaperExamined2">
+              <MappingFragment StoreEntitySet="PaperExamined">
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="FacultyCode" ColumnName="FacultyCode" />
+                <ScalarProperty Name="PaperType" ColumnName="PaperType" />
+                <ScalarProperty Name="LvlOfProgramme" ColumnName="LvlOfProgramme" />
+                <ScalarProperty Name="MaterialsByDECA" ColumnName="MaterialsByDECA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Room2">
+            <EntityTypeMapping TypeName="Database1Model.Room2">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="RoomCode" ColumnName="RoomCode" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="Function" ColumnName="Function" />
+                <ScalarProperty Name="VenueID" ColumnName="VenueID" />
+                <ScalarProperty Name="BlockCode" ColumnName="BlockCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staff2">
+            <EntityTypeMapping TypeName="Database1Model.Staff2">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="FacultyCode" ColumnName="FacultyCode" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="isMuslim" ColumnName="isMuslim" />
+                <ScalarProperty Name="isTakingSTSPhD" ColumnName="isTakingSTSPhD" />
+                <ScalarProperty Name="TypeOfEmploy" ColumnName="TypeOfEmploy" />
+                <ScalarProperty Name="NoOfSatSession" ColumnName="NoOfSatSession" />
+                <ScalarProperty Name="NoAsQuarantineInvi" ColumnName="NoAsQuarantineInvi" />
+                <ScalarProperty Name="NoAsReliefInvi" ColumnName="NoAsReliefInvi" />
+                <ScalarProperty Name="NoOfExtraSession" ColumnName="NoOfExtraSession" />
+                <ScalarProperty Name="isChiefInvi" ColumnName="isChiefInvi" />
+                <ScalarProperty Name="isInviAbove2Years" ColumnName="isInviAbove2Years" />
+                <ScalarProperty Name="isInvi" ColumnName="isInvi" />
+                <ScalarProperty Name="isExam" ColumnName="isExam" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="UniqueCode" ColumnName="UniqueCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Venue2">
+            <EntityTypeMapping TypeName="Database1Model.Venue2">
+              <MappingFragment StoreEntitySet="Venue">
+                <ScalarProperty Name="VenueID" ColumnName="VenueID" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="MaximumProgramme" ColumnName="MaximumProgramme" />
+                <ScalarProperty Name="PreferencePaper" ColumnName="PreferencePaper" />
+                <ScalarProperty Name="EastOrWest" ColumnName="EastOrWest" />
+                <ScalarProperty Name="ExitLocation" ColumnName="ExitLocation" />
+                <ScalarProperty Name="MaxColumn" ColumnName="MaxColumn" />
+                <ScalarProperty Name="MaxRow" ColumnName="MaxRow" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

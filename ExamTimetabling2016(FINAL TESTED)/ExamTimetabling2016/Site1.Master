@@ -1,0 +1,237 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="ExamTimetabling2016.Site1" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="Content/Site.css" />
+    <link rel="stylesheet" href="Content/bootstrap-theme.css" />
+    <link rel="stylesheet" href="Content/bootstrap.css" />
+    <link rel="stylesheet" type='text/css' href="Content/font-awesome.css" />
+    <link rel="stylesheet" type='text/css' href="Content/customize.css" />
+    <link href="https://fonts.googleapis.com/css?family=Aldrich|Antic+Slab|Abel|Asap|Lato|Lora|Prociono|RobotoAnton|Bungee|Bungee+Inline|Oswald" rel="stylesheet" />
+
+    <script src="../../Scripts/jquery-1.9.1.js"></script>
+    <script src="../../Scripts/bootstrap.js"></script>
+    <script src="../../Scripts/metisMenu.js"></script>
+    <script src="../../Scripts/sb-admin-2.js"></script>
+
+</head>
+<body class="bodyfont">
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server">
+        </asp:ScriptManager>
+
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">TARUC Examination Timetabling System</a>
+                </div>
+                <!-- /.navbar-header -->
+
+                <div class="sidebar" role="navigation" style="margin-top: 60px">
+                    <div class="sidebar-nav navbar-collapse" style="color: black; min-height: 100%; max-height: 100%; background-color: white">
+                        <ul class="nav" id="side-menu">
+
+                            <%--
+                            <li class="sidebar-search">
+                                <div class="input-group custom-search-form">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">
+                                            <i class="fa fa-search"></i>Search
+                                        </button>
+                                    </span>
+                                </div>
+                                <!-- /input-group -->
+                            </li>
+                            <li class="bg-success">
+                                <a href="../SamplePage/Sample.aspx" style="color: black"><i class="fa fa-search-plus"></i>Advance Search</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-calendar-check-o"></i>Scheduling</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-edit"></i>Manual Editing</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-file-excel-o"></i>Export To Excel</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-table"></i>Exam Timetable</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-pencil"></i>CNBL Maintenance<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#">Create CNBL Paper</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-calendar-o"></i>Exam Session Maintenance<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#">View Exam Session</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Create New Exam Session</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-calendar-times-o"></i>Holiday Maintenance<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="../HolidayMaintenance/HolidayMaintenance.aspx">View Holidays</a>
+                                    </li>
+                                    <li>
+                                        <a href="../HolidayMaintenance/AddHoliday.aspx">Add New Holiday</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-file-text-o"></i>Survey Form Maintenance<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="#">View Survey Forms</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Add New Survey Form</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-location-arrow"></i>Exam Venue Maintenance<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li class="bg-success">
+                                        <a href="#">Venue Maintenance<span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="../VenueMaintenance/VenueMaintenance.aspx">View All Venues</a>
+                                            </li>
+                                            <li>
+                                                <a href="../VenueMaintenance/AddVenue.aspx">Add New Venue</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Block Maintenance<span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="../BlockMaintenance/BlockMaintenance.aspx">View All Blocks</a>
+                                            </li>
+                                            <li>
+                                                <a href="../BlockMaintenance/AddBlock.aspx">Add New Block</a>
+                                            </li>
+                                        </ul>
+                                        <!-- /.nav-third-level -->
+                                    </li>
+                                    <li>
+                                        <a href="#">Room Maintenance<span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li>
+                                                <a href="#">View All Rooms</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Add New Room</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="bg-success">
+                                        <a href="../AssignRoom/AssignRoom.aspx">Assign Room</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-pencil"></i>Simultaneous Paper Maintenance<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="../SimultaneousMaintenance/SimultaneousMaintenance.aspx">View Simul. Paper</a>
+                                    </li>
+                                    <li>
+                                        <a href="../SimultaneousMaintenance/SimultaneousPaperCreate.aspx">Add New Simul. Paper</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            --%>
+                            <li class="bg-success">
+                                <a href="../BackupAndArchive/BackupAndArchive.aspx"><i class="fa fa-calendar-check-o"></i>Setup Database</a>
+                            </li>
+                            <li class="bg-success">
+                                <a href="#"><i class="fa fa-calendar-check-o"></i>Data Conversion<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a href="#">Excel<span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li><a href="../DataConversion/ExcelCourse.aspx">Course</a></li>
+                                            <li><a href="../DataConversion/ExcelStaff.aspx">Staff</a></li>
+                                            <li><a href="../DataConversion/ExcelExaminer.aspx">Examiner</a></li>
+                                            <li><a href="../DataConversion/ExcelVenue.aspx">Venue</a></li>
+                                            <li><a href="../DataConversion/ExcelInvTimetable.aspx">Invigilation Timetable</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="bg-success">
+                                <a href="#"><i class="fa fa-calendar-check-o"></i>Invigilation Maintenance<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a href="../InvigilationMaintenance/InvigilationMaintainInv.aspx">Maintain Invigilator</a></li>
+                                    <li><a href="#">Constraint Maintenance<span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level">
+                                            <li><a href="../InvigilationMaintenance/InvigilationConstraintAdd.aspx">Add Constraints</a></li>
+                                            <li><a href="../InvigilationMaintenance/InvigilationConstraintView.aspx">View Constraints</a></li>
+                                            <li><a href="../InvigilationMaintenance/InvigilationConstraintUpdateDelete.aspx">Update & Delete Constraints</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="../InvigilationMaintenance/InvigilationTable.aspx">Schedule Invigilation</a></li>
+                                </ul>
+                            </li>
+                            <li class="bg-success">
+                                <a href="#"><i class="fa fa-calendar-check-o"></i>Report<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li><a href="../Report/ReportingInvigilationTimetable.aspx">Invigilation Timetable</a></li>
+                                    <li><a href="../Report/ReportingInvigilatorDutiesMaster.aspx">Invigilation Duty Master</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.sidebar-collapse -->
+                </div>
+                <!-- /.navbar-static-side -->
+            </nav>
+
+            <div id="page-wrapper">
+                <div id="content" class="container-fluid">
+                    <header style="margin-top: 20px; margin-bottom: 40px">
+                        <asp:SiteMapDataSource ID="SiteMapDataSource1" runat="server" />
+                        <asp:SiteMapPath ID="SiteMapPath1" runat="server" CssClass="breadcrumb"></asp:SiteMapPath>
+                    </header>
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                    </asp:ContentPlaceHolder>
+                    <hr />
+                    <footer>
+                        <p>&copy; <%: DateTime.Now.Year %> - Taruc Examination Timetabling</p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,429 @@
+﻿<blocks>
+  <block id="0">
+    <group>3</group>
+    <name>DU</name>
+    <capacity>560</capacity>
+    <location>West</location>
+    <venue id="0">
+      <name>DU</name>
+      <floor>1</floor>
+      <capacity>560</capacity>
+    </venue>
+  </block>
+  <block id="1">
+    <group>5</group>
+    <name>H</name>
+    <capacity>908</capacity>
+    <location>West</location>
+    <venue id="0">
+      <name>H1</name>
+      <floor>1</floor>
+      <capacity>76</capacity>
+    </venue>
+    <venue id="1">
+      <name>H10</name>
+      <floor>3</floor>
+      <capacity>34</capacity>
+    </venue>
+    <venue id="2">
+      <name>H11</name>
+      <floor>3</floor>
+      <capacity>34</capacity>
+    </venue>
+    <venue id="3">
+      <name>H12</name>
+      <floor>3</floor>
+      <capacity>34</capacity>
+    </venue>
+    <venue id="4">
+      <name>H13</name>
+      <floor>3</floor>
+      <capacity>34</capacity>
+    </venue>
+    <venue id="5">
+      <name>H14</name>
+      <floor>3</floor>
+      <capacity>34</capacity>
+    </venue>
+    <venue id="6">
+      <name>H2</name>
+      <floor>1</floor>
+      <capacity>76</capacity>
+    </venue>
+    <venue id="7">
+      <name>H3</name>
+      <floor>1</floor>
+      <capacity>76</capacity>
+    </venue>
+    <venue id="8">
+      <name>H4</name>
+      <floor>1</floor>
+      <capacity>76</capacity>
+    </venue>
+    <venue id="9">
+      <name>H5</name>
+      <floor>1</floor>
+      <capacity>76</capacity>
+    </venue>
+    <venue id="10">
+      <name>H6</name>
+      <floor>1</floor>
+      <capacity>76</capacity>
+    </venue>
+    <venue id="11">
+      <name>H7</name>
+      <floor>2</floor>
+      <capacity>124</capacity>
+    </venue>
+    <venue id="12">
+      <name>H8</name>
+      <floor>2</floor>
+      <capacity>124</capacity>
+    </venue>
+    <venue id="13">
+      <name>H9</name>
+      <floor>3</floor>
+      <capacity>34</capacity>
+    </venue>
+  </block>
+  <block id="2">
+    <group>4</group>
+    <name>KS</name>
+    <capacity>850</capacity>
+    <location>West</location>
+    <venue id="0">
+      <name>KS1</name>
+      <floor>1</floor>
+      <capacity>425</capacity>
+    </venue>
+    <venue id="1">
+      <name>KS2</name>
+      <floor>1</floor>
+      <capacity>425</capacity>
+    </venue>
+  </block>
+  <block id="3">
+    <group>2</group>
+    <name>L</name>
+    <capacity>465</capacity>
+    <location>West</location>
+    <venue id="0">
+      <name>L1</name>
+      <floor>1</floor>
+      <capacity>128</capacity>
+    </venue>
+    <venue id="1">
+      <name>L2</name>
+      <floor>2</floor>
+      <capacity>213</capacity>
+    </venue>
+    <venue id="2">
+      <name>L3</name>
+      <floor>3</floor>
+      <capacity>124</capacity>
+    </venue>
+  </block>
+  <block id="4">
+    <group>2</group>
+    <name>M</name>
+    <capacity>634</capacity>
+    <location>West</location>
+    <venue id="0">
+      <name>M1(A)</name>
+      <floor>1</floor>
+      <capacity>0</capacity>
+    </venue>
+    <venue id="1">
+      <name>M1(B)</name>
+      <floor>1</floor>
+      <capacity>0</capacity>
+    </venue>
+    <venue id="2">
+      <name>M2</name>
+      <floor>2</floor>
+      <capacity>124</capacity>
+    </venue>
+    <venue id="3">
+      <name>M3</name>
+      <floor>2</floor>
+      <capacity>76</capacity>
+    </venue>
+    <venue id="4">
+      <name>M4</name>
+      <floor>2</floor>
+      <capacity>124</capacity>
+    </venue>
+    <venue id="5">
+      <name>M5</name>
+      <floor>2</floor>
+      <capacity>76</capacity>
+    </venue>
+    <venue id="6">
+      <name>M6</name>
+      <floor>2</floor>
+      <capacity>124</capacity>
+    </venue>
+    <venue id="7">
+      <name>M7</name>
+      <floor>2</floor>
+      <capacity>76</capacity>
+    </venue>
+    <venue id="8">
+      <name>M8</name>
+      <floor>3</floor>
+      <capacity>34</capacity>
+    </venue>
+  </block>
+  <block id="5">
+    <group>1</group>
+    <name>PA</name>
+    <capacity>1056</capacity>
+    <location>West</location>
+    <venue id="0">
+      <name>PA1</name>
+      <floor>1</floor>
+      <capacity>68</capacity>
+    </venue>
+    <venue id="1">
+      <name>PA10</name>
+      <floor>2</floor>
+      <capacity>116</capacity>
+    </venue>
+    <venue id="2">
+      <name>PA11</name>
+      <floor>2</floor>
+      <capacity>68</capacity>
+    </venue>
+    <venue id="3">
+      <name>PA12</name>
+      <floor>2</floor>
+      <capacity>116</capacity>
+    </venue>
+    <venue id="4">
+      <name>PA2</name>
+      <floor>1</floor>
+      <capacity>116</capacity>
+    </venue>
+    <venue id="5">
+      <name>PA3</name>
+      <floor>1</floor>
+      <capacity>68</capacity>
+    </venue>
+    <venue id="6">
+      <name>PA4</name>
+      <floor>1</floor>
+      <capacity>68</capacity>
+    </venue>
+    <venue id="7">
+      <name>PA5</name>
+      <floor>1</floor>
+      <capacity>68</capacity>
+    </venue>
+    <venue id="8">
+      <name>PA6</name>
+      <floor>1</floor>
+      <capacity>116</capacity>
+    </venue>
+    <venue id="9">
+      <name>PA7</name>
+      <floor>2</floor>
+      <capacity>68</capacity>
+    </venue>
+    <venue id="10">
+      <name>PA8</name>
+      <floor>2</floor>
+      <capacity>116</capacity>
+    </venue>
+    <venue id="11">
+      <name>PA9</name>
+      <floor>2</floor>
+      <capacity>68</capacity>
+    </venue>
+  </block>
+  <block id="6">
+    <group>1</group>
+    <name>Q</name>
+    <capacity>672</capacity>
+    <location>West</location>
+    <venue id="0">
+      <name>Q1</name>
+      <floor>1</floor>
+      <capacity>112</capacity>
+    </venue>
+    <venue id="1">
+      <name>Q2</name>
+      <floor>1</floor>
+      <capacity>112</capacity>
+    </venue>
+    <venue id="2">
+      <name>Q3</name>
+      <floor>1</floor>
+      <capacity>112</capacity>
+    </venue>
+    <venue id="3">
+      <name>Q4</name>
+      <floor>1</floor>
+      <capacity>112</capacity>
+    </venue>
+    <venue id="4">
+      <name>Q5</name>
+      <floor>1</floor>
+      <capacity>112</capacity>
+    </venue>
+    <venue id="5">
+      <name>Q6</name>
+      <floor>1</floor>
+      <capacity>112</capacity>
+    </venue>
+  </block>
+  <block id="7">
+    <group>1</group>
+    <name>R</name>
+    <capacity>280</capacity>
+    <location>West</location>
+    <venue id="0">
+      <name>R3</name>
+      <floor>1</floor>
+      <capacity>70</capacity>
+    </venue>
+    <venue id="1">
+      <name>R4</name>
+      <floor>1</floor>
+      <capacity>70</capacity>
+    </venue>
+    <venue id="2">
+      <name>R5</name>
+      <floor>1</floor>
+      <capacity>70</capacity>
+    </venue>
+    <venue id="3">
+      <name>R6</name>
+      <floor>1</floor>
+      <capacity>70</capacity>
+    </venue>
+  </block>
+  <block id="8">
+    <group>6</group>
+    <name>SB</name>
+    <capacity>475</capacity>
+    <location>East</location>
+    <venue id="0">
+      <name>SB1</name>
+      <floor>1</floor>
+      <capacity>140</capacity>
+    </venue>
+    <venue id="1">
+      <name>SB2</name>
+      <floor>1</floor>
+      <capacity>93</capacity>
+    </venue>
+    <venue id="2">
+      <name>SB3</name>
+      <floor>2</floor>
+      <capacity>140</capacity>
+    </venue>
+    <venue id="3">
+      <name>SB4</name>
+      <floor>2</floor>
+      <capacity>102</capacity>
+    </venue>
+  </block>
+  <block id="9">
+    <group>6</group>
+    <name>SD</name>
+    <capacity>448</capacity>
+    <location>East</location>
+    <venue id="0">
+      <name>SD1</name>
+      <floor>1</floor>
+      <capacity>112</capacity>
+    </venue>
+    <venue id="1">
+      <name>SD2</name>
+      <floor>1</floor>
+      <capacity>112</capacity>
+    </venue>
+    <venue id="2">
+      <name>SD3</name>
+      <floor>2</floor>
+      <capacity>112</capacity>
+    </venue>
+    <venue id="3">
+      <name>SD4</name>
+      <floor>2</floor>
+      <capacity>112</capacity>
+    </venue>
+  </block>
+  <block id="10">
+    <group>6</group>
+    <name>SE</name>
+    <capacity>448</capacity>
+    <location>East</location>
+    <venue id="0">
+      <name>SE1</name>
+      <floor>1</floor>
+      <capacity>112</capacity>
+    </venue>
+    <venue id="1">
+      <name>SE2</name>
+      <floor>1</floor>
+      <capacity>112</capacity>
+    </venue>
+    <venue id="2">
+      <name>SE3</name>
+      <floor>2</floor>
+      <capacity>112</capacity>
+    </venue>
+    <venue id="3">
+      <name>SE4</name>
+      <floor>2</floor>
+      <capacity>112</capacity>
+    </venue>
+  </block>
+  <block id="11">
+    <group>3</group>
+    <name>V</name>
+    <capacity>452</capacity>
+    <location>West</location>
+    <venue id="0">
+      <name>v1</name>
+      <floor>1</floor>
+      <capacity>70</capacity>
+    </venue>
+    <venue id="1">
+      <name>V2</name>
+      <floor>1</floor>
+      <capacity>70</capacity>
+    </venue>
+    <venue id="2">
+      <name>V3</name>
+      <floor>2</floor>
+      <capacity>34</capacity>
+    </venue>
+    <venue id="3">
+      <name>V4</name>
+      <floor>1</floor>
+      <capacity>70</capacity>
+    </venue>
+    <venue id="4">
+      <name>V5</name>
+      <floor>1</floor>
+      <capacity>34</capacity>
+    </venue>
+    <venue id="5">
+      <name>V6</name>
+      <floor>1</floor>
+      <capacity>34</capacity>
+    </venue>
+    <venue id="6">
+      <name>V7</name>
+      <floor>1</floor>
+      <capacity>70</capacity>
+    </venue>
+    <venue id="7">
+      <name>V8</name>
+      <floor>1</floor>
+      <capacity>70</capacity>
+    </venue>
+  </block>
+</blocks>

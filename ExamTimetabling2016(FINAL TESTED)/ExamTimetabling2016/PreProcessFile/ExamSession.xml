@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ExamSession TotalDay="7" TotalSession="19">
+  <TimeSlot ID="1">
+    <Date>27-Jan-2017</Date>
+    <SessionCount>2</SessionCount>
+    <Session>1</Session>
+    <TimeSlotID>AM170127</TimeSlotID>
+    <Session>2</Session>
+    <TimeSlotID>PM170127</TimeSlotID>
+  </TimeSlot>
+  <TimeSlot ID="2">
+    <Date>28-Jan-2017</Date>
+    <SessionCount>3</SessionCount>
+    <Session>1</Session>
+    <TimeSlotID>AM170128</TimeSlotID>
+    <Session>2</Session>
+    <TimeSlotID>PM170128</TimeSlotID>
+    <Session>3</Session>
+    <TimeSlotID>VM170128</TimeSlotID>
+  </TimeSlot>
+  <TimeSlot ID="3">
+    <Date>30-Jan-2017</Date>
+    <SessionCount>3</SessionCount>
+    <Session>1</Session>
+    <TimeSlotID>AM170130</TimeSlotID>
+    <Session>2</Session>
+    <TimeSlotID>PM170130</TimeSlotID>
+    <Session>3</Session>
+    <TimeSlotID>VM170130</TimeSlotID>
+  </TimeSlot>
+  <TimeSlot ID="4">
+    <Date>31-Jan-2017</Date>
+    <SessionCount>3</SessionCount>
+    <Session>1</Session>
+    <TimeSlotID>AM170131</TimeSlotID>
+    <Session>2</Session>
+    <TimeSlotID>PM170131</TimeSlotID>
+    <Session>3</Session>
+    <TimeSlotID>VM170131</TimeSlotID>
+  </TimeSlot>
+  <TimeSlot ID="5">
+    <Date>01-Feb-2017</Date>
+    <SessionCount>3</SessionCount>
+    <Session>1</Session>
+    <TimeSlotID>AM170201</TimeSlotID>
+    <Session>2</Session>
+    <TimeSlotID>PM170201</TimeSlotID>
+    <Session>3</Session>
+    <TimeSlotID>VM170201</TimeSlotID>
+  </TimeSlot>
+  <TimeSlot ID="6">
+    <Date>02-Feb-2017</Date>
+    <SessionCount>3</SessionCount>
+    <Session>1</Session>
+    <TimeSlotID>AM170202</TimeSlotID>
+    <Session>2</Session>
+    <TimeSlotID>PM170202</TimeSlotID>
+    <Session>3</Session>
+    <TimeSlotID>VM170202</TimeSlotID>
+  </TimeSlot>
+  <TimeSlot ID="7">
+    <Date>03-Feb-2017</Date>
+    <SessionCount>2</SessionCount>
+    <Session>1</Session>
+    <TimeSlotID>AM170203</TimeSlotID>
+    <Session>2</Session>
+    <TimeSlotID>PM170203</TimeSlotID>
+  </TimeSlot>
+</ExamSession>

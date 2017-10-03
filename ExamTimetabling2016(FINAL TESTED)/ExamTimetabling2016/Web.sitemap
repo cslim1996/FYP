@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="" title="Exam Timetabling System"  description="">
+    <siteMapNode url="View/Avanced_Searching/Advanced_Search.aspx" title="Advanced Search"  description="" />
+    <siteMapNode url="View/Scheduling/Scheduling.aspx" title="Scheduling"  description="" />
+    <siteMapNode url="View/ManualEditing/ManualEditing.aspx" title="Manual Editing"  description="" />
+    <siteMapNode url="View/Export_To_Excel/Export_To_Excel_WOSeat.aspx" title="Export to Excel"  description="" />
+    <siteMapNode url="View/Export_To_Excel/ViewExamTimetable.aspx" title="View Exam Timetable"  description="" />
+    <siteMapNode url="" title="CNBL Maintenance">
+      <siteMapNode url="View/CNBLMaintenance/CreateCNBLPaper.aspx" title="Add New CNBL Paper"  description="" />
+    </siteMapNode>
+    <siteMapNode url="" title="Exam Session Maintenance">
+      <siteMapNode url="View/ExamSession_Maintenance/ExamSession_View.aspx" title="View All Exam Sessions"  description="" />
+      <siteMapNode url="View/ExamSession_Maintenance/ExamSesssion_Create.aspx" title="Add New Exam Session"  description="" />
+    </siteMapNode>
+    <siteMapNode url="" title="Holiday Maintenance">
+      <siteMapNode url="View/HolidayMaintenance/HolidayMaintenance.aspx" title="View All Holidays"  description="" />
+      <siteMapNode url="View/HolidayMaintenance/AddHoliday.aspx" title="Add New Holiday"  description="" />
+    </siteMapNode>
+    <siteMapNode url="" title="Survey Form Maintenance">
+      <siteMapNode url="View/SurveyForm/ViewSurvey.aspx" title="View All Survey Forms"  description="" />
+      <siteMapNode url="View/SurveyForm/AddSurvey.aspx" title="Add New Survey Form"  description="" />
+    </siteMapNode>
+    <siteMapNode url="" title="Exam Venue Maintenance">
+      <siteMapNode url="" title="Block Maintenance">
+        <siteMapNode url="View/BlockMaintenance/BlockMaintenance.aspx" title="View All Blocks"  description="" />
+        <siteMapNode url="View/BlockMaintenance/AddBlock.aspx" title="Add New Block"  description="" />
+      </siteMapNode>
+      <siteMapNode url="" title="Venue Maintenance">
+        <siteMapNode url="View/VenueMaintenance/VenueMaintenance.aspx" title="View All Venues"  description="" />
+        <siteMapNode url="View/VenueMaintenance/AddVenue.aspx" title="Add New Venue"  description="" />
+      </siteMapNode>
+      <siteMapNode url="" title="Room Maintenance">
+        <siteMapNode url="View/RoomMaintenance/RoomMaintenance.aspx" title="View All Rooms"  description="" />
+        <siteMapNode url="View/RoomMaintenance/AddRoom.aspx" title="Add New Room"  description="" />
+      </siteMapNode>
+      <siteMapNode url="View/AssignRoom/AssignRoom.aspx" title="Assign Room"  description="" />
+    </siteMapNode>
+    <siteMapNode url="" title="Simultaneous Paper Maintenance">
+      <siteMapNode url="View/SimultaneousMaintenance/SimultaneousMaintenance.aspx" title="View All Simultaneous Paper"  description="" />
+      <siteMapNode url="View/SimultaneousMaintenance/SimultaneousPaperCreate.aspx" title="Add New Simultaneous Paper"  description="" />
+    </siteMapNode>
+    <siteMapNode url="" title="Invigilation Maintenance">
+      <siteMapNode url="View/InvigilationMaintenance/InvigilationMaintainInv.aspx" title="Maintain Invigilator"  description="" />
+      <siteMapNode url="View/InvigilationMaintenance/InvigilationTable.aspx" title="Schedule Invigilation"  description="" />
+      <siteMapNode url="" title="Constraint Maintenance">
+        <siteMapNode url="View/InvigilationMaintenance/InvigilationConstraintAdd.aspx" title="Add Constraint"  description="" />
+        <siteMapNode url="View/InvigilationMaintenance/InvigilationConstraintView.aspx" title="View Constraint"  description="" />
+        <siteMapNode url="View/InvigilationMaintenance/InvigilationConstraintUpdateDelete.aspx" title="Update Constraint"  description="" />
+      </siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="" title="Report">
+      <siteMapNode url="View/Report/ReportingInvigilationTimetable.aspx" title="Invigilation Timetable"  description="" />
+      <siteMapNode url="View/Report/ReportingInvigilatorDutiesMaster.aspx" title="Invigilation Duty Master"  description="" />
+    </siteMapNode>
+    <siteMapNode url="" title="Data Conversion">
+      <siteMapNode url="" title="Excel">
+        <siteMapNode url="View/DataConversion/ExcelCourse.aspx" title="Import Course"  description="" />
+        <siteMapNode url="View/DataConversion/ExcelExaminer.aspx" title="Import Examiner"  description="" />
+        <siteMapNode url="View/DataConversion/ExcelInvTimetable.aspx" title="Import Inv. Timetable"  description="" />
+        <siteMapNode url="View/DataConversion/ExcelStaff.aspx" title="Import Staff"  description="" />
+        <siteMapNode url="View/DataConversion/ExcelVenue.aspx" title="Import Venue"  description="" />
+      </siteMapNode>
+    </siteMapNode>
+    <siteMapNode url="View/BackupAndArchive/BackupAndArchive.aspx" title="Setup Database" />
+
+    <siteMapNode url="View/SamplePage/Sample.aspx" title="Sample Page"/>
+  </siteMapNode>
+</siteMap>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="71dde1e4a3a34e5398cfd27546ae4cb6" Name="Diagram1">
+        <EntityTypeShape EntityType="Database1Model.Block2" Width="1.5" PointX="0.625" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Course2" Width="1.5" PointX="3.375" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Examination2" Width="1.5" PointX="6.375" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.InvigilationDuty2" Width="1.5" PointX="6.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.PaperExamined2" Width="1.5" PointX="6.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Room2" Width="1.5" PointX="3.125" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Staff2" Width="1.5" PointX="8.875" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Venue2" Width="1.5" PointX="0.625" PointY="2" IsExpanded="true" />
+        <AssociationConnector Association="Database1Model.FK_Room_ToBlock" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_Examination_ToCourse" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_PaperExamined_ToCourse" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_Examination_ToVenue" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_InvigilationDuty_ToStaff" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_InvigilationDuty_ToVenue" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_PaperExamined_ToStaff" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_Room_ToVenue" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
