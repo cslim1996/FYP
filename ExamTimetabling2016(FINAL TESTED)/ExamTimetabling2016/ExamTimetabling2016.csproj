@@ -234,7 +234,6 @@
     <Compile Include="Course2.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CSTEST\Domain\Class1.cs" />
     <Compile Include="CSTEST\CsInvigilationTable.aspx.cs">
       <DependentUpon>CsInvigilationTable.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -242,6 +241,7 @@
     <Compile Include="CSTEST\CsInvigilationTable.aspx.designer.cs">
       <DependentUpon>CsInvigilationTable.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CSTEST\Domain\Class1.cs" />
     <Compile Include="CSTEST\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

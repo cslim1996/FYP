@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Threading;
 
-namespace ExamTimetabling2016
+namespace ExamTimetabling2016.CSTEST
 {
-    public partial class InvigilatationTable : System.Web.UI.Page
+    public partial class CsInvigilationTable : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         protected void btnPlan_Click(object sender, EventArgs e)
@@ -36,7 +35,7 @@ namespace ExamTimetabling2016
             //This part will be unchanged (CS)
             double minTotalLoadOfDutyForEachInvigilator = (int)totalLoadOfDutyForEachInvigilator;
             double minTotalLoadOfDutyForEachChiefInvigilator = (int)totalLoadOfDutyForEachChiefInvigilator;
-            
+
             examTimetable = assignExaminersAsInvigilators(minTotalLoadOfDutyForEachInvigilator, examTimetable);
             examTimetable = assignExaminersAsChiefInvigilators(minTotalLoadOfDutyForEachChiefInvigilator, examTimetable);
             examTimetable = assignChiefInvigilators(getChiefInvigilatorsList(), minTotalLoadOfDutyForEachChiefInvigilator, examTimetable);
@@ -885,7 +884,7 @@ namespace ExamTimetabling2016
                                         foreach (int index in fafbInvigilatorsIndexList)
                                         {
                                             int numberOf3HoursDuty = invigilatorsList[index].InvigilationDuty.Where(duty => duty.Duration >= 3 && !duty.CategoryOfInvigilator.Equals("Relief")).ToList().Count;
-                                            
+
                                             if (isAvailable(invigilatorsList[index], examTimetableInSameDayAndSession, totalLoadOfDutyForEachInvigilator, checkType, examTimetable[countForTimetable].BlocksList[countForBlock].VenuesList[countForVenue]) &&
                                                 numberOf3HoursDuty + 1 <= (totalLoadOfDutyForEachInvigilator / 3 * 2))
                                             {
@@ -1347,7 +1346,7 @@ namespace ExamTimetabling2016
                                 double numberOfInvigilatorsRequired = (double)getNumberOfInvigilatorsRequired(venue);
                                 double percentageOfInvigilator = (double)numberOfExperiencedInvigilators / numberOfInvigilatorsRequired;
                                 for (int index = 0; index < experiencedInvigilatorsList.Count && !maintainConstraintControl.constraintValidation(new string[] { "PercentageOfExperienceInvigilator" }, new double[] { percentageOfInvigilator }); index++)
-                                {                                    
+                                {
                                     MaintainVenueControl maintainVenueControl = new MaintainVenueControl();
                                     if (isAvailable(experiencedInvigilatorsList[index], examTimetableInSameDayAndSession, totalLoadOfDutyForEachInvigilator, catOfInvi, examTimetable[countForTimetable].BlocksList[countForBlock].VenuesList[countForVenue])
                                         && !freeInvigilatorIndexNumbersList.Contains(index)
@@ -1841,7 +1840,7 @@ namespace ExamTimetabling2016
             invigilator.InvigilationDuty = invigilator.InvigilationDuty.OrderBy(duty => duty.Date).ToList();
 
             //check whether invigilator is Muslim Male staff and the duty is on Friday PM session
-            if (!maintainConstraintControl.constraintValidation(new string[] { "Date", "Period", "IsMuslim", "gender" }, new double[] { maintainConstraintControl.convertDayOfWeek(examTimetableInSameDayAndSession.Date), maintainConstraintControl.convertPeriod(examTimetableInSameDayAndSession.Session), 
+            if (!maintainConstraintControl.constraintValidation(new string[] { "Date", "Period", "IsMuslim", "gender" }, new double[] { maintainConstraintControl.convertDayOfWeek(examTimetableInSameDayAndSession.Date), maintainConstraintControl.convertPeriod(examTimetableInSameDayAndSession.Session),
                 maintainConstraintControl.convertMuslim(invigilator.IsMuslim), maintainConstraintControl.convertGender(invigilator.Gender) }))
             {
                 return false;

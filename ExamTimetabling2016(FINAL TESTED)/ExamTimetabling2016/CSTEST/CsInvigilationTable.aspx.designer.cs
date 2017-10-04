@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ExamTimetabling2016 {
+namespace ExamTimetabling2016.CSTEST {
     
     
-    public partial class InvigilatationTable {
+    public partial class CsInvigilationTable {
         
         /// <summary>
         /// btnPlan control.
