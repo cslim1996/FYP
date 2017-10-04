@@ -113,6 +113,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CSTEST\CsInvigilationTable.aspx" />
     <Content Include="CSTEST\WebForm1.aspx" />
     <Content Include="CSTEST\WebForm2.aspx" />
     <Content Include="CSTEST\Test3.aspx" />
@@ -234,6 +235,13 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CSTEST\Domain\Class1.cs" />
+    <Compile Include="CSTEST\CsInvigilationTable.aspx.cs">
+      <DependentUpon>CsInvigilationTable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CSTEST\CsInvigilationTable.aspx.designer.cs">
+      <DependentUpon>CsInvigilationTable.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CSTEST\WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

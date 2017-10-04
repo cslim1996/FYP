@@ -30,7 +30,7 @@ namespace ExamTimetabling2016
             Boolean? valid = null;
             Boolean? valid2 = null;
             bool finalvalidation = false;
-            string[] text = System.IO.File.ReadAllLines(@"D:\ExamTimetabling2016(Combined)\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
+            string[] text = System.IO.File.ReadAllLines(@"D:\ExamTimetabling2016(Combined)\FYP\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
             foreach (string a in text)
             {
 
@@ -250,7 +250,7 @@ namespace ExamTimetabling2016
             int count = 0;
             Boolean? valid = null;
             Boolean? valid2 = null;
-            string[] text = System.IO.File.ReadAllLines(@"D:\ExamTimetabling2016(Combined)\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
+            string[] text = System.IO.File.ReadAllLines(@"D:\ExamTimetabling2016(Combined)\FYP\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
             foreach (string a in text)
             {
 
