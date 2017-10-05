@@ -46,7 +46,7 @@ namespace ExamTimetabling2016.CSTEST
                 result = result + stf.Name +"\n";
             }*/
             
-            List<Examination> exam = exams.searchExamByQuery(queryx);
+           List<Examination> exam = exams.searchExamByQuery(queryx);
             //List<Examination> exam = exams.getExaminationList();
             foreach (Examination exm in exam)
             {

@@ -4,11 +4,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2>Planning of invigilation duty</h2>
     <p>
-        <asp:Button ID="btnPlan" runat="server" Text="Plan" />
+        <asp:Button ID="btnPlan" runat="server" Text="Plan" OnClick="btnPlan_Click" />
     </p>
     <p>
-        <asp:Label ID="lblMsg" runat="server"></asp:Label>
+        <asp:Label ID="lblMsg" runat="server">Plan</asp:Label>
     </p>
     <p>
-        &nbsp;</p>
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    </p>
 </asp:Content>

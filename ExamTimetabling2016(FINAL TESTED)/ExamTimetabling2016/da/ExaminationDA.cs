@@ -100,10 +100,12 @@ namespace ExamTimetabling2016
 
             //error
         public List<Examination> getExaminationList()
-        {   List<Examination> examList = null;
+        {
+            List<Examination> result = new List<Examination>();
 
             try
             {
+
                 /*Step 2: Create Sql Search statement and Sql Search Object*/
                 strSearch = "select * from dbo.Examination";
                 cmdSearch = new SqlCommand(strSearch, conn);
@@ -116,20 +118,18 @@ namespace ExamTimetabling2016
                 {
                     while (dtr.Read())
                     {
-
-                        Examination x = new Examination(dtr["TimeslotID"].ToString(), dtr["VenueID"].ToString(), dtr["CourseCode"].ToString(), dtr["ProgrammeCode"].ToString(), Convert.ToChar(dtr["PaperType"].ToString()), Convert.ToChar(dtr["ExamType"].ToString()), Int32.Parse(dtr["Year"].ToString()), Int32.Parse(dtr["SitFrom"].ToString()), Int32.Parse(dtr["SitTo"].ToString()));
-                        examList.Add(x);
-
-                       }
+                        Examination exam = new Examination(dtr["TimeslotID"].ToString(), dtr["VenueID"].ToString(), dtr["CourseCode"].ToString(), dtr["ProgrammeCode"].ToString(), Convert.ToChar(dtr["PaperType"].ToString()), Convert.ToChar(dtr["ExamType"].ToString()), Int32.Parse(dtr["Year"].ToString()), Int32.Parse(dtr["SitFrom"].ToString()), Int32.Parse(dtr["SitTo"].ToString()));
+                        result.Add(exam);
+                    }
+                    dtr.Close();
                 }
-                dtr.Close();
+
             }
             catch (SqlException)
             {
                 throw;
             }
-
-            return examList;
+            return result;
         }
 
         public List<Examination> searchExamByQuery(string examQuery)

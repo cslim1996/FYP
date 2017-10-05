@@ -456,6 +456,7 @@ namespace ExamTimetabling2016
             //Console.ReadLine();
             //Console.Clear();
         }
+
         public double convertDayOfWeek(DateTime dayOfWeek)
         {
             double date = 0;

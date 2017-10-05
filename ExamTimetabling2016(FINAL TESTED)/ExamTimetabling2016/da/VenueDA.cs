@@ -108,6 +108,36 @@ namespace ExamTimetabling2016
             return numberOfInvigilatorsInChargeAssinged;
         }
 
+        public List<String> getListOfAllVenue()
+        {
+            List<String> venueList = new List<string>();
+            try
+            {
+
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "select * from dbo.Venue";
+                cmdSearch = new SqlCommand(strSearch, conn);
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        venueList.Add(dtr["VenueID"].ToString());
+                    }
+                }
+                dtr.Close();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return venueList;
+        }
+
         public void shutDown()
         {
             if (conn != null)

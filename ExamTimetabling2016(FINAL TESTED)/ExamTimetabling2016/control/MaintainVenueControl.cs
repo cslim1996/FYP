@@ -25,6 +25,11 @@ namespace ExamTimetabling2016
             return venueDA.getNumberOfInvigilatorsInChargeAssinged(date, session, venueID);
         }
 
+        public List<String> getListOfAllVenue()
+        {
+            return venueDA.getListOfAllVenue();
+        }
+
         public void shutDown()
         {
             venueDA.shutDown();
