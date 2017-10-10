@@ -55,20 +55,23 @@ namespace ExamTimetabling2016.CSTEST
             //calculate invigilatorsRequired for each class
             foreach(Examination exam in examList)
             {
+                
+
+
             }
 
 
         }
-
+ 
 
         //calculate number of programme different venue for every session
         public int calculateInvigilatorForEachVenue(List<Timetable> examTimetableInSameDayAndSession)
         {
             int result = 0;
             MaintainVenueControl venueControl = new MaintainVenueControl();
-            //venueControl.shutDown();
+            MaintainTimeslotVenueControl timeslotVenueControl = new MaintainTimeslotVenueControl();
             MaintainCourseControl courseControl = new MaintainCourseControl();
-           // courseControl.shutDown();
+            
             List<Course> courseList = new List<Course>();
             List<String> venueIDList = venueControl.getListOfAllVenue();
            
@@ -80,11 +83,19 @@ namespace ExamTimetabling2016.CSTEST
                     Venue venue = new Venue();
                     venue.VenueID = venueID;
                     venue.CoursesList = courseList;
-                    Label1.Text = Label1.Text + "\n" + venueID + "," + tt.Date.ToString() + "," + tt.Session.ToString() + " = "+ getNumberOfInvigilatorsRequired(venue);
+                    int noOfInvigilator = getNumberOfInvigilatorsRequired(venue);
+                    //untested
+                    TimeslotVenue timeslotVenue = new TimeslotVenue((timeslotVenueControl.getTimeslotID(tt.Date,tt.Session)),venue.VenueID, noOfInvigilator, venue.CoursesList);
+
+
+
+                 //   Label1.Text = Label1.Text + "\n" + venueID + "," + tt.Date.ToString() + "," + tt.Session.ToString() + " = "+ getNumberOfInvigilatorsRequired(venue);
                 }
                 
             }
-
+            courseControl.shutDown();
+            timeslotVenueControl.shutDown();
+            venueControl.shutDown();
             return result;
         }
 

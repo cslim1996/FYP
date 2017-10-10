@@ -221,6 +221,7 @@
     <Compile Include="Controller\AdvancedSearchController.cs" />
     <Compile Include="Controller\ExamSesssionController.cs" />
     <Compile Include="control\MaintainBlockControl.cs" />
+    <Compile Include="control\MaintainConstraint2Control.cs" />
     <Compile Include="control\MaintainConstraintControl.cs" />
     <Compile Include="control\MaintainCourseControl.cs" />
     <Compile Include="control\MaintainExaminationControl.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="control\MaintainPaperExaminedControl.cs" />
     <Compile Include="control\MaintainProgrammeControl.cs" />
     <Compile Include="control\MaintainStaffControl.cs" />
+    <Compile Include="control\MaintainTimeslotVenueControl.cs" />
     <Compile Include="control\MaintainTimetableControl.cs" />
     <Compile Include="control\MaintainVenueControl.cs" />
     <Compile Include="Course2.cs">
@@ -263,6 +265,7 @@
       <DependentUpon>Test3.aspx</DependentUpon>
     </Compile>
     <Compile Include="da\BlockDA.cs" />
+    <Compile Include="da\Constraint2DA.cs" />
     <Compile Include="da\ConstraintDA.cs" />
     <Compile Include="da\CourseDA.cs" />
     <Compile Include="da\ExaminationDA.cs" />
@@ -271,9 +274,12 @@
     <Compile Include="da\PaperExaminedDA.cs" />
     <Compile Include="da\ProgrammeDA.cs" />
     <Compile Include="da\StaffDA.cs" />
+    <Compile Include="da\TimeslotVenueDA.cs" />
     <Compile Include="da\TimetableDA.cs" />
     <Compile Include="da\VenueDA.cs" />
     <Compile Include="domain\Block.cs" />
+    <Compile Include="domain\TimeslotVenue.cs" />
+    <Compile Include="domain\Constraint2.cs" />
     <Compile Include="domain\Course.cs" />
     <Compile Include="domain\Examination.cs" />
     <Compile Include="domain\Exemption.cs" />

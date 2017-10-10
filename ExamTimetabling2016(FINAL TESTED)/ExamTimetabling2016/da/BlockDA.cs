@@ -33,6 +33,7 @@ namespace ExamTimetabling2016
                 Console.WriteLine(ex.Message);
             }
         }
+        
 
         public List<Block> searchBlocksList(DateTime date, string session)
         {

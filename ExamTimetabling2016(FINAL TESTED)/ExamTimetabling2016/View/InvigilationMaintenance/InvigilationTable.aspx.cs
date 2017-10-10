@@ -1083,6 +1083,7 @@ namespace ExamTimetabling2016
                 }
                 countForTimetable++;
             }
+            
             maintainInvigilationDutyControl.shutDown();
             return examTimetable;
         }
