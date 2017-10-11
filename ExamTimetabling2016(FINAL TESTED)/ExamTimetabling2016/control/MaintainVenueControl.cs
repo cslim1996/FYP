@@ -15,6 +15,11 @@ namespace ExamTimetabling2016
             venueDA = new VenueDA();
         }
 
+        public string getLocationByVenueID(string venueID)
+        {
+            return venueDA.getLocationByVenueID(venueID);
+        }
+
         public List<Venue> searchVenuesList(DateTime date, string session, string blockCode)
         {
             return venueDA.searchVenuesList(date, session, blockCode);

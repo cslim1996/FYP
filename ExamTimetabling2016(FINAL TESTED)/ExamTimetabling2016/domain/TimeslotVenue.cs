@@ -14,8 +14,10 @@ namespace ExamTimetabling2016
         private int noOfInvigilatorRequired;
         private List<Course> courseList;
         private List<Staff> invigilatorList;
+        private string location;
+        private int duration;
 
-        public TimeslotVenue(string timeslotID, string venueID, DateTime date, String session, int noOfInvigilatorRequired, List<Course> courseList)
+        public TimeslotVenue(string timeslotID, string venueID, DateTime date, string session, int noOfInvigilatorRequired, List<Course> courseList)
         {
             this.timeslotID = timeslotID;
             this.venueID = venueID;
@@ -25,7 +27,19 @@ namespace ExamTimetabling2016
             this.date = date;
             this.session = session;
         }
-
+        
+        //for chief
+        public TimeslotVenue(string timeslotID, string location, DateTime date,string session, int noOfChiefInvigilatorRequired, int duration)
+        {
+            this.venueID = null;
+            this.timeslotID = timeslotID;
+            this.location = location;
+            this.date = date;
+            this.session = session;
+            this.NoOfInvigilatorRequired = NoOfInvigilatorRequired;
+            this.duration = duration;
+        }
+        
         public string TimeslotID
         {
             get
@@ -114,6 +128,32 @@ namespace ExamTimetabling2016
             set
             {
                 session = value;
+            }
+        }
+
+        public string Location
+        {
+            get
+            {
+                return location;
+            }
+
+            set
+            {
+                location = value;
+            }
+        }
+
+        public int Duration
+        {
+            get
+            {
+                return duration;
+            }
+
+            set
+            {
+                duration = value;
             }
         }
     }

@@ -51,29 +51,45 @@ namespace ExamTimetabling2016.CSTEST
             List<TimeslotVenue> timeslotVenue = calculateInvigilatorForEachVenue(examTimetable);
         }            
 
-        public void assignInvigilators(List<TimeslotVenue> tsVenue,List<Constraint2> constraintList)
+        public void assignInvigilators(List<TimeslotVenue> tsVenueForInvigilator, List<TimeslotVenue> tsVenueForChief,List<Constraint2> constraintList)
         {
+            List<InvigilationDuty> invigilationDutyList = new List<InvigilationDuty>();
 
             //load constraints
             MaintainInvigilationDutyControl mInvigilatorControl = new MaintainInvigilationDutyControl();
             MaintainExaminationControl mExamControl = new MaintainExaminationControl();
-            foreach (TimeslotVenue tv in tsVenue)
+            MaintainVenueControl mVenueControl = new MaintainVenueControl();
+            
+
+            //create invigilation duty for normal invigilator and invigilator in charge
+            foreach (TimeslotVenue tv in tsVenueForInvigilator)
             {
-                if(tv.InvigilatorList.Count() < tv.NoOfInvigilatorRequired)
+                for(int x = 0; x < tv.NoOfInvigilatorRequired; x++)
                 {
-                     
-                   //if exam type is m then assign examiner
-                    
-
-                    //update saturday session
-                    if(tv.Date.DayOfWeek == DayOfWeek.Saturday)
+                    if(x == 0)
                     {
-                        //mInvigilatorControl.updateNoOfSatSession();
+                        InvigilationDuty inviDuty = new InvigilationDuty(tv.Date,tv.Session,tv.VenueID,mVenueControl.getLocationByVenueID(tv.VenueID),"In-Charge",tv.CourseList[0].Duration);
+                        invigilationDutyList.Add(inviDuty);
                     }
-                    //noofextrasession
-
+                    else
+                    {
+                        InvigilationDuty inviDuty = new InvigilationDuty(tv.Date, tv.Session, tv.VenueID, mVenueControl.getLocationByVenueID(tv.VenueID), "Invigilator", tv.CourseList[0].Duration);
+                        invigilationDutyList.Add(inviDuty);
+                    }
                 }
+
+                //create invigilator list for Chief
+                foreach (TimeslotVenue tsVenue in tsVenueForChief)
+                {
+                    for(int x = 0; x < tsVenue.NoOfInvigilatorRequired; x++)
+                    {
+                        InvigilationDuty inviDuty = new InvigilationDuty(tv.Date, tv.Session,tsVenue.VenueID, tsVenue.Location, "Chief", tsVenue.Duration);
+                        invigilationDutyList.Add(inviDuty);
+                    }
+                }
+
                 mInvigilatorControl.shutDown();
+                mVenueControl.shutDown();
                 mExamControl.shutDown();
             }
 
@@ -113,7 +129,38 @@ namespace ExamTimetabling2016.CSTEST
             return result;
         }
 
-        
+        public List<TimeslotVenue> calculateChiefInvigilatorForEachVenue(List<Timetable> examTimetableInSameDayAndSession)
+        {
+            MaintainTimeslotVenueControl tsVenueControl = new MaintainTimeslotVenueControl();
+            MaintainVenueControl venueControl = new MaintainVenueControl();
+
+            List<TimeslotVenue> tsVenueChiefList = new List<TimeslotVenue>();
+            foreach(Timetable tt in examTimetableInSameDayAndSession)
+            {
+               foreach(Block block in tt.BlocksList)
+                {
+                    int duration = getLongestCourseDuration(block);
+                    int noOfChiefInvi = 0;
+
+                    if (block.VenuesList.Count >= 9)
+                    {
+                        noOfChiefInvi += 2;
+                    }
+                    else
+                    {
+                        noOfChiefInvi++;
+                    }
+                    
+                    TimeslotVenue timeslotVenueForChief = new TimeslotVenue(tsVenueControl.getTimeslotID(tt.Date,tt.Session),"",tt.Date,tt.Session,noOfChiefInvi,duration);
+                    tsVenueChiefList.Add(timeslotVenueForChief);
+                    //date,session,location,chief,duration
+
+                }
+            }
+            venueControl.shutDown();
+            tsVenueControl.shutDown();
+            return tsVenueChiefList;
+        }
         
         //get longest paper duration in the block
         public static int getLongestCourseDuration(Block block)

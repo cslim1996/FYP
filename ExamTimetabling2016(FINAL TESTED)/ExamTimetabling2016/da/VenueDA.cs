@@ -74,6 +74,41 @@ namespace ExamTimetabling2016
             return venuesList;
         }
 
+
+        public string getLocationByVenueID(string venueID)
+        {
+            string result = "";
+            try
+            {
+
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "Select location from dbo.venue where venueid = @venueID";
+                cmdSearch = new SqlCommand(strSearch, conn);
+
+                cmdSearch.Parameters.AddWithValue("@venueID", venueID);
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        result = dtr["location"].ToString();
+                    }
+                }
+                dtr.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw;
+            }
+
+            return result;
+        }
+
+
         //get number of invigilator-in-charge assigned in the venue
         public int getNumberOfInvigilatorsInChargeAssinged(DateTime date, string session, string venueID)
         {
