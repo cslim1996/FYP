@@ -65,6 +65,11 @@ namespace ExamTimetabling2016
             return invigilationDutyDA.clearInvigilationDuty();
         }
 
+        public int updateNoOfSatSession(string staffID)
+        {
+            return invigilationDutyDA.updateNoOfSatSession(staffID);
+        }
+
         public void shutDown()
         {
             invigilationDutyDA.shutDown();

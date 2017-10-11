@@ -43,31 +43,48 @@ namespace ExamTimetabling2016.CSTEST
             double minTotalLoadOfDutyForEachInvigilator = (int)totalLoadOfDutyForEachInvigilator;
             double minTotalLoadOfDutyForEachChiefInvigilator = (int)totalLoadOfDutyForEachChiefInvigilator;
             MaintainVenueControl venueControl = new MaintainVenueControl();
+            MaintainConstraint2Control examConstraintControl = new MaintainConstraint2Control();
+            List<Constraint2> examConstraintList = examConstraintControl.getConstraintList();
             List<String> venueID = venueControl.getListOfAllVenue();
             
-
-            calculateInvigilatorForEachVenue(examTimetable);
+            //used for assignation
+            List<TimeslotVenue> timeslotVenue = calculateInvigilatorForEachVenue(examTimetable);
         }            
 
-        public void assignInvigilators(List<Examination> examList)
+        public void assignInvigilators(List<TimeslotVenue> tsVenue,List<Constraint2> constraintList)
         {
-            
-            //calculate invigilatorsRequired for each class
-            foreach(Examination exam in examList)
+
+            //load constraints
+            MaintainInvigilationDutyControl mInvigilatorControl = new MaintainInvigilationDutyControl();
+            MaintainExaminationControl mExamControl = new MaintainExaminationControl();
+            foreach (TimeslotVenue tv in tsVenue)
             {
-                
+                if(tv.InvigilatorList.Count() < tv.NoOfInvigilatorRequired)
+                {
+                     
+                   //if exam type is m then assign examiner
+                    
 
+                    //update saturday session
+                    if(tv.Date.DayOfWeek == DayOfWeek.Saturday)
+                    {
+                        //mInvigilatorControl.updateNoOfSatSession();
+                    }
+                    //noofextrasession
 
+                }
+                mInvigilatorControl.shutDown();
+                mExamControl.shutDown();
             }
-
 
         }
  
 
         //calculate number of programme different venue for every session
-        public int calculateInvigilatorForEachVenue(List<Timetable> examTimetableInSameDayAndSession)
+        public List<TimeslotVenue> calculateInvigilatorForEachVenue(List<Timetable> examTimetableInSameDayAndSession)
         {
-            int result = 0;
+            List<TimeslotVenue> result = null;
+            
             MaintainVenueControl venueControl = new MaintainVenueControl();
             MaintainTimeslotVenueControl timeslotVenueControl = new MaintainTimeslotVenueControl();
             MaintainCourseControl courseControl = new MaintainCourseControl();
@@ -85,11 +102,8 @@ namespace ExamTimetabling2016.CSTEST
                     venue.CoursesList = courseList;
                     int noOfInvigilator = getNumberOfInvigilatorsRequired(venue);
                     //untested
-                    TimeslotVenue timeslotVenue = new TimeslotVenue((timeslotVenueControl.getTimeslotID(tt.Date,tt.Session)),venue.VenueID, noOfInvigilator, venue.CoursesList);
-
-
-
-                 //   Label1.Text = Label1.Text + "\n" + venueID + "," + tt.Date.ToString() + "," + tt.Session.ToString() + " = "+ getNumberOfInvigilatorsRequired(venue);
+                    TimeslotVenue timeslotVenue = new TimeslotVenue((timeslotVenueControl.getTimeslotID(tt.Date,tt.Session)),venue.VenueID,tt.Date,tt.Session, noOfInvigilator, venue.CoursesList);
+                    result.Add(timeslotVenue);
                 }
                 
             }

@@ -8,18 +8,22 @@ namespace ExamTimetabling2016
     public class TimeslotVenue
     {
         private string timeslotID;
+        private DateTime date;
+        private string session;
         private string venueID;
         private int noOfInvigilatorRequired;
         private List<Course> courseList;
         private List<Staff> invigilatorList;
 
-        public TimeslotVenue(string timeslotID, string venueID, int noOfInvigilatorRequired, List<Course> courseList)
+        public TimeslotVenue(string timeslotID, string venueID, DateTime date, String session, int noOfInvigilatorRequired, List<Course> courseList)
         {
             this.timeslotID = timeslotID;
             this.venueID = venueID;
             this.noOfInvigilatorRequired = noOfInvigilatorRequired;
             this.courseList = courseList;
             this.InvigilatorList = new List<Staff>();
+            this.date = date;
+            this.session = session;
         }
 
         public string TimeslotID
@@ -84,6 +88,32 @@ namespace ExamTimetabling2016
             set
             {
                 invigilatorList = value;
+            }
+        }
+
+        public DateTime Date
+        {
+            get
+            {
+                return date;
+            }
+
+            set
+            {
+                date = value;
+            }
+        }
+
+        public string Session
+        {
+            get
+            {
+                return session;
+            }
+
+            set
+            {
+                session = value;
             }
         }
     }

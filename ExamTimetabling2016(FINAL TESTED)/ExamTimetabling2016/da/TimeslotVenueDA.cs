@@ -87,7 +87,40 @@ namespace ExamTimetabling2016
             }
         }
 
-        
+        //untested
+        public int countNoOfFacultyInvolved(String timeslotID, String venueID)
+        {
+            int count = 0;
+            try
+            {/*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "select count(distinct b.FacultyCode) as FacultyCount from examination a inner join Course c on a.CourseCode = c.CourseCode inner join PaperExamined b on b.CourseCode = c.CourseCode group by TimeslotID,VenueID where a.timeslotid =@timeslotID and a.venueid =@venueID";
+                cmdSearch = new SqlCommand(strSearch, conn);
+
+                cmdSearch.Parameters.AddWithValue("@timeslotID", timeslotID);
+                cmdSearch.Parameters.AddWithValue("@venueID", venueID);
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        count = Convert.ToInt32(dtr["FacultyCount"]);
+}
+                    dtr.Close();
+                }
+
+            }
+            catch(SqlException ex)
+            {
+                throw;
+            }
+
+            
+            return count;
+
+        }
 
         public void shutDown()
         {
