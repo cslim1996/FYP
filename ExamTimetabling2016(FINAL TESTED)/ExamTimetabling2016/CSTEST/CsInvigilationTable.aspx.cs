@@ -151,7 +151,7 @@ namespace ExamTimetabling2016.CSTEST
                         noOfChiefInvi++;
                     }
                     
-                    TimeslotVenue timeslotVenueForChief = new TimeslotVenue(tsVenueControl.getTimeslotID(tt.Date,tt.Session),"",tt.Date,tt.Session,noOfChiefInvi,duration);
+                    TimeslotVenue timeslotVenueForChief = new TimeslotVenue(tsVenueControl.getTimeslotID(tt.Date,tt.Session),block.BlockCode,tt.Date,tt.Session,noOfChiefInvi,duration);
                     tsVenueChiefList.Add(timeslotVenueForChief);
                     //date,session,location,chief,duration
 
@@ -162,6 +162,8 @@ namespace ExamTimetabling2016.CSTEST
             return tsVenueChiefList;
         }
         
+        public List<TimeslotVenue> calculateReliefForEachVenue(List<Timetable> examTimetableInSameDayAndSession)
+
         //get longest paper duration in the block
         public static int getLongestCourseDuration(Block block)
         {
