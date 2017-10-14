@@ -31,7 +31,7 @@ namespace ExamTimetabling2016
         //for chief
         public TimeslotVenue(string timeslotID, string location, DateTime date,string session, int noOfChiefInvigilatorRequired, int duration)
         {
-            this.venueID = null;
+            this.venueID = "";
             this.timeslotID = timeslotID;
             this.location = location;
             this.date = date;
@@ -40,6 +40,17 @@ namespace ExamTimetabling2016
             this.duration = duration;
         }
         
+        //for relief
+        public TimeslotVenue(string timeslotID, DateTime date, string session, string location)
+        {
+            this.timeslotID = timeslotID;
+            this.date = date;
+            this.venueID = "";
+            this.session = session;
+            this.location = location;
+            this.duration = 0;
+        }
+
         public string TimeslotID
         {
             get

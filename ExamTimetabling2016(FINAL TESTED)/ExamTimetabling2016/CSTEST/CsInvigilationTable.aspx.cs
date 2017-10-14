@@ -12,7 +12,7 @@ namespace ExamTimetabling2016.CSTEST
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-          
+
         }
 
         protected void btnPlan_Click(object sender, EventArgs e)
@@ -48,10 +48,17 @@ namespace ExamTimetabling2016.CSTEST
             List<String> venueID = venueControl.getListOfAllVenue();
             
             //used for assignation
-            List<TimeslotVenue> timeslotVenue = calculateInvigilatorForEachVenue(examTimetable);
-        }            
+            List<TimeslotVenue> timeslotVenueForInvigilator = calculateInvigilatorForEachVenue(examTimetable);
+            List<TimeslotVenue> timeslotVenueForRelief = calculateReliefForEachVenue(examTimetable);
+            List<TimeslotVenue> timeslotVenueForChief = calculateChiefInvigilatorForEachVenue(examTimetable);
 
-        public void assignInvigilators(List<TimeslotVenue> tsVenueForInvigilator, List<TimeslotVenue> tsVenueForChief,List<Constraint2> constraintList)
+
+            
+            List<InvigilationDuty> inviDutyList = createInvigilationDutyList(timeslotVenueForInvigilator, timeslotVenueForChief, timeslotVenueForRelief);
+            Label1.Text = inviDutyList.Count.ToString();
+            }       
+
+        public List<InvigilationDuty> createInvigilationDutyList(List<TimeslotVenue> tsVenueForInvigilator, List<TimeslotVenue> tsVenueForChief,List<TimeslotVenue> tsVenueForRelief)
         {
             List<InvigilationDuty> invigilationDutyList = new List<InvigilationDuty>();
 
@@ -59,17 +66,19 @@ namespace ExamTimetabling2016.CSTEST
             MaintainInvigilationDutyControl mInvigilatorControl = new MaintainInvigilationDutyControl();
             MaintainExaminationControl mExamControl = new MaintainExaminationControl();
             MaintainVenueControl mVenueControl = new MaintainVenueControl();
-            
+
 
             //create invigilation duty for normal invigilator and invigilator in charge
             foreach (TimeslotVenue tv in tsVenueForInvigilator)
             {
-                for(int x = 0; x < tv.NoOfInvigilatorRequired; x++)
+                for (int x = 0; x < tv.NoOfInvigilatorRequired; x++)
                 {
-                    if(x == 0)
+                    if (x == 0)
                     {
-                        InvigilationDuty inviDuty = new InvigilationDuty(tv.Date,tv.Session,tv.VenueID,mVenueControl.getLocationByVenueID(tv.VenueID),"In-Charge",tv.CourseList[0].Duration);
-                        invigilationDutyList.Add(inviDuty);
+                        
+                            InvigilationDuty inviDuty = new InvigilationDuty(tv.Date, tv.Session, tv.VenueID, mVenueControl.getLocationByVenueID(tv.VenueID), "In-Charge", tv.CourseList[0].Duration);
+                            invigilationDutyList.Add(inviDuty);
+                        
                     }
                     else
                     {
@@ -77,29 +86,38 @@ namespace ExamTimetabling2016.CSTEST
                         invigilationDutyList.Add(inviDuty);
                     }
                 }
-
+            }
                 //create invigilator list for Chief
                 foreach (TimeslotVenue tsVenue in tsVenueForChief)
                 {
                     for(int x = 0; x < tsVenue.NoOfInvigilatorRequired; x++)
                     {
-                        InvigilationDuty inviDuty = new InvigilationDuty(tv.Date, tv.Session,tsVenue.VenueID, tsVenue.Location, "Chief", tsVenue.Duration);
+                        InvigilationDuty inviDuty = new InvigilationDuty(tsVenue.Date, tsVenue.Session,tsVenue.VenueID, tsVenue.Location, "Chief", tsVenue.Duration);
                         invigilationDutyList.Add(inviDuty);
                     }
+                }
+
+                //relief
+                foreach(TimeslotVenue tsVenue in tsVenueForRelief)
+                {
+                InvigilationDuty inviDuty = new InvigilationDuty(tsVenue.Date, tsVenue.Session, tsVenue.VenueID, tsVenue.Location, "Relief",tsVenue.Duration);
+                invigilationDutyList.Add(inviDuty);
                 }
 
                 mInvigilatorControl.shutDown();
                 mVenueControl.shutDown();
                 mExamControl.shutDown();
+
+            return invigilationDutyList;
             }
 
-        }
+        
  
 
         //calculate number of programme different venue for every session
         public List<TimeslotVenue> calculateInvigilatorForEachVenue(List<Timetable> examTimetableInSameDayAndSession)
         {
-            List<TimeslotVenue> result = null;
+            List<TimeslotVenue> result = new List<TimeslotVenue>();
             
             MaintainVenueControl venueControl = new MaintainVenueControl();
             MaintainTimeslotVenueControl timeslotVenueControl = new MaintainTimeslotVenueControl();
@@ -110,18 +128,20 @@ namespace ExamTimetabling2016.CSTEST
            
             foreach (Timetable tt in examTimetableInSameDayAndSession)
             {
-                foreach(String venueID in venueIDList)
+                foreach (String venueID in venueIDList)
                 {
                     courseList = courseControl.searchCoursesList(tt.Date, tt.Session, venueID);
                     Venue venue = new Venue();
                     venue.VenueID = venueID;
                     venue.CoursesList = courseList;
                     int noOfInvigilator = getNumberOfInvigilatorsRequired(venue);
-                    //untested
-                    TimeslotVenue timeslotVenue = new TimeslotVenue((timeslotVenueControl.getTimeslotID(tt.Date,tt.Session)),venue.VenueID,tt.Date,tt.Session, noOfInvigilator, venue.CoursesList);
-                    result.Add(timeslotVenue);
+
+                    if (venue.CoursesList.Count!= 0 && noOfInvigilator!= 0)
+                    {
+                        TimeslotVenue timeslotVenue = new TimeslotVenue((timeslotVenueControl.getTimeslotID(tt.Date, tt.Session)), venue.VenueID, tt.Date, tt.Session, noOfInvigilator, venue.CoursesList);
+                        result.Add(timeslotVenue);
+                    }    
                 }
-                
             }
             courseControl.shutDown();
             timeslotVenueControl.shutDown();
@@ -163,6 +183,44 @@ namespace ExamTimetabling2016.CSTEST
         }
         
         public List<TimeslotVenue> calculateReliefForEachVenue(List<Timetable> examTimetableInSameDayAndSession)
+        {
+            List<TimeslotVenue> reliefList = new List<TimeslotVenue>();
+            MaintainTimeslotVenueControl tsVenueControl = new MaintainTimeslotVenueControl();
+            String location = "";
+
+            foreach (Timetable tt in examTimetableInSameDayAndSession)
+            {
+                //add 1 quarantine invi for east campus
+                if (tt.BlocksList.Where(block => block.EastOrWest.Equals('E')).ToList().Count > 0)
+                {
+                    TimeslotVenue tsVenueRelief = new TimeslotVenue(tsVenueControl.getTimeslotID(tt.Date, tt.Session), tt.Date, tt.Session, "East Campus");
+                    reliefList.Add(tsVenueRelief);
+                }
+
+                //add 1 quarantine invi for west campus
+                if (tt.BlocksList.Where(block => block.EastOrWest.Equals('W')).ToList().Count > 0)
+                {
+                    TimeslotVenue tsVenueRelief = new TimeslotVenue(tsVenueControl.getTimeslotID(tt.Date, tt.Session), tt.Date, tt.Session, "West Campus");
+                    reliefList.Add(tsVenueRelief);
+                }
+                    
+                foreach (Block block in tt.BlocksList)
+                {
+                    if (block.EastOrWest.Equals('E'))
+                    {
+                        location = "East Campus";
+                    }else if (block.EastOrWest.Equals('W'))
+                    {
+                        location = "West Campus";
+                    }
+                    TimeslotVenue tsVenueRelief = new TimeslotVenue(tsVenueControl.getTimeslotID(tt.Date, tt.Session), tt.Date, tt.Session,location);
+                    reliefList.Add(tsVenueRelief);
+                }    
+
+            }
+            tsVenueControl.shutDown();
+            return reliefList;
+        }
 
         //get longest paper duration in the block
         public static int getLongestCourseDuration(Block block)
@@ -234,7 +292,7 @@ namespace ExamTimetabling2016.CSTEST
 
             //add number of relief invigilators required(one for each block)
             totalReliefInvigilatorsRequiredPerSession += examTimetableInSameDayAndSession.BlocksList.Count;
-
+            
             //add 1 quarantine invi for east campus
             if (examTimetableInSameDayAndSession.BlocksList.Where(block => block.EastOrWest.Equals('E')).ToList().Count > 0)
                 totalReliefInvigilatorsRequiredPerSession++;
