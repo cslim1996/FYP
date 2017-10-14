@@ -16,7 +16,6 @@ namespace ExamTimetabling2016
         private int year;  
         private int sitFrom;
         private int sitTo;
-        private int invigilatorRequired;
 
         public Examination(string timeslotID, string venueID, string courseCode, string programmeCode, char paperType, char examType, int year, int sitFrom, int sitTo)
         {
@@ -29,14 +28,8 @@ namespace ExamTimetabling2016
             this.year = year;
             this.sitFrom = sitFrom;
             this.sitTo = sitTo;
-            this.invigilatorRequired = 0; 
         }
-
-        public int InvigilatorRequired
-        {
-            get { return invigilatorRequired; }
-            set { invigilatorRequired = value; }
-        }
+        
 
         public string TimeslotID
         {

@@ -226,6 +226,7 @@
     <Compile Include="control\MaintainCourseControl.cs" />
     <Compile Include="control\MaintainExaminationControl.cs" />
     <Compile Include="control\MaintainExemptionControl.cs" />
+    <Compile Include="control\MaintainFacultyControl.cs" />
     <Compile Include="control\MaintainInvigilationDutyControl.cs" />
     <Compile Include="control\MaintainPaperExaminedControl.cs" />
     <Compile Include="control\MaintainProgrammeControl.cs" />
@@ -270,6 +271,7 @@
     <Compile Include="da\CourseDA.cs" />
     <Compile Include="da\ExaminationDA.cs" />
     <Compile Include="da\ExemptionDA.cs" />
+    <Compile Include="da\FacultyDA.cs" />
     <Compile Include="da\InvigilationDutyDA.cs" />
     <Compile Include="da\PaperExaminedDA.cs" />
     <Compile Include="da\ProgrammeDA.cs" />
@@ -278,6 +280,7 @@
     <Compile Include="da\TimetableDA.cs" />
     <Compile Include="da\VenueDA.cs" />
     <Compile Include="domain\Block.cs" />
+    <Compile Include="domain\Faculty.cs" />
     <Compile Include="domain\TimeslotVenue.cs" />
     <Compile Include="domain\Constraint2.cs" />
     <Compile Include="domain\Course.cs" />

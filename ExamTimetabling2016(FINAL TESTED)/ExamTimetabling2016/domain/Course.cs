@@ -13,6 +13,7 @@ namespace ExamTimetabling2016
         private bool isDoubleSeating;
         private bool isCnblPaper;
         private List<Programme> programmeList;
+        private Faculty faculty;
 
         public Course()
         {
@@ -33,6 +34,18 @@ namespace ExamTimetabling2016
         {
             this.courseCode = courseCode;
             this.courseTitle = courseTitle;
+        }
+
+        public Course(string courseCode, string courseTitle, int duration, bool isDoubleSeating, bool isCnblPaper)
+        {
+            MaintainFacultyControl mFacultyControl = new MaintainFacultyControl();
+            this.courseCode = courseCode;
+            this.courseTitle = courseTitle;
+            this.duration = duration;
+            this.isDoubleSeating = isDoubleSeating;
+            this.isCnblPaper = isCnblPaper;
+            this.faculty = mFacultyControl.searchFacultyByCourseCode(courseCode);
+            mFacultyControl.shutDown();
         }
 
         public string CourseTitle
@@ -97,6 +110,19 @@ namespace ExamTimetabling2016
             set
             {
                 programmeList = value;
+            }
+        }
+
+        public Faculty Faculty
+        {
+            get
+            {
+                return faculty;
+            }
+
+            set
+            {
+                faculty = value;
             }
         }
     }

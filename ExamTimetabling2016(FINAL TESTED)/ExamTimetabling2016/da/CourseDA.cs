@@ -209,6 +209,7 @@ namespace ExamTimetabling2016
             return facultyCodesList;
         }
 
+       
         public void shutDown()
         {
             if (conn != null)

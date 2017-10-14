@@ -11,8 +11,9 @@ namespace ExamTimetabling2016.CSTEST
     public partial class CsInvigilationTable : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-
+        {/*
+            MaintainFacultyControl mfc = new MaintainFacultyControl();
+            Label1.Text = mfc.getFacultyList()[0].FacultyFullName.ToString();*/
         }
 
         protected void btnPlan_Click(object sender, EventArgs e)
@@ -37,6 +38,7 @@ namespace ExamTimetabling2016.CSTEST
             MaintainStaffControl maintainStaffControl = new MaintainStaffControl();
             double totalLoadOfDutyForEachInvigilator = calculateTotalLoadOfDutyForEachInvigilator(calculateTotalInvigilatorsRequired(examTimetable), maintainStaffControl.countTotalInvigilatorsAvailable());
             double totalLoadOfDutyForEachChiefInvigilator = calculateTotalLoadOfDutyForEachChiefInvigilator(calculateTotalChiefInvigilatorsRequired(examTimetable), maintainStaffControl.countTotalChiefInvigilatorsAvailable());
+            
             maintainStaffControl.shutDown();
 
             //This part will be unchanged (CS)
@@ -53,10 +55,27 @@ namespace ExamTimetabling2016.CSTEST
             List<TimeslotVenue> timeslotVenueForChief = calculateChiefInvigilatorForEachVenue(examTimetable);
 
 
-            
+            //List of invigilation Duty
             List<InvigilationDuty> inviDutyList = createInvigilationDutyList(timeslotVenueForInvigilator, timeslotVenueForChief, timeslotVenueForRelief);
-            Label1.Text = inviDutyList.Count.ToString();
+            
+
+
             }       
+
+        //load constraint lsit
+
+        public void assignInvigilator(List<InvigilationDuty> inviDutyList,List<Constraint2> constraintList)
+        {
+            MaintainCourseControl mCourseControl = new MaintainCourseControl();
+            foreach(InvigilationDuty invigilationDuty in inviDutyList)
+            {
+                foreach(Constraint2 constraint in constraintList)
+                {
+                    
+                }
+            }
+            mCourseControl.shutDown();
+        }
 
         public List<InvigilationDuty> createInvigilationDutyList(List<TimeslotVenue> tsVenueForInvigilator, List<TimeslotVenue> tsVenueForChief,List<TimeslotVenue> tsVenueForRelief)
         {

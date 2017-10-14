@@ -11,6 +11,7 @@ namespace ExamTimetabling2016
         private string examQuery;
         private string conditionQuery;
         private char isCondition;
+        private char constraintType;
         private List<Examination> examList;
         private List<Staff> staffList;
 
@@ -99,6 +100,19 @@ namespace ExamTimetabling2016
             set
             {
                 staffList = value;
+            }
+        }
+
+        public char ConstraintType
+        {
+            get
+            {
+                return constraintType;
+            }
+
+            set
+            {
+                constraintType = value;
             }
         }
     }
