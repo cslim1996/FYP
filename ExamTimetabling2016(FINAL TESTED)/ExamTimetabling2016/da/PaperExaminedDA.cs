@@ -96,6 +96,38 @@ namespace ExamTimetabling2016
 
             return paperExaminedList;
         }
+        public List<string> searchPaperExaminedByStaffID(string staffID)
+        {
+            List<string> paperExaminedList = new List<string>();
+
+            try
+            {
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "Select * from dbo.PaperExamined where staffID = @StaffID";
+                cmdSearch = new SqlCommand(strSearch, conn);
+
+                cmdSearch.Parameters.AddWithValue("@StaffID", staffID);
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        paperExaminedList.Add(dtr["CourseCode"].ToString());
+                    }
+                    dtr.Close();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return paperExaminedList;
+        }
 
         public void shutDown()
         {

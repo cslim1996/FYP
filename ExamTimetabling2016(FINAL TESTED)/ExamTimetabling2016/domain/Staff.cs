@@ -54,6 +54,26 @@ namespace ExamTimetabling2016
         }
 
 
+        public Staff(string staffID,bool isMuslim,bool isTakingSTSPhD,char typeOfEmploy, int noOfSatSession,
+            int noAsReliefInvi, int noOfExtraSession, bool isChiefInvi, bool isInviAbove2years, char gender)
+            : base("",'\0',false)
+        {
+            MaintainExemptionControl mExemptioncontrol = new MaintainExemptionControl();
+            MaintainPaperExaminedControl mPaperExaminedControl = new MaintainPaperExaminedControl();
+            this.staffID = staffID;
+            this.IsMuslim = isMuslim;
+            this.isTakingSTSPhD = isTakingSTSPhD;
+            this.typeOfEmploy = typeOfEmploy;
+            this.noOfExtraSession = noOfExtraSession;
+            this.noAsReliefInvi = noAsReliefInvi;
+            this.noOfExtraSession = noOfExtraSession;
+            this.isChiefInvi = isInviAbove2Years;
+            this.Gender = gender;
+            this.exemptionList = mExemptioncontrol.searchExemptionList(staffID);
+            this.paperCodeExamined = mPaperExaminedControl.searchPaperExaminedByStaffID(staffID);
+            this.invigilationDuty = new List<InvigilationDuty>();
+        }
+
         public Staff(string staffID, string title, string name, char facultyCode, char isChief, char isInvi)
             : base("", '\0', false)
         {
@@ -299,5 +319,10 @@ namespace ExamTimetabling2016
                 invigilationDuty = value;
             }
         }
+
+        
+
+        
+        
     }
 }

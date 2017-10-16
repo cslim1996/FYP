@@ -97,6 +97,60 @@ namespace ExamTimetabling2016
             return staffList;
         }
 
+        //unused for now
+        public List<Staff> getInvigilatorList()
+        {
+            List<Staff> staffList = new List<Staff>();
+
+            try
+            {
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "Select * from dbo.Staff where isInvi = 'Y'";
+                cmdSearch = new SqlCommand(strSearch, conn);
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        bool isTakingSTSPhD = false;
+                        bool isMuslim= false;
+                        bool isChiefInvi = false;
+                        bool isInviAbove2years = false;
+                        
+                        //convert isMuslim
+                        if (Convert.ToChar(dtr["isMuslim"]).Equals('Y'))
+                            isMuslim = true;
+
+                        if (Convert.ToChar(dtr["isTakingSTSPhD"]).Equals('Y'))
+                            isTakingSTSPhD = true;
+
+                        if (Convert.ToChar(dtr["isChiefInvi"]).Equals('Y'))
+                            isChiefInvi = true;
+
+                        if (Convert.ToChar(dtr["isAbove2years"]).Equals('Y'))
+                            isInviAbove2years = true;
+                        
+                        Staff staff = new Staff(dtr["StaffID"].ToString(),isMuslim,isTakingSTSPhD,
+                            Convert.ToChar(dtr["typeOfEmploy"]),Convert.ToInt16(dtr["NoOfSatSession"]),
+                            Convert.ToInt16(dtr["noAsReliefInvi"]),Convert.ToInt16(dtr["NoOfExtraSession"]),
+                            isChiefInvi,isInviAbove2years,Convert.ToChar(dtr["Gender"]));
+                        
+                        staffList.Add(staff);
+                    }
+                    dtr.Close();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return staffList;
+        }
 
         public List<Staff> searchLecturer(string input, string criteria)
         {
@@ -110,7 +164,7 @@ namespace ExamTimetabling2016
                 if (criteria.Equals("faculty"))
                 {
                     /*Step 2: Create Sql Search statement and Sql Search Object*/
-                    strSearch = "Select S.name, S.gender, S.isMuslim, S.StaffID, S.title, S.position, S.facultyCode, S.department, S.isTakingSTSPhD, S.typeOfEmploy, S.NoOfSatSession, S.NoAsQuarantineInvi, S.NoAsReliefInvi, S.NoOfExtraSession, S.isChiefInvi, S.isInviAbove2Years From dbo.Staff S Where S.typeOfEmploy = 'F' and S.typeOfEmploy = 'F' and S.faculty = @Faculty";
+                        strSearch = "Select S.name, S.gender, S.isMuslim, S.StaffID, S.title, S.position, S.facultyCode, S.department, S.isTakingSTSPhD, S.typeOfEmploy, S.NoOfSatSession, S.NoAsQuarantineInvi, S.NoAsReliefInvi, S.NoOfExtraSession, S.isChiefInvi, S.isInviAbove2Years From dbo.Staff S Where S.typeOfEmploy = 'F' and S.typeOfEmploy = 'F' and S.faculty = @Faculty";
                     cmdSearch = new SqlCommand(strSearch, conn);
 
                     cmdSearch.Parameters.AddWithValue("@Faculty", input);
@@ -704,6 +758,7 @@ namespace ExamTimetabling2016
             }
             return averageNoOfExtraSession;
         }
+
         public List<string> getFacultyCodesList()
         {
             List<string> facultyCodesList = new List<string>();

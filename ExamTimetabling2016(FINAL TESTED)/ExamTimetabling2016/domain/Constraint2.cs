@@ -11,7 +11,7 @@ namespace ExamTimetabling2016
         private string examQuery;
         private string conditionQuery;
         private char isCondition;
-        private char constraintType;
+        private char constraintType; //indicate
         private List<Examination> examList;
         private List<Staff> staffList;
 

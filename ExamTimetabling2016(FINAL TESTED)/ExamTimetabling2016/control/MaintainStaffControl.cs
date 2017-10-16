@@ -13,6 +13,11 @@ namespace ExamTimetabling2016
             staffDA = new StaffDA();
         }
 
+        public List<Staff> getInvigilatorList()
+        {
+            return staffDA.getInvigilatorList();
+        }
+
         public Staff getStaffName(string staffID)
         {
             return staffDA.getStaffName(staffID);

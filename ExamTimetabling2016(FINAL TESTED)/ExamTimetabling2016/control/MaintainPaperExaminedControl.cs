@@ -24,6 +24,11 @@ namespace ExamTimetabling2016
             return paperExaminedDA.searchPaperExamined(location, timeslotID);
         }
 
+        public List<string> searchPaperExaminedByStaffID(string staffID)
+        {
+            return paperExaminedDA.searchPaperExaminedByStaffID(staffID);
+        }
+
         public void shutDown()
         {
             paperExaminedDA.shutDown();
