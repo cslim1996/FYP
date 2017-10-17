@@ -554,15 +554,16 @@ namespace ExamTimetabling2016.CSTEST
             {
 
                 foreach (Constraint2 constraint in constraintList)
-                {
-                    string codeVarReferenceExpression = "";
+                {/*
                     List<String> stringVariable = new List<string>();
                     stringVariable.Add("Faculty");
                     string statementForStaff = "staff.Faculty == ";
                     string statementForExam = "faculty == FAFB";
                     string[] wordsOfConstraintForStaff = statementForStaff.Split(' ');
                     string[] wordsOfConstraintForExam = statementForStaff.Split(' ');
+                    */
 
+                    //if exam in invigilation duty matches with the on in
                 }
 
             }

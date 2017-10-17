@@ -281,6 +281,7 @@
     <Compile Include="da\VenueDA.cs" />
     <Compile Include="domain\Block.cs" />
     <Compile Include="domain\Faculty.cs" />
+    <Compile Include="domain\StaffHeuristic.cs" />
     <Compile Include="domain\TimeslotVenue.cs" />
     <Compile Include="domain\Constraint2.cs" />
     <Compile Include="domain\Course.cs" />

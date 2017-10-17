@@ -30,6 +30,11 @@ namespace ExamTimetabling2016
             return examinationDA.getExaminationList();
         }
 
+        public List<Examination> searchExaminationByTimeslotAndVenue(string timeslotID, string venueID)
+        {
+            return examinationDA.searchExaminationByTimeslotAndVenue(timeslotID,venueID);
+        }
+
         public void shutDown()
         {
             examinationDA.shutDown();
