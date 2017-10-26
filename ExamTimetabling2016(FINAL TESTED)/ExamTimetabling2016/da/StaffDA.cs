@@ -116,11 +116,10 @@ namespace ExamTimetabling2016
                 {
                     while (dtr.Read())
                     {
-                        bool isTakingSTSPhD = false;
+                        bool? isTakingSTSPhD = null;
                         bool isMuslim= false;
-                        bool isChiefInvi = false;
-                        bool isInviAbove2years = false;
-                        
+                        bool? isChiefInvi = null;
+                        bool? isInviAbove2years = null;
                         //convert isMuslim
                         if (Convert.ToChar(dtr["isMuslim"]).Equals('Y'))
                             isMuslim = true;
@@ -138,7 +137,10 @@ namespace ExamTimetabling2016
                             Convert.ToChar(dtr["typeOfEmploy"]),Convert.ToInt16(dtr["NoOfSatSession"]),
                             Convert.ToInt16(dtr["noAsReliefInvi"]),Convert.ToInt16(dtr["NoOfExtraSession"]),
                             isChiefInvi,isInviAbove2years,Convert.ToChar(dtr["Gender"]));
-                        
+
+                        staff.IsChief = Convert.ToChar(dtr["isChiefInvi"]);
+
+
                         staffList.Add(staff);
                     }
                     dtr.Close();

@@ -18,6 +18,11 @@ namespace ExamTimetabling2016
         {
             return facultyDA.getFacultyByCourseCode(courseCode);
         }
+        
+        public Faculty searchFacultyByFacultyCode(char facultyCode)
+        {
+            return facultyDA.getFacultyByFacultyCode(facultyCode);
+        }
 
         public List<Faculty> getFacultyList()
         {

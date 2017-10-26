@@ -5,13 +5,13 @@ using System.Web;
 
 namespace ExamTimetabling2016
 {
-    public class StaffHeuristic
+    public class InvigilatorHeuristic
     {
         Staff staff;
         int heuristic;
         bool possibleCanditate;
 
-        public StaffHeuristic(Staff staff)
+        public InvigilatorHeuristic(Staff staff)
         {
             this.staff = staff; 
             this.heuristic = 0;

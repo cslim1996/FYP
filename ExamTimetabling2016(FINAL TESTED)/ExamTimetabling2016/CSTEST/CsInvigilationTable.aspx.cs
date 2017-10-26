@@ -549,33 +549,114 @@ namespace ExamTimetabling2016.CSTEST
         //process constraint
         public void processConstraint(List<Staff> invigilatorList, List<InvigilationDuty> invigilationDutyList, List<Constraint2> constraintList)
         {
-            //for every invigilation duty available check the constraint stored in database
-            foreach (InvigilationDuty inviDuty in invigilationDutyList)
+         
+            //initialize domain for heuristic calculation
+            List<InvigilatorHeuristic> inviHeuristicList = new List<InvigilatorHeuristic>();
+            
+            //input
+            foreach(Staff invigilator in invigilatorList)
             {
-
-                foreach (Constraint2 constraint in constraintList)
-                {/*
-                    List<String> stringVariable = new List<string>();
-                    stringVariable.Add("Faculty");
-                    string statementForStaff = "staff.Faculty == ";
-                    string statementForExam = "faculty == FAFB";
-                    string[] wordsOfConstraintForStaff = statementForStaff.Split(' ');
-                    string[] wordsOfConstraintForExam = statementForStaff.Split(' ');
-                    */
-
-                    //if exam in invigilation duty matches with the on in
-                }
-
+                inviHeuristicList.Add(new InvigilatorHeuristic(invigilator));
             }
+            
+            //for every invigilation duty available check the constraint stored in database (normal invigilator)
+            // if exam is correct                                
+            foreach(InvigilationDuty inviDuty in invigilationDutyList)
+            {
+                // process contraints here and get highest heuristic staff and update the staff
+                
+            }                                      
+            
         }
             
-
-
         
-
-        public void getNoOfConstraintFromStatement()
+        public void getCanditate(List<InvigilatorHeuristic> invigilators, InvigilationDuty invigilationDuty, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief)
         {
+            MaintainFacultyControl mFacultyControl = new MaintainFacultyControl();
+            
+            foreach (InvigilatorHeuristic invigilator in invigilators)
+            {
+                foreach (Constraint3 constraint in constraintList)
+                {
+                    int maxHeuristic = 0;
+                    //if exempted invigilator will not be assigned as invigilator
+                    if (invigilator.Staff.ExemptionList != null)
+                    {
+                        foreach (Exemption exemption in invigilator.Staff.ExemptionList)
+                            if (constraint.InvigilationDuty.Date.Equals(exemption))
+                            {
+                                invigilator.PossibleCanditate = false;
+                            }
+                    }
 
+                    //staff variable 
+                    if (invigilator.Staff.FacultyCode.Equals(constraint.Invigilator.FacultyCode) && !invigilator.Staff.FacultyCode.Equals('\0') && !constraint.Invigilator.FacultyCode.Equals('\0')) ;
+                    {
+                        invigilator.Heuristic++;
+                        maxHeuristic++;
+                    }
+                    
+                    if(invigilator.Staff.IsInviAbove2Years.Equals(constraint.Invigilator.IsInviAbove2Years) && !constraint.Invigilator.IsInviAbove2Years.Equals(null))
+                    {
+                        invigilator.Heuristic++;
+                        maxHeuristic++;
+                    }
+
+                    if (invigilator.Staff.IsChief.Equals(constraint.Invigilator.IsChief) && constraint.Invigilator.IsChief.Equals('\0'))
+                    {
+                        invigilator.Heuristic++;
+                        maxHeuristic++;
+                    }
+
+                    if (invigilator.Staff.IsInviAbove2Years.)
+                    {
+                        
+                    }
+                    
+                    //invigilation duty
+                    if (invigilationDuty.CategoryOfInvigilator.Equals(constraint.InvigilationDuty.CategoryOfInvigilator))
+                    {
+                        invigilator.Heuristic++;
+                        maxHeuristic++;
+                    }
+
+                    //exam
+                    foreach (Examination exam in invigilationDuty.ExamList)
+                    {
+                        if (mFacultyControl.searchFacultyByCourseCode(exam.CourseCode).FacultyCode.Equals(constraint.Examination.FacultyCode) && constraint.Examination.FacultyCode != null)
+                        {
+                            invigilator.Heuristic++;
+                            maxHeuristic++;
+                        }
+
+                        if (exam.ExamType.Equals(constraint.Examination.ExamType)&& constraint.Examination.ExamType != '\0')
+                        {
+                            invigilator.Heuristic++;
+                            maxHeuristic++;
+                        }
+
+                        if (exam.PaperType.Equals(constraint.Examination.PaperType) && constraint.Examination.PaperType != '\0')
+                        {
+                            invigilator.Heuristic++;
+                            maxHeuristic++;
+                        }
+                        
+                        //questionable assignation of examiner
+                        if (invigilator.Staff.PaperCodeExamined.Equals(exam.CourseCode)){
+                            invigilator.Heuristic++;
+                            maxHeuristic++;
+                        }
+                        
+                        if(invigilator.Staff.PaperCodeExamined.Equals(exam.CourseCode) && exam.PaperType.Equals(constraint.Examination) && exam.PaperType !='\0'){
+                            invigilator.Heuristic++;
+                            maxHeuristic++;
+                        }
+                        
+                    }
+
+                    
+                }
+            }
         }
         
 

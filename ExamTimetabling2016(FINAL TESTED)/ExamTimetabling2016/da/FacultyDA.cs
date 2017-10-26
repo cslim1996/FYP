@@ -101,6 +101,39 @@ namespace ExamTimetabling2016
             return faculty;
         }
 
+        public Faculty getFacultyByFacultyCode(char facultyCode)
+        {
+            Faculty faculty = new Faculty();
+
+            try
+            {
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "Select * from dbo.PaperExamined a inner join dbo.Faculty b on a.FacultyCode = b.FacultyCode  where a.FacultyCode = @FacultyCode";
+                cmdSearch = new SqlCommand(strSearch, conn);
+
+                cmdSearch.Parameters.AddWithValue("@FacultyCode", facultyCode);
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        faculty = new Faculty(Convert.ToChar(dtr["FacultyCode"]), dtr["Faculty"].ToString(), dtr["FacultyName"].ToString());
+                    }
+                    dtr.Close();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return faculty;
+        }
+
         public void shutDown()
         {
             if (conn != null)

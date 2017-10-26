@@ -7,7 +7,6 @@ namespace ExamTimetabling2016
 {
     public class Staff : Person
     {
-
         private string name;
         private char facultyCode;
         private char isChief;
@@ -17,21 +16,21 @@ namespace ExamTimetabling2016
         private string position;
         private string faculty;
         private string department;
-        private bool isTakingSTSPhD;
+        private bool? isTakingSTSPhD;
         private char typeOfEmploy;
         private int noOfSatSession;
         private int noAsQuarantineInvi;
         private int noAsReliefInvi;
         private int noOfExtraSession;
-        private bool isChiefInvi;
-        private bool isInviAbove2Years;
+        private bool? isChiefInvi;
+        private bool? isInviAbove2Years;
         private List<string> paperCodeExamined;
         private List<Exemption> exemptionList;
         private List<InvigilationDuty> invigilationDuty;
 
         public Staff(string name, char gender, bool isMuslim, string staffID, string title, string position,
-            string faculty, string department, bool isTakingSTSPhD, char typeOfEmploy, int noOfSatSession,
-            int noAsQuarantineInvi, int noAsReliefInvi, int noOfExtraSession, bool isChiefInvi, bool isInviAbove2Years,
+            string faculty, string department, bool? isTakingSTSPhD, char typeOfEmploy, int noOfSatSession,
+            int noAsQuarantineInvi, int noAsReliefInvi, int noOfExtraSession, bool? isChiefInvi, bool? isInviAbove2Years,
             List<string> paperCodeExamined, List<Exemption> exemptionList, List<InvigilationDuty> invigilationDuty)
             : base(name, gender, isMuslim)
         {
@@ -54,21 +53,20 @@ namespace ExamTimetabling2016
         }
 
 
-        public Staff(string staffID,bool isMuslim,bool isTakingSTSPhD,char typeOfEmploy, int noOfSatSession,
-            int noAsReliefInvi, int noOfExtraSession, bool isChiefInvi, bool isInviAbove2years, char gender)
-            : base("",'\0',false)
+        public Staff(string staffID,bool isMuslim,bool? isTakingSTSPhD,char typeOfEmploy, int noOfSatSession,
+            int noAsReliefInvi, int noOfExtraSession, bool? isChiefInvi, bool? isInviAbove2Years, char gender)
+            : base("",gender, isMuslim)
         {
             MaintainExemptionControl mExemptioncontrol = new MaintainExemptionControl();
             MaintainPaperExaminedControl mPaperExaminedControl = new MaintainPaperExaminedControl();
             this.staffID = staffID;
-            this.IsMuslim = isMuslim;
             this.isTakingSTSPhD = isTakingSTSPhD;
             this.typeOfEmploy = typeOfEmploy;
             this.noOfExtraSession = noOfExtraSession;
             this.noAsReliefInvi = noAsReliefInvi;
             this.noOfExtraSession = noOfExtraSession;
-            this.isChiefInvi = isInviAbove2Years;
-            this.Gender = gender;
+            this.isInviAbove2Years = isInviAbove2Years;
+            this.isChiefInvi = isChiefInvi;
             this.exemptionList = mExemptioncontrol.searchExemptionList(staffID);
             this.paperCodeExamined = mPaperExaminedControl.searchPaperExaminedByStaffID(staffID);
             this.invigilationDuty = new List<InvigilationDuty>();
@@ -97,7 +95,7 @@ namespace ExamTimetabling2016
         public Staff()
             : base("", 'M', false)
         {
-            new Staff("", 'M', false, "", "", "", "", "", false, 'F', 0, 0, 0, 0, false, false,
+            new Staff("", 'M', false, "", "", "", "", "", null, 'F', 0, 0, 0, 0, null, null,
                 new List<string>(), new List<Exemption>(), new List<InvigilationDuty>());
         }
 
@@ -177,7 +175,7 @@ namespace ExamTimetabling2016
             }
         }
 
-        public bool IsTakingSTSPhD
+        public bool? IsTakingSTSPhD
         {
             get
             {
@@ -255,7 +253,7 @@ namespace ExamTimetabling2016
             }
         }
 
-        public bool IsChiefInvi
+        public bool? IsChiefInvi
         {
             get
             {
@@ -268,7 +266,7 @@ namespace ExamTimetabling2016
             }
         }
 
-        public bool IsInviAbove2Years
+        public bool? IsInviAbove2Years
         {
             get
             {
