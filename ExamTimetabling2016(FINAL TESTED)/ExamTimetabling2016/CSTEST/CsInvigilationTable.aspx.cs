@@ -621,7 +621,7 @@ namespace ExamTimetabling2016.CSTEST
                     }
                     
                     //invigilation duty
-                    if (invigilationDuty.CategoryOfInvigilator.Equals(constraint.InvigilationDuty.CategoryOfInvigilator))
+                    if (invigilationDuty.CategoryOfInvigilator.Equals(constraint.InvigilationDuty.CategoryOfInvigilator) && constraint.InvigilationDuty.CategoryOfInvigilator!= null)
                     {
                         invigilator.Heuristic++;
                         maxHeuristic++;
