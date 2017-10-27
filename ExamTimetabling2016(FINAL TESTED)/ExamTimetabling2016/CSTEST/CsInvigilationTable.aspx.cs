@@ -439,7 +439,7 @@ namespace ExamTimetabling2016.CSTEST
             }
             return freeInvigilatorsIndexList;
         }
-
+        /*
         //check whether invigilator is available
         public static bool isAvailable(Staff invigilator, Timetable examTimetableInSameDayAndSession, double totalLoadOfDutyForEach, string checkType, Venue venue)
         {
@@ -545,7 +545,7 @@ namespace ExamTimetabling2016.CSTEST
             }
             return true;
         }
-
+        */
         //process constraint
         public void processConstraint(List<Staff> invigilatorList, List<InvigilationDuty> invigilationDutyList, List<Constraint2> constraintList)
         {
@@ -595,6 +595,12 @@ namespace ExamTimetabling2016.CSTEST
                         invigilator.Heuristic++;
                         maxHeuristic++;
                     }
+
+                    if (invigilator.Staff.IsMuslim.Equals(constraint.Invigilator.IsMuslim)&& constraint.Invigilator.IsMuslim!= null)
+                    {
+                        invigilator.Heuristic++;
+                        maxHeuristic++;
+                    }
                     
                     if(invigilator.Staff.IsInviAbove2Years.Equals(constraint.Invigilator.IsInviAbove2Years) && !constraint.Invigilator.IsInviAbove2Years.Equals(null))
                     {
@@ -608,13 +614,26 @@ namespace ExamTimetabling2016.CSTEST
                         maxHeuristic++;
                     }
 
-                    if (invigilator.Staff.IsInviAbove2Years.)
+                    if (invigilator.Staff.IsInviAbove2Years.Equals(constraint.Invigilator.IsInviAbove2Years) && constraint.Invigilator.IsInviAbove2Years != null)
                     {
-                        
+                        invigilator.Heuristic++;
+                        maxHeuristic++;
                     }
                     
                     //invigilation duty
                     if (invigilationDuty.CategoryOfInvigilator.Equals(constraint.InvigilationDuty.CategoryOfInvigilator))
+                    {
+                        invigilator.Heuristic++;
+                        maxHeuristic++;
+                    }
+
+                    if(invigilationDuty.Duration.Equals(constraint.InvigilationDuty.Duration)&& constraint.InvigilationDuty.Duration!= null)
+                    {
+                        invigilator.Heuristic++;
+                        maxHeuristic++;
+                    }
+
+                    if(invigilationDuty.Location.Equals(constraint.InvigilationDuty.Location)&& constraint.InvigilationDuty.Location != null)
                     {
                         invigilator.Heuristic++;
                         maxHeuristic++;
