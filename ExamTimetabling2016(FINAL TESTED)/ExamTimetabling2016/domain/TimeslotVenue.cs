@@ -155,6 +155,48 @@ namespace ExamTimetabling2016
             }
         }
 
+        public bool InvigilatorListHasMale()
+        {
+            bool result = false;
+
+            foreach (Staff staff in this.invigilatorList)
+            {
+                if (staff.Gender.Equals('M'))
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        public bool InvigilatorListHasFemale()
+        {
+            bool result = false;
+
+            foreach (Staff staff in this.invigilatorList)
+            {
+                if (staff.Gender.Equals('F'))
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        public int NoOfExperienceInvigilator()
+        {
+            int result = 0;
+
+            foreach (Staff staff in this.invigilatorList)
+            {
+                if (staff.IsInviAbove2Years.Equals(true))
+                    result++;
+            }
+            return result;
+        }
+        
         public int Duration
         {
             get

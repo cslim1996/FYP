@@ -16,7 +16,7 @@ namespace ExamTimetabling2016
         private int year;  
         private int sitFrom;
         private int sitTo;
-        private Faculty facultyCode;
+        private Faculty faculty;
 
         public Examination(string timeslotID, string venueID, string courseCode, string programmeCode, char paperType, char examType, int year, int sitFrom, int sitTo)
         {
@@ -30,7 +30,8 @@ namespace ExamTimetabling2016
             this.year = year;
             this.sitFrom = sitFrom;
             this.sitTo = sitTo;
-            this.facultyCode = mFacultyControl.searchFacultyByCourseCode(CourseCode);
+            this.faculty = mFacultyControl.searchFacultyByCourseCode(CourseCode);
+            mFacultyControl.shutDown();
                     }
         
         public Examination()
@@ -44,7 +45,7 @@ namespace ExamTimetabling2016
             this.year = 0;
             this.sitFrom = 0;
             this.sitTo = 0;
-            this.facultyCode = null;
+            this.faculty = new Faculty();
         }
 
         public string TimeslotID
@@ -103,16 +104,16 @@ namespace ExamTimetabling2016
 
 
 
-        public Faculty FacultyCode
+        public Faculty Faculty
         {
             get
             {
-                return facultyCode;
+                return faculty;
             }
 
             set
             {
-                facultyCode = value;
+                faculty = value;
             }
         }
     }

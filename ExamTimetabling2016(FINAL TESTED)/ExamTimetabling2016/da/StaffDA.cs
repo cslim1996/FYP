@@ -117,22 +117,30 @@ namespace ExamTimetabling2016
                     while (dtr.Read())
                     {
                         bool? isTakingSTSPhD = null;
-                        bool isMuslim= false;
+                        bool? isMuslim= null;
                         bool? isChiefInvi = null;
                         bool? isInviAbove2years = null;
                         //convert isMuslim
                         if (Convert.ToChar(dtr["isMuslim"]).Equals('Y'))
                             isMuslim = true;
+                        else if (Convert.ToChar(dtr["isMuslim"]).Equals('N'))
+                            isMuslim = false;
 
                         if (Convert.ToChar(dtr["isTakingSTSPhD"]).Equals('Y'))
                             isTakingSTSPhD = true;
+                        else if (Convert.ToChar(dtr["isTakingSTSPhD"]).Equals('N'))
+                            isTakingSTSPhD = false;
 
                         if (Convert.ToChar(dtr["isChiefInvi"]).Equals('Y'))
                             isChiefInvi = true;
+                        else if (Convert.ToChar(dtr["isChiefInvi"]).Equals('N'))
+                            isChiefInvi = false;
 
-                        if (Convert.ToChar(dtr["isAbove2years"]).Equals('Y'))
+                        if (Convert.ToChar(dtr["isInviAbove2Years"]).Equals('Y'))
                             isInviAbove2years = true;
-                        
+                        else if (Convert.ToChar(dtr["isInviAbove2Years"]).Equals('N'))
+                            isInviAbove2years = false;
+
                         Staff staff = new Staff(dtr["StaffID"].ToString(),isMuslim,isTakingSTSPhD,
                             Convert.ToChar(dtr["typeOfEmploy"]),Convert.ToInt16(dtr["NoOfSatSession"]),
                             Convert.ToInt16(dtr["noAsReliefInvi"]),Convert.ToInt16(dtr["NoOfExtraSession"]),

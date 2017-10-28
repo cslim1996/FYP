@@ -10,9 +10,9 @@ namespace ExamTimetabling2016
     {
         private string name;
         private char gender;
-        private bool isMuslim;
+        private bool? isMuslim;
 
-        public Person(string name, char gender, bool isMuslim)
+        public Person(string name, char gender, bool? isMuslim)
         {
             this.name = name;
             this.gender = gender;
@@ -45,7 +45,7 @@ namespace ExamTimetabling2016
             }
         }
 
-        public bool IsMuslim
+        public bool? IsMuslim
         {
             get
             {

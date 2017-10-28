@@ -28,7 +28,7 @@ namespace ExamTimetabling2016
         private List<Exemption> exemptionList;
         private List<InvigilationDuty> invigilationDuty;
 
-        public Staff(string name, char gender, bool isMuslim, string staffID, string title, string position,
+        public Staff(string name, char gender, bool? isMuslim, string staffID, string title, string position,
             string faculty, string department, bool? isTakingSTSPhD, char typeOfEmploy, int noOfSatSession,
             int noAsQuarantineInvi, int noAsReliefInvi, int noOfExtraSession, bool? isChiefInvi, bool? isInviAbove2Years,
             List<string> paperCodeExamined, List<Exemption> exemptionList, List<InvigilationDuty> invigilationDuty)
@@ -53,7 +53,7 @@ namespace ExamTimetabling2016
         }
 
 
-        public Staff(string staffID,bool isMuslim,bool? isTakingSTSPhD,char typeOfEmploy, int noOfSatSession,
+        public Staff(string staffID,bool? isMuslim,bool? isTakingSTSPhD,char typeOfEmploy, int noOfSatSession,
             int noAsReliefInvi, int noOfExtraSession, bool? isChiefInvi, bool? isInviAbove2Years, char gender)
             : base("",gender, isMuslim)
         {
@@ -70,10 +70,12 @@ namespace ExamTimetabling2016
             this.exemptionList = mExemptioncontrol.searchExemptionList(staffID);
             this.paperCodeExamined = mPaperExaminedControl.searchPaperExaminedByStaffID(staffID);
             this.invigilationDuty = new List<InvigilationDuty>();
+            mExemptioncontrol.shutDown();
+            mPaperExaminedControl.shutDown();
         }
 
         public Staff(string staffID, string title, string name, char facultyCode, char isChief, char isInvi)
-            : base("", '\0', false)
+            : base("", '\0', null)
         {
             this.staffID = staffID;
             this.title = title;
@@ -84,7 +86,7 @@ namespace ExamTimetabling2016
         }
 
         public Staff(string title, string name)
-            : base("", '\0', false)
+            : base("", '\0', null)
         {
             this.title = title;
             this.name = name;

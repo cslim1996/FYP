@@ -348,6 +348,7 @@ namespace ExamTimetabling2016
 
             return n;
         }
+        
 
         public void shutDown()
         {

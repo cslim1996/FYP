@@ -20,6 +20,10 @@ namespace ExamTimetabling2016.CSTEST
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            string x = "";
+            if(x == "")
+            Label1.Text = "wtf";
+
         }
 
         //handle overlapping

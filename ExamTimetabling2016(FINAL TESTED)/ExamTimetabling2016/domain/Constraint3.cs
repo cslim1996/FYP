@@ -10,19 +10,23 @@ namespace ExamTimetabling2016
         InvigilationDuty invigilationDuty;
         Staff invigilator;
         Examination examination;
+        bool? isHardConstraint;
 
         public Constraint3()
         {
             this.invigilationDuty = new InvigilationDuty();
             this.invigilator = new Staff();
-            this.examination = new Examination(); 
+            this.examination = new Examination();
+            this.isHardConstraint = false;
+            
         }
 
-        public Constraint3(InvigilationDuty invigilationDuty, Staff invigilator, Examination examination)
+        public Constraint3(InvigilationDuty invigilationDuty, Staff invigilator, Examination examination, bool? isHardConstraint)
         {
             this.invigilationDuty = invigilationDuty;
             this.invigilator = invigilator;
             this.examination = examination;
+            this.isHardConstraint = isHardConstraint;
         }
         
 
@@ -62,6 +66,19 @@ namespace ExamTimetabling2016
             set
             {
                 examination = value;
+            }
+        }
+
+        public bool? IsHardConstraint
+        {
+            get
+            {
+                return isHardConstraint;
+            }
+
+            set
+            {
+                isHardConstraint = value;
             }
         }
     }

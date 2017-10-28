@@ -19,7 +19,7 @@ namespace ExamTimetabling2016
 
         public InvigilationDuty()
         {
-            new InvigilationDuty(new DateTime(), "", "", "", "", 0);
+            new InvigilationDuty(new DateTime(), "", "", "", "", 0 );
         }
 
         public InvigilationDuty(DateTime date, string session, string venueID, string location, string categoryOfInvigilator, int duration)
@@ -150,6 +150,7 @@ namespace ExamTimetabling2016
             }
         }
 
+        
         public List<Examination> ExamList
         {
             get
@@ -162,5 +163,6 @@ namespace ExamTimetabling2016
                 examList = value;
             }
         }
+        
     }
 }

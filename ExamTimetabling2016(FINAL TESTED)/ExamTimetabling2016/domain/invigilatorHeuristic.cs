@@ -9,13 +9,13 @@ namespace ExamTimetabling2016
     {
         Staff staff;
         int heuristic;
-        bool possibleCanditate;
+        bool? possibleCanditate;
 
         public InvigilatorHeuristic(Staff staff)
         {
             this.staff = staff; 
             this.heuristic = 0;
-            this.possibleCanditate = true;
+            this.possibleCanditate = null;
         }
 
         public Staff Staff
@@ -44,7 +44,7 @@ namespace ExamTimetabling2016
             }
         }
 
-        public bool PossibleCanditate
+        public bool? PossibleCanditate
         {
             get
             {
@@ -55,6 +55,11 @@ namespace ExamTimetabling2016
             {
                 possibleCanditate = value;
             }
+        }
+
+        public string toString()
+        {
+            return this.staff.StaffID +", " + this.heuristic + ", " + this.possibleCanditate + "\n";
         }
     }
 }
