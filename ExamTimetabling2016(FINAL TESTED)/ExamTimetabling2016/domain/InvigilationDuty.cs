@@ -149,7 +149,7 @@ namespace ExamTimetabling2016
                 duration = value;
             }
         }
-
+        
         
         public List<Examination> ExamList
         {

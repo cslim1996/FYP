@@ -27,6 +27,8 @@ namespace ExamTimetabling2016
         private List<string> paperCodeExamined;
         private List<Exemption> exemptionList;
         private List<InvigilationDuty> invigilationDuty;
+        
+        
 
         public Staff(string name, char gender, bool? isMuslim, string staffID, string title, string position,
             string faculty, string department, bool? isTakingSTSPhD, char typeOfEmploy, int noOfSatSession,
@@ -320,7 +322,38 @@ namespace ExamTimetabling2016
             }
         }
 
-        
+        public bool? hasOtherDutyOnSameDay(DateTime date, string session)
+        {
+            bool? result = null;
+
+            foreach(InvigilationDuty inviDuty in this.invigilationDuty)
+            {
+                if (inviDuty.Date.Equals(date) && !inviDuty.Session.Equals(session))
+                {
+                    result = true;
+                }
+                else
+                    result = false;
+            }
+            return result;
+        }
+
+        public bool? hasMorningDutySameDay(DateTime date)
+        {
+            bool? result = null;
+
+            foreach (InvigilationDuty inviDuty in this.invigilationDuty)
+            {
+                if (inviDuty.Date.Equals(date) && inviDuty.Session.Equals("AM"))
+                {
+                    result = true;
+                }
+                else
+                    result = false;
+
+            }
+            return result;
+        }
 
         
         

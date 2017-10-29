@@ -29,6 +29,11 @@ namespace ExamTimetabling2016
             return courseDA.searchCourseCodesExaminedList(date, session, isMainPaperOnly);
         }
 
+        public Course searchCourseByCourseCode(string courseCode)
+        {
+            return courseDA.searchCourseByCourseCode(courseCode);
+        }
+
         public List<string> searchFacultyCodesList(List<Course> CoursesList)
         {
             return courseDA.searchFacultyCodesList(CoursesList);

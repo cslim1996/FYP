@@ -62,7 +62,7 @@ namespace ExamTimetabling2016.CSTEST
 
             maintainStaffControl.shutDown();
             
-            
+            /*
             List<Constraint3> constraintList = new List<Constraint3>();
             Staff staff = new Staff();
             Examination exam = new Examination();
@@ -600,9 +600,11 @@ namespace ExamTimetabling2016.CSTEST
             
             foreach (InvigilatorHeuristic invigilator in invigilators)
             {
+                
                 foreach (Constraint3 constraint in constraintList)
                 {
                     int maxHeuristic = 0;
+                    int score = 0;
                     //if exempted invigilator will not be assigned as invigilator
                     if (invigilator.Staff.ExemptionList != null)
                     {
@@ -613,178 +615,186 @@ namespace ExamTimetabling2016.CSTEST
                             }
                     }
 
-                    //staff variable 
-                    if (invigilator.Staff.FacultyCode.Equals(constraint.Invigilator.FacultyCode) && !constraint.Invigilator.FacultyCode.Equals('\0'))
+                    //staff variable
+                    if (!constraint.Invigilator.hasOtherDutyOnSameDay(invigilationDuty.Date,invigilationDuty.Session).Equals(null))
                     {
-                        invigilator.Heuristic++;
                         maxHeuristic++;
-                    }
-                    else
-                    {
-                        if (constraint.IsHardConstraint == true && !constraint.Invigilator.FacultyCode.Equals('\0'))
-                            invigilator.PossibleCanditate = false;
-                    }
-                
-                    if (invigilator.Staff.IsMuslim.Equals(constraint.Invigilator.IsMuslim)&& constraint.Invigilator.IsMuslim!= null)
-                    {
-                        invigilator.Heuristic++;
-                        maxHeuristic++;
-                    }
-                    else
-                    {
-                        if (constraint.IsHardConstraint == true && constraint.Invigilator.IsMuslim != null)
-                            invigilator.PossibleCanditate = false;
+                        if (invigilator.Staff.hasOtherDutyOnSameDay(invigilationDuty.Date, invigilationDuty.Session).Equals(constraint.HasMorningDutyOnSameDay)){
+                            score++;
+                        }
+                        else
+                        {
+                            if (constraint.IsHardConstraint == true)
+                                invigilator.PossibleCanditate = false;
+                        }
+
                     }
 
-                    if (invigilator.Staff.IsInviAbove2Years.Equals(constraint.Invigilator.IsInviAbove2Years) && !constraint.Invigilator.IsInviAbove2Years.Equals(null))
+                    if (!constraint.Invigilator.FacultyCode.Equals('\0'))
                     {
-                        invigilator.Heuristic++;
                         maxHeuristic++;
-                    }
-                    else
-                    {
-                        if (constraint.IsHardConstraint == true && !constraint.Invigilator.IsInviAbove2Years.Equals(null))
-                            invigilator.PossibleCanditate = false;
+                        if (invigilator.Staff.FacultyCode.Equals(constraint.Invigilator.FacultyCode))
+                        {
+                            score++;
+                        }
+                        else
+                        {
+                            if (constraint.IsHardConstraint == true && !constraint.Invigilator.FacultyCode.Equals('\0'))
+                                invigilator.PossibleCanditate = false;
+                        }
                     }
 
-                    if (invigilator.Staff.IsChief.Equals(constraint.Invigilator.IsChief) && !constraint.Invigilator.IsChiefInvi.Equals(null))
+                    if (constraint.Invigilator.IsMuslim != null)
                     {
-                        invigilator.Heuristic++;
                         maxHeuristic++;
-                    }
-                    else
-                    {
-                        if (constraint.IsHardConstraint == true && !constraint.Invigilator.IsChiefInvi.Equals(null))
-                            invigilator.PossibleCanditate = false;
+                        if (invigilator.Staff.IsMuslim.Equals(constraint.Invigilator.IsMuslim))
+                        {
+                            score++;
+                        }
+                        else
+                        {
+                            if (constraint.IsHardConstraint == true && constraint.Invigilator.IsMuslim != null)
+                                invigilator.PossibleCanditate = false;
+                        }
                     }
 
-                    if (invigilator.Staff.IsInviAbove2Years.Equals(constraint.Invigilator.IsInviAbove2Years) && constraint.Invigilator.IsInviAbove2Years != null)
+                    if (!constraint.Invigilator.IsInviAbove2Years.Equals(null))
                     {
-                        invigilator.Heuristic++;
                         maxHeuristic++;
-                    }
-                    else
-                    {
-                        if (constraint.IsHardConstraint == true && constraint.Invigilator.IsInviAbove2Years != null)
-                            invigilator.PossibleCanditate = false;
+                        if (invigilator.Staff.IsInviAbove2Years.Equals(constraint.Invigilator.IsInviAbove2Years))
+                        {
+                            score++;
+                        }
+                        else
+                        {
+                            if (constraint.IsHardConstraint == true && !constraint.Invigilator.IsInviAbove2Years.Equals(null))
+                                invigilator.PossibleCanditate = false;
+                        }
                     }
 
-                    if (invigilator.Staff.IsTakingSTSPhD.Equals(constraint.Invigilator.IsTakingSTSPhD) && !invigilator.Staff.IsTakingSTSPhD.Equals(null))
+                    if (constraint.Invigilator.IsChiefInvi.Equals(null))
                     {
-                        invigilator.Heuristic++;
                         maxHeuristic++;
-                    }
-                    else
-                    {
-                        if (constraint.IsHardConstraint == true && constraint.Invigilator.IsTakingSTSPhD != null)
-                            invigilator.PossibleCanditate = false;
+                        if (invigilator.Staff.IsChief.Equals(constraint.Invigilator.IsChief))
+                        {
+                            score++;
+                            
+                        }
+                        else
+                        {
+                            if (constraint.IsHardConstraint == true && !constraint.Invigilator.IsChiefInvi.Equals(null))
+                                invigilator.PossibleCanditate = false;
+                        }
                     }
 
-                    if (invigilator.Staff.TypeOfEmploy.Equals(constraint.Invigilator.TypeOfEmploy) && constraint.Invigilator.TypeOfEmploy!= '\0'){
-                        invigilator.Heuristic++;
-                        maxHeuristic++;
-                    }
-                    else
+                    if (constraint.Invigilator.IsInviAbove2Years != null)
                     {
-                        if (constraint.IsHardConstraint == true && constraint.Invigilator.TypeOfEmploy != '\0')
-                            invigilator.PossibleCanditate = false;
+                        maxHeuristic++;
+                        if (invigilator.Staff.IsInviAbove2Years.Equals(constraint.Invigilator.IsInviAbove2Years))
+                        {
+                            score++;
+                        }
+                        else
+                        {
+                            if (constraint.IsHardConstraint == true && constraint.Invigilator.IsInviAbove2Years != null)
+                                invigilator.PossibleCanditate = false;
+                        }
+                    }
+
+                    if (!invigilator.Staff.IsTakingSTSPhD.Equals(null))
+                    {
+                        maxHeuristic++;
+                        if (invigilator.Staff.IsTakingSTSPhD.Equals(constraint.Invigilator.IsTakingSTSPhD))
+                        {
+                            score++;
+                        }
+                        else
+                        {
+                            if (constraint.IsHardConstraint == true && constraint.Invigilator.IsTakingSTSPhD != null)
+                                invigilator.PossibleCanditate = false;
+                        }
+                    }
+
+                    if (constraint.Invigilator.TypeOfEmploy != '\0')
+                    {
+                        maxHeuristic++;
+                        if (invigilator.Staff.TypeOfEmploy.Equals(constraint.Invigilator.TypeOfEmploy))
+                        {
+                            score++;
+                        }
+                        else
+                        {
+                            if (constraint.IsHardConstraint == true && constraint.Invigilator.TypeOfEmploy != '\0')
+                                invigilator.PossibleCanditate = false;
+                        }
                     }
 
                     //invigilation duty
-                    if (invigilationDuty.CategoryOfInvigilator.Equals(constraint.InvigilationDuty.CategoryOfInvigilator) && (constraint.InvigilationDuty.CategoryOfInvigilator!= null || constraint.InvigilationDuty.CategoryOfInvigilator != ""))
+                    if ((constraint.InvigilationDuty.CategoryOfInvigilator != null || constraint.InvigilationDuty.CategoryOfInvigilator != ""))
                     {
-                        invigilator.Heuristic++;
                         maxHeuristic++;
-                    }
-                    else
-                    {
-                        if (constraint.IsHardConstraint == true && (constraint.InvigilationDuty.CategoryOfInvigilator != null || constraint.InvigilationDuty.CategoryOfInvigilator != ""))
-                            invigilator.PossibleCanditate = false;
+                        if (invigilationDuty.CategoryOfInvigilator.Equals(constraint.InvigilationDuty.CategoryOfInvigilator))
+                        {
+                            score++;
+                        }
+                        else
+                        {
+                            if (constraint.IsHardConstraint == true && (constraint.InvigilationDuty.CategoryOfInvigilator != null || constraint.InvigilationDuty.CategoryOfInvigilator != ""))
+                                invigilator.PossibleCanditate = false;
+                        }
                     }
 
-                    if (invigilationDuty.Duration.Equals(constraint.InvigilationDuty.Duration)&& constraint.InvigilationDuty.Duration!= 0)
+                    if (constraint.InvigilationDuty.Duration != 0)
                     {
-                        invigilator.Heuristic++;
                         maxHeuristic++;
-                    }
-                    else
-                    {
-                        if (constraint.IsHardConstraint == true && constraint.InvigilationDuty.Duration != 0)
-                            invigilator.PossibleCanditate = false;
+                        if (invigilationDuty.Duration.Equals(constraint.InvigilationDuty.Duration))
+                        {
+                            score++; 
+                        }
+                        else
+                        {
+                            if (constraint.IsHardConstraint == true && constraint.InvigilationDuty.Duration != 0)
+                                invigilator.PossibleCanditate = false;
+                        }
                     }
 
-                    if (invigilationDuty.Location.Equals(constraint.InvigilationDuty.Location)&& (constraint.InvigilationDuty.Location != null || constraint.InvigilationDuty.CategoryOfInvigilator != ""))
+                    if (constraint.InvigilationDuty.Location != null || constraint.InvigilationDuty.CategoryOfInvigilator != "")
                     {
-                        invigilator.Heuristic++;
                         maxHeuristic++;
-                    }
-                    else
-                    {
-                        if (constraint.IsHardConstraint == true && (constraint.InvigilationDuty.Location != null || constraint.InvigilationDuty.CategoryOfInvigilator != ""))
-                            invigilator.PossibleCanditate = false;
+                        if (invigilationDuty.Location.Equals(constraint.InvigilationDuty.Location))
+                        {
+                            score++;
+                        }
+                        else
+                        {
+                            if (constraint.IsHardConstraint == true && (constraint.InvigilationDuty.Location != null || constraint.InvigilationDuty.CategoryOfInvigilator != ""))
+                                invigilator.PossibleCanditate = false;
+                        }
                     }
 
                     //exam
                     foreach (Examination exam in invigilationDuty.ExamList)
                     {
-                        if (mFacultyControl.searchFacultyByCourseCode(exam.CourseCode).FacultyCode.Equals(constraint.Examination.Faculty.FacultyCode) && (!constraint.Examination.Faculty.FacultyCode.Equals('\0')))
+                        if (!constraint.Examination.Faculty.FacultyCode.Equals('\0'))
                         {
-                            invigilator.Heuristic++;
                             maxHeuristic++;
-                        }
-                        else
-                        {
-                            if (constraint.IsHardConstraint == true && (!constraint.Examination.Faculty.FacultyCode.Equals('\0')))
-                                invigilator.PossibleCanditate = false;
-                        }
-
-                        if (exam.ExamType.Equals(constraint.Examination.ExamType) && constraint.Examination.ExamType != '\0')
-                        {
-                            invigilator.Heuristic++;
-                            maxHeuristic++;
-                        }
-                        else
-                        {
-                            if (constraint.IsHardConstraint == true && constraint.Examination.ExamType != '\0')
-                                invigilator.PossibleCanditate = false;
-                        }
-
-                        if (exam.PaperType.Equals(constraint.Examination.PaperType) && constraint.Examination.PaperType != '\0')
-                        {
-                            invigilator.Heuristic++;
-                            maxHeuristic++;
-                        }
-                        else
-                        {
-                            if (constraint.IsHardConstraint == true && constraint.Examination.ExamType != '\0')
-                                invigilator.PossibleCanditate = false;
-                        }
-
-                        if (exam.Year.Equals(constraint.Examination.Year) && constraint.Examination.Year != 0)
-                        {
-                            invigilator.Heuristic++;
-                            maxHeuristic++;
-                        }
-                        else
-                        {
-                            if (constraint.IsHardConstraint == true && constraint.Examination.Year != 0)
-                                invigilator.PossibleCanditate = false;
-                        }
-
-                        foreach (string paperExamined in invigilator.Staff.PaperCodeExamined)
-                        {
-
-                            //questionable assignation of examiner no constraint involvement
-                            if (paperExamined.Equals(exam.CourseCode) && (paperExamined != "" || paperExamined != null))
+                            if (mFacultyControl.searchFacultyByCourseCode(exam.CourseCode).FacultyCode.Equals(constraint.Examination.Faculty.FacultyCode))
                             {
-                                invigilator.Heuristic++;
-                                maxHeuristic++;
+                                score++;
                             }
-
-                            if (invigilator.Staff.PaperCodeExamined.Equals(exam.CourseCode) && exam.PaperType.Equals(constraint.Examination.PaperType) && exam.PaperType != '\0')
+                            else
                             {
-                                invigilator.Heuristic++;
-                                maxHeuristic++;
+                                if (constraint.IsHardConstraint == true && (!constraint.Examination.Faculty.FacultyCode.Equals('\0')))
+                                    invigilator.PossibleCanditate = false;
+                            }
+                        }
+
+                        if (!constraint.Examination.ExamType.Equals('\0') || constraint.Examination.ExamType != '\0')
+                        {
+                            maxHeuristic++;
+                            if (exam.ExamType.Equals(constraint.Examination.ExamType))
+                            {
+                                score++;
                             }
                             else
                             {
@@ -793,12 +803,90 @@ namespace ExamTimetabling2016.CSTEST
                             }
                         }
 
+                        if (constraint.Examination.PaperType != '\0')
+                        {
+                            maxHeuristic++;
+                            if (exam.PaperType.Equals(constraint.Examination.PaperType))
+                            {
+                                score++;
+                            }
+                            else
+                            {
+                                if (constraint.IsHardConstraint == true && constraint.Examination.ExamType != '\0')
+                                    invigilator.PossibleCanditate = false;
+                            }
+                        }
+
+                        if (constraint.Examination.Year != 0)
+                        {
+                            maxHeuristic++;
+                            if (exam.Year.Equals(constraint.Examination.Year))
+                            {
+                                score++;
+                            }
+                            else
+                            {
+                                if (constraint.IsHardConstraint == true && constraint.Examination.Year != 0)
+                                    invigilator.PossibleCanditate = false;
+                            }
+                        }
+
+                        MaintainCourseControl mCourseControl = new MaintainCourseControl();
+                        Course course = mCourseControl.searchCourseByCourseCode(exam.CourseCode);
+                        mCourseControl.shutDown();
+
+                        if (!constraint.IsCnblPaper.Equals(null))
+                        {
+                            maxHeuristic++;
+                            if (course.IsCnblPaper.Equals(constraint.IsCnblPaper))
+                            {
+                                score++;
+                            }
+                            else
+                            {
+                                if (constraint.IsHardConstraint == true && constraint.IsCnblPaper != null)
+                                    invigilator.PossibleCanditate = false;
+                            }
+                        }
+
+                        if (!constraint.IsDoubleSeating.Equals(null))
+                        {
+                            maxHeuristic++;
+                            if (course.IsDoubleSeating.Equals(constraint.IsDoubleSeating))
+                            {
+                                score++;
+                            }
+                            else
+                            {
+                                if (constraint.IsHardConstraint == true && constraint.IsDoubleSeating != null)
+                                    invigilator.PossibleCanditate = false;
+                            }
+                        }
+
+                        
+                        //got problem (is examiner)
+                        //add assign examiner = true
+                        foreach (string paperExamined in invigilator.Staff.PaperCodeExamined)
+                        {
+                            //questionable assignation of examiner no constraint involvement
+                            if (paperExamined.Equals(exam.CourseCode) && (paperExamined != "" || paperExamined != null))
+                            {
+                                invigilator.Heuristic++;
+                                maxHeuristic++;
+                            }
+
+                        }
+
                     }
 
-                    
+                if(score == maxHeuristic)
+                    {
+                        invigilator.Heuristic++;
+                    }    
                 }
-                Label1.Text += invigilator.Heuristic;
+                
             }
+
             mFacultyControl.shutDown();
         }
          

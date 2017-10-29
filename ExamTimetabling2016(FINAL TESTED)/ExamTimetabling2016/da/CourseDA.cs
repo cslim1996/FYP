@@ -208,8 +208,53 @@ namespace ExamTimetabling2016
             }
             return facultyCodesList;
         }
+        
+        public Course searchCourseByCourseCode(string courseCode)
+        {
+            Course course = new Course();
+            try
+            {
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "Select * from dbo.Course where CourseCode = @CourseCode";
+                cmdSearch = new SqlCommand(strSearch, conn);
 
-       
+                cmdSearch.Parameters.AddWithValue("@CourseCode", courseCode);
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    bool isDoubleSeating = false;
+                    bool isCnblPaper = false;
+
+                    if (Convert.ToChar((dtr["DoubleSeating"])).Equals('Y'))
+                    {
+                        isDoubleSeating = true;
+                    }
+
+                    if (Convert.ToChar((dtr["CnblPaper"])).Equals('Y'))
+                    {
+                        isCnblPaper = true;
+                    }
+                    
+                    while (dtr.Read())
+                    {
+                        course = new Course(courseCode, dtr["CourseTitle"].ToString(), Convert.ToInt16(dtr["duration"]), isDoubleSeating, isCnblPaper, new List<Programme>());
+                    }
+                    dtr.Close();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return course;
+
+        }
+
         public void shutDown()
         {
             if (conn != null)
