@@ -14,9 +14,9 @@ namespace ExamTimetabling2016
 
         public Faculty()
         {
-            this.facultyFullName = "";
+            this.facultyFullName = null;
             this.facultyCode = '\0';
-            this.facultyName = "";
+            this.facultyName = null;
             this.facultyDutyCount = 0;
         }
 

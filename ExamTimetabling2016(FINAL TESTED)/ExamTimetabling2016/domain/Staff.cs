@@ -76,6 +76,28 @@ namespace ExamTimetabling2016
             mPaperExaminedControl.shutDown();
         }
 
+        public Staff(string staffID, bool? isMuslim, bool? isTakingSTSPhD, char typeOfEmploy, int noOfSatSession,
+            int noAsReliefInvi, int noOfExtraSession, bool? isChiefInvi, bool? isInviAbove2Years, char gender, char facultyCode)
+            : base("", gender, isMuslim)
+        {
+            MaintainExemptionControl mExemptioncontrol = new MaintainExemptionControl();
+            MaintainPaperExaminedControl mPaperExaminedControl = new MaintainPaperExaminedControl();
+            this.staffID = staffID;
+            this.isTakingSTSPhD = isTakingSTSPhD;
+            this.typeOfEmploy = typeOfEmploy;
+            this.noOfExtraSession = noOfExtraSession;
+            this.noAsReliefInvi = noAsReliefInvi;
+            this.noOfExtraSession = noOfExtraSession;
+            this.isInviAbove2Years = isInviAbove2Years;
+            this.isChiefInvi = isChiefInvi;
+            this.exemptionList = mExemptioncontrol.searchExemptionList(staffID);
+            this.paperCodeExamined = mPaperExaminedControl.searchPaperExaminedByStaffID(staffID);
+            this.invigilationDuty = new List<InvigilationDuty>();
+            this.facultyCode = facultyCode;
+            mExemptioncontrol.shutDown();
+            mPaperExaminedControl.shutDown();
+        }
+
         public Staff(string staffID, string title, string name, char facultyCode, char isChief, char isInvi)
             : base("", '\0', null)
         {
@@ -97,9 +119,9 @@ namespace ExamTimetabling2016
         }
 
         public Staff()
-            : base("", 'M', false)
+            : base("", 'M', null)
         {
-            new Staff("", 'M', false, "", "", "", "", "", null, 'F', 0, 0, 0, 0, null, null,
+            new Staff("", 'M', null, "", "", "", "", "", null, 'F', 0, 0, 0, 0, null, null,
                 new List<string>(), new List<Exemption>(), new List<InvigilationDuty>());
         }
 
@@ -322,40 +344,75 @@ namespace ExamTimetabling2016
             }
         }
 
-        public bool? hasOtherDutyOnSameDay(DateTime date, string session)
+        public bool? hasOtherDutyOnSameDay(List<InvigilationDuty> inviDuties, DateTime date, string session)
         {
             bool? result = null;
-
-            foreach(InvigilationDuty inviDuty in this.invigilationDuty)
+            if (inviDuties.Equals(null))
             {
-                if (inviDuty.Date.Equals(date) && !inviDuty.Session.Equals(session))
+                result = false;
+            }
+            else
+            {
+                foreach (InvigilationDuty inviDuty in inviDuties)
                 {
-                    result = true;
+                    if (inviDuty.Date.Equals(date) && !inviDuty.Session.Equals(session))
+                    {
+                        result = true;
+                    }
+                    else
+                        result = false;
                 }
-                else
-                    result = false;
             }
             return result;
         }
 
-        public bool? hasMorningDutySameDay(DateTime date)
+        public bool? hasSpecificDurationOfADutyOnSameDay(List<InvigilationDuty> inviDuties,DateTime date, int duration)
         {
             bool? result = null;
 
-            foreach (InvigilationDuty inviDuty in this.invigilationDuty)
+            if (inviDuties.Equals(null))
             {
-                if (inviDuty.Date.Equals(date) && inviDuty.Session.Equals("AM"))
+                result = false;
+            }
+            else
+            {
+                foreach (InvigilationDuty inviDuty in inviDuties)
                 {
-                    result = true;
-                }
-                else
-                    result = false;
 
+                    if (inviDuty.Date.Equals(date) && inviDuty.Duration.Equals(duration))
+                    {
+                        result = true;
+                    }
+                    else
+                        result = false;
+
+                }
             }
             return result;
         }
 
-        
-        
+        public bool? hasSpecificSessionDutyOnSameDay(List<InvigilationDuty> inviDuties, DateTime date, string session)
+        {
+            bool? result = null;
+            if (inviDuties.Equals(null))
+            {
+                result = false;
+            }
+            else
+            {
+                foreach (InvigilationDuty inviDuty in inviDuties)
+                {
+                    if (inviDuty.Date.Equals(date) && inviDuty.Session.Equals(session))
+                    {
+                        result = true;
+                    }
+                    else
+                        result = false;
+
+                }
+            }
+            return result;
+        }
+
     }
 }

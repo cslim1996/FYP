@@ -75,7 +75,7 @@ namespace ExamTimetabling2016
             try
             {
                 /*Step 2: Create Sql Search statement and Sql Search Object*/
-                strSearch = "Select * from dbo.PaperExamined a inner join dbo.Faculty b on a.FacultyCode = b.FacultyCode  where a.CourseCode = @CourseCode";
+                strSearch = "select * from dbo.PaperExamined a inner join dbo.Faculty b on a.FacultyCode = b.FacultyCode where a.CourseCode = @CourseCode ";
                 cmdSearch = new SqlCommand(strSearch, conn);
 
                 cmdSearch.Parameters.AddWithValue("@CourseCode", courseCode);

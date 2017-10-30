@@ -226,21 +226,22 @@ namespace ExamTimetabling2016
                 /*Step 4: Get result set from the query*/
                 if (dtr.HasRows)
                 {
-                    bool isDoubleSeating = false;
-                    bool isCnblPaper = false;
-
-                    if (Convert.ToChar((dtr["DoubleSeating"])).Equals('Y'))
-                    {
-                        isDoubleSeating = true;
-                    }
-
-                    if (Convert.ToChar((dtr["CnblPaper"])).Equals('Y'))
-                    {
-                        isCnblPaper = true;
-                    }
-                    
+                   
                     while (dtr.Read())
                     {
+                        bool isDoubleSeating = false;
+                        bool isCnblPaper = false;
+
+                        if (Convert.ToChar((dtr["DoubleSeating"])).Equals('Y'))
+                        {
+                            isDoubleSeating = true;
+                        }
+
+                        if (Convert.ToChar((dtr["CnblPaper"])).Equals('Y'))
+                        {
+                            isCnblPaper = true;
+                        }
+
                         course = new Course(courseCode, dtr["CourseTitle"].ToString(), Convert.ToInt16(dtr["duration"]), isDoubleSeating, isCnblPaper, new List<Programme>());
                     }
                     dtr.Close();

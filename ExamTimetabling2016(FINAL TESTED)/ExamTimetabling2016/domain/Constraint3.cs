@@ -19,8 +19,13 @@ namespace ExamTimetabling2016
         int maxReliefSession;
         int minExtraSession;
         int maxExtraSession;
+        int constraintImportanceValue;
         bool? hasOtherDutyOnSameDay;
-        bool? hasMorningDutyOnSameDay;
+        bool? hasSpecificSessionDutyOnSameDay;
+        bool? hasSpecificDurationDutyOnSameDay;
+        string hasSpecificSessionDutyOnSameDayString;
+        int hasSpecificDurationDutyOnSameDayInt;
+        string dayOfWeek;
 
         public Constraint3()
         {
@@ -34,11 +39,15 @@ namespace ExamTimetabling2016
             this.maxExtraSession = 0;
             this.minReliefSession = 0;
             this.maxReliefSession = 0;
-            this.MinExtraSession = 0;
-            this.MaxExtraSession = 0;
+            this.minExtraSession = 0;
+            this.maxExtraSession = 0;
             this.hasOtherDutyOnSameDay = null;
-            this.hasMorningDutyOnSameDay = null;
-            
+            this.hasSpecificDurationDutyOnSameDay = null;
+            this.hasSpecificDurationDutyOnSameDayInt = 0;
+            this.hasSpecificSessionDutyOnSameDay = null;
+            this.hasSpecificSessionDutyOnSameDayString = null;
+            this.dayOfWeek = "";
+            this.constraintImportanceValue = 1;
         }
 
         public Constraint3(InvigilationDuty invigilationDuty, Staff invigilator, Examination examination, bool? isHardConstraint , bool? isCnblPaper, bool? isDoubleSeating)
@@ -212,25 +221,90 @@ namespace ExamTimetabling2016
         {
             get
             {
-                return hasDutyOnSameDay;
+                return hasOtherDutyOnSameDay;
             }
 
             set
             {
-                hasDutyOnSameDay = value;
+                hasOtherDutyOnSameDay = value;
             }
         }
 
-        public bool? HasMorningDutyOnSameDay
+        public int ConstraintImportanceValue
         {
             get
             {
-                return hasMorningDutyOnSameDay;
+                return constraintImportanceValue;
             }
 
             set
             {
-                hasMorningDutyOnSameDay = value;
+                constraintImportanceValue = value;
+            }
+        }
+
+        public bool? HasSpecificSessionDutyOnSameDay
+        {
+            get
+            {
+                return hasSpecificSessionDutyOnSameDay;
+            }
+
+            set
+            {
+                hasSpecificSessionDutyOnSameDay = value;
+            }
+        }
+
+        public bool? HasSpecificDurationDutyOnSameDay
+        {
+            get
+            {
+                return hasSpecificDurationDutyOnSameDay;
+            }
+
+            set
+            {
+                hasSpecificDurationDutyOnSameDay = value;
+            }
+        }
+
+        public string HasSpecificSessionDutyOnSameDayString
+        {
+            get
+            {
+                return hasSpecificSessionDutyOnSameDayString;
+            }
+
+            set
+            {
+                hasSpecificSessionDutyOnSameDayString = value;
+            }
+        }
+
+        public int HasSpecificDurationDutyOnSameDayInt
+        {
+            get
+            {
+                return hasSpecificDurationDutyOnSameDayInt;
+            }
+
+            set
+            {
+                hasSpecificDurationDutyOnSameDayInt = value;
+            }
+        }
+
+        public string DayOfWeek
+        {
+            get
+            {
+                return dayOfWeek;
+            }
+
+            set
+            {
+                dayOfWeek = value;
             }
         }
     }

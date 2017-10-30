@@ -144,7 +144,7 @@ namespace ExamTimetabling2016
                         Staff staff = new Staff(dtr["StaffID"].ToString(),isMuslim,isTakingSTSPhD,
                             Convert.ToChar(dtr["typeOfEmploy"]),Convert.ToInt16(dtr["NoOfSatSession"]),
                             Convert.ToInt16(dtr["noAsReliefInvi"]),Convert.ToInt16(dtr["NoOfExtraSession"]),
-                            isChiefInvi,isInviAbove2years,Convert.ToChar(dtr["Gender"]));
+                            isChiefInvi,isInviAbove2years,Convert.ToChar(dtr["Gender"]),Convert.ToChar(dtr["FacultyCode"]));
 
                         staff.IsChief = Convert.ToChar(dtr["isChiefInvi"]);
 
