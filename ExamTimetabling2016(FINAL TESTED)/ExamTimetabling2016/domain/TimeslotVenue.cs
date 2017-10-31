@@ -49,6 +49,19 @@ namespace ExamTimetabling2016
             this.session = session;
             this.location = location;
             this.duration = 0;
+            this.noOfInvigilatorRequired = 0;
+            this.invigilatorList = new List<Staff>();
+            this.courseList = new List<Course>();
+        }
+        
+        public TimeslotVenue()
+        {
+            this.timeslotID = null;
+            this.date = new DateTime();
+            this.venueID = null;
+            this.session = null;
+            this.location = null;
+            this.duration = 0;
         }
 
         public string TimeslotID
@@ -155,11 +168,11 @@ namespace ExamTimetabling2016
             }
         }
 
-        public bool InvigilatorListHasMale()
+        public bool InvigilatorListHasMale(List<Staff> invigilatorList)
         {
             bool result = false;
 
-            foreach (Staff staff in this.invigilatorList)
+            foreach (Staff staff in invigilatorList)
             {
                 if (staff.Gender.Equals('M'))
                 {
@@ -170,11 +183,11 @@ namespace ExamTimetabling2016
             return result;
         }
 
-        public bool InvigilatorListHasFemale()
+        public bool InvigilatorListHasFemale(List<Staff> invigilatorList)
         {
             bool result = false;
 
-            foreach (Staff staff in this.invigilatorList)
+            foreach (Staff staff in invigilatorList)
             {
                 if (staff.Gender.Equals('F'))
                 {
@@ -185,16 +198,31 @@ namespace ExamTimetabling2016
             return result;
         }
 
-        public int NoOfExperienceInvigilator()
+        public int NoOfExperienceInvigilator(List<Staff> invigilatorList)
         {
             int result = 0;
 
-            foreach (Staff staff in this.invigilatorList)
+            foreach (Staff staff in invigilatorList)
             {
                 if (staff.IsInviAbove2Years.Equals(true))
                     result++;
             }
             return result;
+        }
+
+        public int percentageOfExperiencedInvigilator(List<Staff> invigilatorList,int noOfInvigilatorRequired)
+        {
+            double result = 0;
+            double experiencedInvigilatorCount = 0;
+            foreach (Staff invigilator in invigilatorList)
+            {
+                if (invigilator.IsInviAbove2Years.Equals(true))
+                    experiencedInvigilatorCount++;
+            }
+
+            result = (experiencedInvigilatorCount / noOfInvigilatorRequired) * 100;
+
+            return (int)result;
         }
         
         public int Duration

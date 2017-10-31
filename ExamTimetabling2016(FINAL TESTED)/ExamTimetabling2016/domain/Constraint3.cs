@@ -19,6 +19,7 @@ namespace ExamTimetabling2016
         int maxReliefSession;
         int minExtraSession;
         int maxExtraSession;
+        int minExperiencedInvigilator;
         int constraintImportanceValue;
         bool? hasOtherDutyOnSameDay;
         bool? hasSpecificSessionDutyOnSameDay;
@@ -26,6 +27,7 @@ namespace ExamTimetabling2016
         string hasSpecificSessionDutyOnSameDayString;
         int hasSpecificDurationDutyOnSameDayInt;
         string dayOfWeek;
+        bool? assignExaminerToPaper;
 
         public Constraint3()
         {
@@ -48,6 +50,8 @@ namespace ExamTimetabling2016
             this.hasSpecificSessionDutyOnSameDayString = null;
             this.dayOfWeek = "";
             this.constraintImportanceValue = 1;
+            this.assignExaminerToPaper = null;
+            this.minExperiencedInvigilator = 0;
         }
 
         public Constraint3(InvigilationDuty invigilationDuty, Staff invigilator, Examination examination, bool? isHardConstraint , bool? isCnblPaper, bool? isDoubleSeating)
@@ -305,6 +309,32 @@ namespace ExamTimetabling2016
             set
             {
                 dayOfWeek = value;
+            }
+        }
+
+        public bool? AssignExaminerToPaper
+        {
+            get
+            {
+                return assignExaminerToPaper;
+            }
+
+            set
+            {
+                assignExaminerToPaper = value;
+            }
+        }
+
+        public int MinExperiencedInvigilator
+        {
+            get
+            {
+                return minExperiencedInvigilator;
+            }
+
+            set
+            {
+                minExperiencedInvigilator = value;
             }
         }
     }

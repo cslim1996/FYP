@@ -55,7 +55,26 @@ namespace ExamTimetabling2016.CSTEST
             List<TimeslotVenue> timeslotVenueForInvigilator = calculateInvigilatorForEachVenue(examTimetable);
             List<TimeslotVenue> timeslotVenueForRelief = calculateReliefForEachVenue(examTimetable);
             List<TimeslotVenue> timeslotVenueForChief = calculateChiefInvigilatorForEachVenue(examTimetable);
+
+            //combine timeslotvenue list
+            List<TimeslotVenue> CombinedTimeslotVenueList = new List<TimeslotVenue>();
             
+            foreach(TimeslotVenue tsVenue in timeslotVenueForInvigilator)
+            {
+                CombinedTimeslotVenueList.Add(tsVenue);
+            }
+            foreach (TimeslotVenue tsVenue in timeslotVenueForRelief)
+            {
+                CombinedTimeslotVenueList.Add(tsVenue);
+            }
+            foreach (TimeslotVenue tsVenue in timeslotVenueForChief)
+            {
+                //need to review the part for checking of location and venue id esp for chief and relief
+                CombinedTimeslotVenueList.Add(tsVenue); 
+                Label1.Text += tsVenue.Location.ToString();
+            }
+
+
             //List of invigilation Duty
             List<InvigilationDuty> inviDutyList = createInvigilationDutyList(timeslotVenueForInvigilator, timeslotVenueForChief, timeslotVenueForRelief);
             List<Staff> invigilatorList = maintainStaffControl.getInvigilatorList();
@@ -69,7 +88,7 @@ namespace ExamTimetabling2016.CSTEST
             constraint.Invigilator.FacultyCode = 'A';
             constraint.InvigilationDuty.Duration = 2;
             constraintList.Add(constraint);
-            //initialize domain for heuristic calculation
+            //initialize domain for score calculation
 
             List<InvigilatorHeuristic> inviHeuristicList = new List<InvigilatorHeuristic>();
 
@@ -79,7 +98,7 @@ namespace ExamTimetabling2016.CSTEST
                 inviHeuristicList.Add(new InvigilatorHeuristic(invigilator));
             }
             
-            getCanditateList(inviHeuristicList,inviDutyList[1],constraintList,(int)minTotalLoadOfDutyForEachInvigilator, (int)minTotalLoadOfDutyForEachInvigilator);
+            getCanditateList(inviHeuristicList,inviDutyList[1],constraintList,(int)minTotalLoadOfDutyForEachInvigilator, (int)minTotalLoadOfDutyForEachInvigilator,CombinedTimeslotVenueList);
             //Label1.Text = inviDutyList[1].Duration.ToString() + inviDutyList[1].CategoryOfInvigilator;
             foreach (Examination exam in inviDutyList[1].ExamList)
             {
@@ -464,113 +483,7 @@ namespace ExamTimetabling2016.CSTEST
             }
             return freeInvigilatorsIndexList;
         }
-        /*
-        //check whether invigilator is available
-        public static bool isAvailable(Staff invigilator, Timetable examTimetableInSameDayAndSession, double totalLoadOfDutyForEach, string checkType, Venue venue)
-        {
-            MaintainConstraintControl maintainConstraintControl = new MaintainConstraintControl();
-            invigilator.InvigilationDuty = invigilator.InvigilationDuty.OrderBy(duty => duty.Date).ToList();
 
-            //check whether invigilator is Muslim Male staff and the duty is on Friday PM session
-            if (!maintainConstraintControl.constraintValidation(new string[] { "Date", "Period", "IsMuslim", "gender" }, new double[] { maintainConstraintControl.convertDayOfWeek(examTimetableInSameDayAndSession.Date), maintainConstraintControl.convertPeriod(examTimetableInSameDayAndSession.Session),
-                maintainConstraintControl.convertMuslim(invigilator.IsMuslim), maintainConstraintControl.convertGender(invigilator.Gender) }))
-            {
-                return false;
-            }
-            //check whether 2/3 load of duty is achieved if invigilator is doing PHD 
-            else if (invigilator.IsTakingSTSPhD && invigilator.InvigilationDuty.Count >= (totalLoadOfDutyForEach / 3 * 2))
-            {
-                return false;
-            }
-            else if (checkType.Equals("Relief"))
-            {
-                foreach (InvigilationDuty invigilationDuty in invigilator.InvigilationDuty)
-                {
-                    if (invigilationDuty.CategoryOfInvigilator.Equals("Relief"))
-                    {
-                        return false;
-                    }
-                }
-            }
-            //keep 1 free slot for in-charge if the venue only need 1 more invigilator and there is no experienced invigilators assigned in the venue
-            else if ((checkType.Equals("Invigilator") || checkType.Equals("Examiner")) && !invigilator.IsInviAbove2Years && venue.InvigilatorsList.Count == getNumberOfInvigilatorsRequired(venue) - 1)
-            {
-                bool isAssignedWithExperiencedInvi = false;
-                foreach (Staff invi in venue.InvigilatorsList)
-                {
-                    if (invi.IsInviAbove2Years)
-                    {
-                        isAssignedWithExperiencedInvi = true;
-                        break;
-                    }
-                }
-                if (!isAssignedWithExperiencedInvi)
-                {
-                    return false;
-                }
-            }
-
-            //check whether load of duty is full
-            if (Math.Round(totalLoadOfDutyForEach, MidpointRounding.AwayFromZero) == totalLoadOfDutyForEach)
-            {
-                if (invigilator.InvigilationDuty.Count >= totalLoadOfDutyForEach)
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                MaintainStaffControl maintainStaffControl = new MaintainStaffControl();
-                int avgNoOfExtraSession = maintainStaffControl.getAverageNoOfExtraSession(checkType);
-                maintainStaffControl.shutDown();
-                if (invigilator.InvigilationDuty.Count >= totalLoadOfDutyForEach - (invigilator.NoOfExtraSession - avgNoOfExtraSession))
-                {
-                    return false;
-                }
-            }
-
-            //check whether new duty will lead to allocation of duties for more than 3 consecutive days at a stretch
-            if (invigilator.InvigilationDuty.Count >= 2)
-            {
-                TimeSpan currentTimeSpan, previousTimeSpan;
-                List<InvigilationDuty> tempInviDutyList = invigilator.InvigilationDuty;
-                tempInviDutyList.Add(new InvigilationDuty(examTimetableInSameDayAndSession.Date, "", "", "", "", 0));
-                tempInviDutyList = tempInviDutyList.OrderBy(duty => duty.Date).ToList();
-                for (int i = 2; i < tempInviDutyList.Count; i++)
-                {
-                    currentTimeSpan = tempInviDutyList[i].Date.Subtract(tempInviDutyList[i - 1].Date);
-                    previousTimeSpan = tempInviDutyList[i - 1].Date.Subtract(tempInviDutyList[i - 2].Date);
-                    if (currentTimeSpan == TimeSpan.FromDays(1) && previousTimeSpan == TimeSpan.FromDays(1))
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            //check whether invigilator is available for that session
-            foreach (InvigilationDuty invigilationDuty in invigilator.InvigilationDuty)
-            {
-                foreach (Exemption exemption in invigilator.ExemptionList)
-                {
-                    if (exemption.Date.Equals(examTimetableInSameDayAndSession.Date) &&
-                    exemption.Session.Equals(examTimetableInSameDayAndSession.Session))
-                    {
-                        return false;
-                    }
-                }
-                //return false if same date same session and prevent AM EV session
-                if ((invigilationDuty.Date.Equals(examTimetableInSameDayAndSession.Date) &&
-                    invigilationDuty.Session.Equals(examTimetableInSameDayAndSession.Session)) ||
-                    (invigilationDuty.Date.Equals(examTimetableInSameDayAndSession.Date) &&
-                    (invigilationDuty.Session.Equals("PM") && examTimetableInSameDayAndSession.Session.Equals("EV")) ||
-                    (invigilationDuty.Session.Equals("EV") && examTimetableInSameDayAndSession.Session.Equals("PM"))))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        */
         //process constraint
         public void processConstraint(List<Staff> invigilatorList, List<InvigilationDuty> invigilationDutyList, List<Constraint2> constraintList)
         {
@@ -594,10 +507,10 @@ namespace ExamTimetabling2016.CSTEST
             
         }
         
-        public void getCanditateList(List<InvigilatorHeuristic> invigilators, InvigilationDuty invigilationDuty, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief)
+        public void getCanditateList(List<InvigilatorHeuristic> invigilators, InvigilationDuty invigilationDuty, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief, List<TimeslotVenue> fullTimeslotVenueList)
         {
             MaintainFacultyControl mFacultyControl = new MaintainFacultyControl();
-            
+            List<InvigilatorHeuristic> CandidateList = new List<InvigilatorHeuristic>();
             foreach (InvigilatorHeuristic invigilator in invigilators)
             {
                 foreach (Constraint3 constraint in constraintList)
@@ -770,7 +683,6 @@ namespace ExamTimetabling2016.CSTEST
 
                     if (constraint.InvigilationDuty.CategoryOfInvigilator != "" && constraint.InvigilationDuty.CategoryOfInvigilator != null )
                     {
-                        Label1.Text += "wtf";
                         maxHeuristic++;
                         if (invigilationDuty.CategoryOfInvigilator.Equals(constraint.InvigilationDuty.CategoryOfInvigilator))
                         {
@@ -901,21 +813,40 @@ namespace ExamTimetabling2016.CSTEST
                                     invigilator.PossibleCanditate = false;
                             }
                         }
-
                         
-                        //got problem (is examiner)
-                        //add assign examiner = true
-                        /*
                         foreach (string paperExamined in invigilator.Staff.PaperCodeExamined)
                         {
-                            //questionable assignation of examiner no constraint involvement
-                            if (paperExamined.Equals(exam.CourseCode) && (paperExamined != "" || paperExamined != null))
+                            if (constraint.AssignExaminerToPaper != null && !constraint.AssignExaminerToPaper.Equals(null))
                             {
-                                invigilator.Heuristic++;
                                 maxHeuristic++;
+                                //questionable assignation of examiner no constraint involvement
+                                if (paperExamined.Equals(exam.CourseCode))
+                                {
+                                    invigilator.Heuristic++;
+                                }
+                                else if (constraint.IsHardConstraint.Equals(true))
+                                {
+                                    invigilator.PossibleCanditate = false;
+                                }
+
                             }
 
-                        }*/
+                        }
+
+                        //get timeslotvenue by invigilationduty
+                        TimeslotVenue tsVenue = getTimeslotVenue(fullTimeslotVenueList, invigilationDuty.Date, invigilationDuty.Session, invigilationDuty.VenueID, invigilationDuty.Location);
+                        if(constraint.MinExperiencedInvigilator!= 0)
+                        {
+                            if(tsVenue.percentageOfExperiencedInvigilator(tsVenue.InvigilatorList,tsVenue.NoOfInvigilatorRequired)<= constraint.MinExperiencedInvigilator)
+                            {
+                                maxHeuristic++;
+                                if (invigilator.Staff.IsInviAbove2Years.Equals(true))
+                                {
+                                    score++;
+                                }
+
+                            }
+                        }
 
                     }
 
@@ -923,11 +854,28 @@ namespace ExamTimetabling2016.CSTEST
                     {
                         invigilator.Heuristic += constraint.ConstraintImportanceValue;
                     }
-                    //Label1.Text += maxHeuristic.ToString();  
                 }
-                Label1.Text += invigilator.Staff.StaffID + "," + invigilator.Staff.FacultyCode.ToString() + "," + invigilator.Heuristic.ToString() + "\n";
+
+                if(invigilator.PossibleCanditate!= false)
+                {
+                    CandidateList.Add(invigilator);
+                }
+                //Label1.Text += invigilator.Staff.StaffID + "," + invigilator.Staff.FacultyCode.ToString() + "," + invigilator.Heuristic.ToString() + "\n";
             }
             mFacultyControl.shutDown();
+        }
+
+        public TimeslotVenue getTimeslotVenue(List<TimeslotVenue> fullTimeslotVenueList,DateTime date, string session, string venueID, string location)
+        {
+            TimeslotVenue tsVenue = new TimeslotVenue();
+            foreach(TimeslotVenue timeslotVenue in fullTimeslotVenueList)
+            {
+                if (timeslotVenue.Date.Equals(date) && timeslotVenue.Equals(session) && timeslotVenue.Location.Equals(location) && timeslotVenue.VenueID.Equals(venueID))
+                {
+                    tsVenue = timeslotVenue;
+                }
+            }
+            return tsVenue;
         }
          
         public List<Staff> removeExemptedAndNotAvailableInvigilator(List<Staff> fullInviList, InvigilationDuty invigilatonDuty)
