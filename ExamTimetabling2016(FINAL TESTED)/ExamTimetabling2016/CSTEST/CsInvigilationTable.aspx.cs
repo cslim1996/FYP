@@ -16,7 +16,6 @@ namespace ExamTimetabling2016.CSTEST
             MaintainFacultyControl mfc = new MaintainFacultyControl();
             Label1.Text = mfc.getFacultyList()[0].FacultyFullName.ToString();*/
            
-
         }
 
         protected void btnPlan_Click(object sender, EventArgs e)
@@ -41,14 +40,15 @@ namespace ExamTimetabling2016.CSTEST
             MaintainStaffControl maintainStaffControl = new MaintainStaffControl();
             double totalLoadOfDutyForEachInvigilator = calculateTotalLoadOfDutyForEachInvigilator(calculateTotalInvigilatorsRequired(examTimetable), maintainStaffControl.countTotalInvigilatorsAvailable());
             double totalLoadOfDutyForEachChiefInvigilator = calculateTotalLoadOfDutyForEachChiefInvigilator(calculateTotalChiefInvigilatorsRequired(examTimetable), maintainStaffControl.countTotalChiefInvigilatorsAvailable());
-
-
-            //This part will be unchanged (CS)
+            
+            //calculate min duty load for differeten invigilators
             double minTotalLoadOfDutyForEachInvigilator = (int)totalLoadOfDutyForEachInvigilator;
             double minTotalLoadOfDutyForEachChiefInvigilator = (int)totalLoadOfDutyForEachChiefInvigilator;
+            
             MaintainVenueControl venueControl = new MaintainVenueControl();
             MaintainConstraint2Control examConstraintControl = new MaintainConstraint2Control();
-            List<Constraint2> examConstraintList = examConstraintControl.getConstraintList();
+
+            //get list of venue IDs
             List<String> venueID = venueControl.getListOfAllVenue();
 
             //used for assignation
@@ -73,17 +73,39 @@ namespace ExamTimetabling2016.CSTEST
                 CombinedTimeslotVenueList.Add(tsVenue); 
                 Label1.Text += tsVenue.Location.ToString();
             }
-
-
-            //List of invigilation Duty
+            
+            //create list of invigilation Duty
             List<InvigilationDuty> inviDutyList = createInvigilationDutyList(timeslotVenueForInvigilator, timeslotVenueForChief, timeslotVenueForRelief);
+            MaintainFacultyControl mFacultyControl = new MaintainFacultyControl();
+            List<Faculty> fullFacultyList = mFacultyControl.getFacultyList();
+
+            //calculate total duty count for each faculty
+            int TotalInvigilationDutyCount = inviDutyList.Count;
+            
+            foreach(InvigilationDuty inviDuty in inviDutyList)
+            {
+                foreach(Examination exam in inviDuty.ExamList)
+                {
+                    foreach(Faculty faculty in fullFacultyList)
+                    {
+                        if (exam.Faculty.FacultyCode.Equals(faculty.FacultyCode))
+                        {
+                            faculty.FacultyDutyCount++;
+                        }
+                    }
+                }
+            }
+
+
+            //get invigilator list from database where isInvi = Y
             List<Staff> invigilatorList = maintainStaffControl.getInvigilatorList();
 
             maintainStaffControl.shutDown();
             
-            
             List<Constraint3> constraintList = new List<Constraint3>();
             
+
+
             Constraint3 constraint = new Constraint3();
             constraint.Invigilator.FacultyCode = 'A';
             constraint.InvigilationDuty.Duration = 2;
@@ -125,6 +147,7 @@ namespace ExamTimetabling2016.CSTEST
             mCourseControl.shutDown();
         }
 
+        //create List Of invigilation duty list without staff assigned
         public List<InvigilationDuty> createInvigilationDutyList(List<TimeslotVenue> tsVenueForInvigilator, List<TimeslotVenue> tsVenueForChief, List<TimeslotVenue> tsVenueForRelief)
         {
             List<InvigilationDuty> invigilationDutyList = new List<InvigilationDuty>();
@@ -507,7 +530,8 @@ namespace ExamTimetabling2016.CSTEST
             
         }
         
-        public void getCanditateList(List<InvigilatorHeuristic> invigilators, InvigilationDuty invigilationDuty, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief, List<TimeslotVenue> fullTimeslotVenueList)
+        //get candiate list 
+        public List<InvigilatorHeuristic> getCanditateList(List<InvigilatorHeuristic> invigilators, InvigilationDuty invigilationDuty, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief, List<TimeslotVenue> fullTimeslotVenueList)
         {
             MaintainFacultyControl mFacultyControl = new MaintainFacultyControl();
             List<InvigilatorHeuristic> CandidateList = new List<InvigilatorHeuristic>();
@@ -863,8 +887,55 @@ namespace ExamTimetabling2016.CSTEST
                 //Label1.Text += invigilator.Staff.StaffID + "," + invigilator.Staff.FacultyCode.ToString() + "," + invigilator.Heuristic.ToString() + "\n";
             }
             mFacultyControl.shutDown();
+            return CandidateList;
         }
 
+        //assign invigilator
+        public void assignInvigilator(List<InvigilatorHeuristic> invigilators, List<InvigilationDuty> invigilationDuties, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief, List<TimeslotVenue> fullTimeslotVenueList, Faculty faculty)
+        {
+            //assign invigilation duty one by one
+            foreach(InvigilationDuty invigilationDuty in invigilationDuties)
+            {
+                //get possible candidate for each duty
+                invigilationDuty.PossibleCandidate = getCanditateList(invigilators, invigilationDuty, constraintList, minInvigilationDuty, minInvigilationDutyForChief, fullTimeslotVenueList);
+
+                //remove exempted or not available candidate
+                List<InvigilatorHeuristic> processedInvigilatorList = removeExemptedAndNotAvailableInvigilator(invigilationDuty.PossibleCandidate, invigilationDuty);
+
+                //field for the highest scoring candidate to be keep in
+                List<InvigilatorHeuristic> finalCandidateList = new List<InvigilatorHeuristic>();
+
+                //max score for each duty 
+                int maxScore = 0;
+                
+                //find the highest score of candidate of invigilators
+                foreach (InvigilatorHeuristic possibleCanditate in processedInvigilatorList)
+                {
+                    if (possibleCanditate.Heuristic>maxScore)
+                    {
+                        maxScore = possibleCanditate.Heuristic;
+                    }       
+                }
+
+                //find the invigilator with highest score and add them into a list
+                foreach (InvigilatorHeuristic invigilator in processedInvigilatorList)
+                {
+                    if (invigilator.Heuristic.Equals(maxScore))
+                    {
+                        finalCandidateList.Add(invigilator);
+                    }
+                }
+
+                //shuffle the final list
+                finalCandidateList.Shuffle();
+
+                //update
+
+            }
+           
+        }
+        
+        //get timeslotvenue with the similar duty session and date 
         public TimeslotVenue getTimeslotVenue(List<TimeslotVenue> fullTimeslotVenueList,DateTime date, string session, string venueID, string location)
         {
             TimeslotVenue tsVenue = new TimeslotVenue();
@@ -878,44 +949,51 @@ namespace ExamTimetabling2016.CSTEST
             return tsVenue;
         }
          
-        public List<Staff> removeExemptedAndNotAvailableInvigilator(List<Staff> fullInviList, InvigilationDuty invigilatonDuty)
+        // remove exempted and unavailable invigilator before assignation of invigilator
+        public List<InvigilatorHeuristic> removeExemptedAndNotAvailableInvigilator(List<InvigilatorHeuristic> candidateInvigilatorList, InvigilationDuty invigilatonDuty)
         {
-            List<Staff> possibleStaffList = new List<Staff>();
+            List<InvigilatorHeuristic> finalInvigilatorCandidateList = new List<InvigilatorHeuristic>();
             MaintainExemptionControl exemptionControl = new MaintainExemptionControl();
-            foreach(Staff staff in fullInviList)
+            
+            foreach (InvigilatorHeuristic staff in candidateInvigilatorList)
             {
                 bool? isAvailable = true;
-                foreach(Exemption exemption in staff.ExemptionList)
-                {
-                    if(exemption.Date.Equals(invigilatonDuty.Date) && exemption.Session.Equals(invigilatonDuty.Date)){
+                foreach(Exemption exemption in staff.Staff.ExemptionList)
+                {   //remove exempted invigilators
+                    if (exemption.Date.Equals(invigilatonDuty.Date) && exemption.Session.Equals(invigilatonDuty.Date)){
                         isAvailable = false;
                     }
                 }
-                
-               foreach(InvigilationDuty inviDuty in staff.InvigilationDuty)
+                //remove staff from list if already has relief session if relief session is already 1
+                if(staff.Staff.NoAsReliefInvi != 0 && invigilatonDuty.CategoryOfInvigilator.Equals("Relief")) {
+                    isAvailable = false;
+                }
+
+                //remove staf from list if already has saturday session
+                if(staff.Staff.NoOfSatSession !=0 && invigilatonDuty.Date.DayOfWeek.Equals("Saturday"))
+                {
+                    isAvailable = false;
+                }
+
+               foreach(InvigilationDuty inviDuty in staff.Staff.InvigilationDuty)
                 {
                     if(inviDuty.Date.Equals(invigilatonDuty.Date) && inviDuty.Session.Equals(invigilatonDuty.Session))
                     {
+                        //remove staff which has duty on the same day
                         isAvailable = false;
                     }
                 }
                   if(isAvailable == true)
                 {
-                    possibleStaffList.Add(staff);
+                    finalInvigilatorCandidateList.Add(staff);
                 }
             }
 
             exemptionControl.shutDown();
-            return possibleStaffList;
+            return finalInvigilatorCandidateList;
         }
 
-        //maybe wrong
-        public List<Staff> getInvigilatorCandidate()
-        {
-            List<Staff> staffList = new List<Staff>();
-
-            return staffList;
-        }
+        
     }    
     public static class ThreadSafeRandom
     {

@@ -16,10 +16,11 @@ namespace ExamTimetabling2016
         private string categoryOfInvigilator;
         private int duration;
         private List<Examination> examList;
+        private List<InvigilatorHeuristic> possibleCandidate;
 
         public InvigilationDuty()
         {
-            new InvigilationDuty(new DateTime(), "", "", "", "", 0 );
+            new InvigilationDuty(new DateTime(), "", "", "", "", 0);
         }
 
         public InvigilationDuty(DateTime date, string session, string venueID, string location, string categoryOfInvigilator, int duration)
@@ -33,6 +34,7 @@ namespace ExamTimetabling2016
             this.duration = duration;
             this.timeslotID = session + date.Date.ToString("ddMMyy");
             this.examList = mExamControl.searchExaminationByTimeslotAndVenue(this.timeslotID, this.venueID);
+            this.possibleCandidate = new List<InvigilatorHeuristic>();
             mExamControl.shutDown();
         }
 
@@ -163,6 +165,18 @@ namespace ExamTimetabling2016
                 examList = value;
             }
         }
-        
+
+        public List<InvigilatorHeuristic> PossibleCandidate
+        {
+            get
+            {
+                return possibleCandidate;
+            }
+
+            set
+            {
+                possibleCandidate = value;
+            }
+        }
     }
 }
