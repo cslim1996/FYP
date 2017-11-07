@@ -22,12 +22,14 @@ namespace ExamTimetabling2016
         int minExperiencedInvigilator;
         int constraintImportanceValue;
         bool? hasOtherDutyOnSameDay;
-        bool? hasSpecificSessionDutyOnSameDay;
-        bool? hasSpecificDurationDutyOnSameDay;
-        string hasSpecificSessionDutyOnSameDayString;
-        int hasSpecificDurationDutyOnSameDayInt;
-        string dayOfWeek;
-        bool? assignExaminerToPaper;
+        bool? hasSpecificSessionDutyOnSameDay;//
+        bool? hasSpecificDurationDutyOnSameDay;//
+        bool? hasSpecificSessionAndDurationDutyOnSameDay;//
+        string hasSpecificSessionDutyOnSameDayString;//
+        int hasSpecificDurationDutyOnSameDayInt;//
+        string dayOfWeek;//
+        bool? assignExaminerToPaper;//
+        int percentageOfInvigilatorAssignedToTheirOwnFacultyDuty;
 
         public Constraint3()
         {
@@ -41,8 +43,6 @@ namespace ExamTimetabling2016
             this.maxExtraSession = 0;
             this.minReliefSession = 0;
             this.maxReliefSession = 0;
-            this.minExtraSession = 0;
-            this.maxExtraSession = 0;
             this.hasOtherDutyOnSameDay = null;
             this.hasSpecificDurationDutyOnSameDay = null;
             this.hasSpecificDurationDutyOnSameDayInt = 0;
@@ -52,6 +52,8 @@ namespace ExamTimetabling2016
             this.constraintImportanceValue = 1;
             this.assignExaminerToPaper = null;
             this.minExperiencedInvigilator = 0;
+            this.hasSpecificSessionAndDurationDutyOnSameDay = null;
+            this.percentageOfInvigilatorAssignedToTheirOwnFacultyDuty = 0;
         }
 
         public Constraint3(InvigilationDuty invigilationDuty, Staff invigilator, Examination examination, bool? isHardConstraint , bool? isCnblPaper, bool? isDoubleSeating)
@@ -335,6 +337,32 @@ namespace ExamTimetabling2016
             set
             {
                 minExperiencedInvigilator = value;
+            }
+        }
+
+        public bool? HasSpecificSessionAndDurationDutyOnSameDay
+        {
+            get
+            {
+                return hasSpecificSessionAndDurationDutyOnSameDay;
+            }
+
+            set
+            {
+                hasSpecificSessionAndDurationDutyOnSameDay = value;
+            }
+        }
+
+        public int PercentageOfInvigilatorAssignedToTheirOwnFacultyDuty
+        {
+            get
+            {
+                return percentageOfInvigilatorAssignedToTheirOwnFacultyDuty;
+            }
+
+            set
+            {
+                percentageOfInvigilatorAssignedToTheirOwnFacultyDuty = value;
             }
         }
     }

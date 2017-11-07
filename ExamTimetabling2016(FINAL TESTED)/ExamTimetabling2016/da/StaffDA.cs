@@ -96,8 +96,7 @@ namespace ExamTimetabling2016
 
             return staffList;
         }
-
-        //unused for now
+        
         public List<Staff> getInvigilatorList()
         {
             List<Staff> staffList = new List<Staff>();
@@ -144,7 +143,8 @@ namespace ExamTimetabling2016
                         Staff staff = new Staff(dtr["StaffID"].ToString(),isMuslim,isTakingSTSPhD,
                             Convert.ToChar(dtr["typeOfEmploy"]),Convert.ToInt16(dtr["NoOfSatSession"]),
                             Convert.ToInt16(dtr["noAsReliefInvi"]),Convert.ToInt16(dtr["NoOfExtraSession"]),
-                            isChiefInvi,isInviAbove2years,Convert.ToChar(dtr["Gender"]),Convert.ToChar(dtr["FacultyCode"]));
+                            isChiefInvi,isInviAbove2years,Convert.ToChar(dtr["Gender"]),Convert.ToChar(dtr["FacultyCode"]),
+                            Convert.ToInt16(dtr["NoOfEveningSession"]),Convert.ToInt16(dtr["NoAsQuarantineInvi"]));
 
                         staff.IsChief = Convert.ToChar(dtr["isChiefInvi"]);
 
@@ -812,41 +812,7 @@ namespace ExamTimetabling2016
                 }
         }
 
-        //need to be moved into staffDA(start of my edit)
-        public List<Staff> searchLecturerByQuery(string invigilatorQuery)
-        {
-            StaffDA staffs = new StaffDA();
-            List<Staff> result = new List<Staff>();
-
-            try
-            {
-                /*Step 2: Create Sql Search statement and Sql Search Object*/
-                strSearch =  invigilatorQuery;
-                cmdSearch = new SqlCommand(strSearch, conn);
-
-                /*Step 3: Execute command to retrieve data*/
-                SqlDataReader dtr = cmdSearch.ExecuteReader();
-
-                /*Step 4: Get result set from the query*/
-                if (dtr.HasRows)
-                {
-                    while (dtr.Read())
-                    {
-                        Staff staff = new Staff(dtr["StaffID"].ToString(), dtr["Title"].ToString(), dtr["Name"].ToString(), Convert.ToChar(dtr["FacultyCode"].ToString()), Convert.ToChar(dtr["isChiefInvi"].ToString()), Convert.ToChar(dtr["isInvi"].ToString()));
-                        result.Add(staff);
-                    }
-                    dtr.Close();
-                }
-
-            }
-            catch (SqlException)
-            {
-                throw;
-            }
-
-            return result;
-        }
-    }
+       }
 
     
   

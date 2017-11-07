@@ -74,7 +74,6 @@ namespace ExamTimetabling2016
             return venuesList;
         }
 
-
         public string getLocationByVenueID(string venueID)
         {
             string result = "";

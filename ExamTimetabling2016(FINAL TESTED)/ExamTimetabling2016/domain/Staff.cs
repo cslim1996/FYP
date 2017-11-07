@@ -27,6 +27,7 @@ namespace ExamTimetabling2016
         private List<string> paperCodeExamined;
         private List<Exemption> exemptionList;
         private List<InvigilationDuty> invigilationDuty;
+        private int noOfEveningSession;
         
         
 
@@ -52,6 +53,7 @@ namespace ExamTimetabling2016
             this.paperCodeExamined = paperCodeExamined;
             this.exemptionList = exemptionList;
             this.invigilationDuty = invigilationDuty;
+            this.NoOfEveningSession = noOfEveningSession;
         }
 
 
@@ -77,7 +79,7 @@ namespace ExamTimetabling2016
         }
 
         public Staff(string staffID, bool? isMuslim, bool? isTakingSTSPhD, char typeOfEmploy, int noOfSatSession,
-            int noAsReliefInvi, int noOfExtraSession, bool? isChiefInvi, bool? isInviAbove2Years, char gender, char facultyCode)
+            int noAsReliefInvi, int noOfExtraSession, bool? isChiefInvi, bool? isInviAbove2Years, char gender, char facultyCode,int noOfEveningSession,int noAsQuarantineInvi)
             : base("", gender, isMuslim)
         {
             MaintainExemptionControl mExemptioncontrol = new MaintainExemptionControl();
@@ -94,6 +96,8 @@ namespace ExamTimetabling2016
             this.paperCodeExamined = mPaperExaminedControl.searchPaperExaminedByStaffID(staffID);
             this.invigilationDuty = new List<InvigilationDuty>();
             this.facultyCode = facultyCode;
+            this.noOfEveningSession = noOfEveningSession;
+            this.noAsQuarantineInvi = noAsQuarantineInvi;
             mExemptioncontrol.shutDown();
             mPaperExaminedControl.shutDown();
         }
@@ -344,6 +348,19 @@ namespace ExamTimetabling2016
             }
         }
 
+        public int NoOfEveningSession
+        {
+            get
+            {
+                return noOfEveningSession;
+            }
+
+            set
+            {
+                noOfEveningSession = value;
+            }
+        }
+
         public bool? hasOtherDutyOnSameDay(List<InvigilationDuty> inviDuties, DateTime date, string session)
         {
             bool? result = null;
@@ -380,6 +397,32 @@ namespace ExamTimetabling2016
                 {
 
                     if (inviDuty.Date.Equals(date) && inviDuty.Duration.Equals(duration))
+                    {
+                        result = true;
+                    }
+                    else
+                        result = false;
+
+                }
+            }
+            return result;
+        }
+
+        public bool? hasSpecificSessionAndDurationDutyOnSameDay(List<InvigilationDuty> inviDuties, DateTime date, string session, int duration)
+        {
+
+            bool? result = null;
+
+            if (inviDuties.Equals(null))
+            {
+                result = false;
+            }
+            else
+            {
+                foreach (InvigilationDuty inviDuty in inviDuties)
+                {
+
+                    if (inviDuty.Date.Equals(date) && inviDuty.Duration.Equals(duration) && inviDuty.Session.Equals(session))
                     {
                         result = true;
                     }

@@ -133,7 +133,7 @@ namespace ExamTimetabling2016
 
             return faculty;
         }
-
+        
         public void shutDown()
         {
             if (conn != null)

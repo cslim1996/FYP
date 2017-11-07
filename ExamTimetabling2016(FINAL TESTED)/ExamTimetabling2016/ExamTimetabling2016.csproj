@@ -251,6 +251,7 @@
     </Compile>
     <Compile Include="da\BlockDA.cs" />
     <Compile Include="da\Constraint2DA.cs" />
+    <Compile Include="da\Constraint3DA.cs" />
     <Compile Include="da\ConstraintDA.cs" />
     <Compile Include="da\CourseDA.cs" />
     <Compile Include="da\ExaminationDA.cs" />

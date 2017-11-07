@@ -11,6 +11,7 @@ namespace ExamTimetabling2016
         private char facultyCode;
         private string facultyFullName;
         private int facultyDutyCount;
+        private int invigilatorAssignedToOwnFacultyDutyCount;
 
         public Faculty()
         {
@@ -18,6 +19,7 @@ namespace ExamTimetabling2016
             this.facultyCode = '\0';
             this.facultyName = null;
             this.facultyDutyCount = 0;
+            this.invigilatorAssignedToOwnFacultyDutyCount = 0;
         }
 
 
@@ -27,6 +29,7 @@ namespace ExamTimetabling2016
             this.facultyCode = facultyCode;
             this.facultyFullName = facultyFullName;
             this.facultyDutyCount = 0;
+            this.invigilatorAssignedToOwnFacultyDutyCount = 0;
         }
 
         public string FacultyName
@@ -79,6 +82,28 @@ namespace ExamTimetabling2016
             {
                 facultyDutyCount = value;
             }
+        }
+
+        public int InvigilatorAssignedToOwnFacultyDutyCount
+        {
+            get
+            {
+                return invigilatorAssignedToOwnFacultyDutyCount;
+            }
+
+            set
+            {
+                invigilatorAssignedToOwnFacultyDutyCount = value;
+            }
+        }
+
+        public int PercentageOfInvigilatorAssignedToOwnFacultyDuty()
+        {
+            double result =0;
+
+            result = (invigilatorAssignedToOwnFacultyDutyCount / facultyDutyCount) * 100;
+
+            return (int) result;
         }
     }
 
