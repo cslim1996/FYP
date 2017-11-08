@@ -7,29 +7,25 @@ namespace ExamTimetabling2016
 {
     public class Constraint3
     {
+        int constraintID;
         InvigilationDuty invigilationDuty;
         Staff invigilator;
         Examination examination;
         bool? isHardConstraint;
         bool? isCnblPaper;
         bool? isDoubleSeating;
-        int minSatSession;
-        int maxSatSesssion;
-        int minReliefSession;
-        int maxReliefSession;
-        int minExtraSession;
-        int maxExtraSession;
-        int minExperiencedInvigilator;
+        int minExperiencedInvigilator;//
         int constraintImportanceValue;
         bool? hasOtherDutyOnSameDay;
-        bool? hasSpecificSessionDutyOnSameDay;//
-        bool? hasSpecificDurationDutyOnSameDay;//
-        bool? hasSpecificSessionAndDurationDutyOnSameDay;//
-        string hasSpecificSessionDutyOnSameDayString;//
-        int hasSpecificDurationDutyOnSameDayInt;//
-        string dayOfWeek;//
+        bool? hasSpecificSessionDutyOnSameDay;
+        bool? hasSpecificDurationDutyOnSameDay;
+        bool? hasSpecificSessionAndDurationDutyOnSameDay;
+        string hasSpecificSessionDutyOnSameDayString;
+        int hasSpecificDurationDutyOnSameDayInt;
+        string dayOfWeek;
         bool? assignExaminerToPaper;//
-        int percentageOfInvigilatorAssignedToTheirOwnFacultyDuty;
+        int percentageOfInvigilatorAssignedToTheirOwnFacultyDuty;//
+        string remark;
 
         public Constraint3()
         {
@@ -39,21 +35,18 @@ namespace ExamTimetabling2016
             this.isHardConstraint = false;
             this.isCnblPaper = null;
             this.IsDoubleSeating = null;
-            this.minExtraSession = 0;
-            this.maxExtraSession = 0;
-            this.minReliefSession = 0;
-            this.maxReliefSession = 0;
             this.hasOtherDutyOnSameDay = null;
             this.hasSpecificDurationDutyOnSameDay = null;
             this.hasSpecificDurationDutyOnSameDayInt = 0;
             this.hasSpecificSessionDutyOnSameDay = null;
-            this.hasSpecificSessionDutyOnSameDayString = null;
+            this.hasSpecificSessionDutyOnSameDayString = "";
             this.dayOfWeek = "";
             this.constraintImportanceValue = 1;
             this.assignExaminerToPaper = null;
             this.minExperiencedInvigilator = 0;
             this.hasSpecificSessionAndDurationDutyOnSameDay = null;
             this.percentageOfInvigilatorAssignedToTheirOwnFacultyDuty = 0;
+            this.remark = "";
         }
 
         public Constraint3(InvigilationDuty invigilationDuty, Staff invigilator, Examination examination, bool? isHardConstraint , bool? isCnblPaper, bool? isDoubleSeating)
@@ -144,85 +137,7 @@ namespace ExamTimetabling2016
                 isDoubleSeating = value;
             }
         }
-
-        public int MinSatSession
-        {
-            get
-            {
-                return minSatSession;
-            }
-
-            set
-            {
-                minSatSession = value;
-            }
-        }
-
-        public int MaxSatSesssion
-        {
-            get
-            {
-                return maxSatSesssion;
-            }
-
-            set
-            {
-                maxSatSesssion = value;
-            }
-        }
-
-        public int MinReliefSession
-        {
-            get
-            {
-                return minReliefSession;
-            }
-
-            set
-            {
-                minReliefSession = value;
-            }
-        }
-
-        public int MaxReliefSession
-        {
-            get
-            {
-                return maxReliefSession;
-            }
-
-            set
-            {
-                maxReliefSession = value;
-            }
-        }
-
-        public int MinExtraSession
-        {
-            get
-            {
-                return minExtraSession;
-            }
-
-            set
-            {
-                minExtraSession = value;
-            }
-        }
-
-        public int MaxExtraSession
-        {
-            get
-            {
-                return maxExtraSession;
-            }
-
-            set
-            {
-                maxExtraSession = value;
-            }
-        }
-
+        
         public bool? HasOtherDutyOnSameDay
         {
             get
@@ -363,6 +278,32 @@ namespace ExamTimetabling2016
             set
             {
                 percentageOfInvigilatorAssignedToTheirOwnFacultyDuty = value;
+            }
+        }
+
+        public int ConstraintID
+        {
+            get
+            {
+                return constraintID;
+            }
+
+            set
+            {
+                constraintID = value;
+            }
+        }
+
+        public string Remark
+        {
+            get
+            {
+                return remark;
+            }
+
+            set
+            {
+                remark = value;
             }
         }
     }

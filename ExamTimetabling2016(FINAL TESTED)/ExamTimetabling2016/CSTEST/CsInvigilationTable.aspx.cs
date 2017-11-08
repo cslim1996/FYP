@@ -552,6 +552,7 @@ namespace ExamTimetabling2016.CSTEST
                             scoreForInviDutyAndExam++;
                         }
                     }
+                    
 
                     //category of invigilation
                     if (constraint.InvigilationDuty.CategoryOfInvigilator != "" && constraint.InvigilationDuty.CategoryOfInvigilator != null)
@@ -882,8 +883,6 @@ namespace ExamTimetabling2016.CSTEST
                                 {
                                     score++;
                                 }
-                                //not sure if i should make it false when it is not reached
-
                             }
                         }
 

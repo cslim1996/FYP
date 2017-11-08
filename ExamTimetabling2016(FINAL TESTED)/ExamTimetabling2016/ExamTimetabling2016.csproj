@@ -219,6 +219,7 @@
     <Compile Include="Controller\ExamSesssionController.cs" />
     <Compile Include="control\MaintainBlockControl.cs" />
     <Compile Include="control\MaintainConstraint2Control.cs" />
+    <Compile Include="control\MaintainConstraint3Control.cs" />
     <Compile Include="control\MaintainConstraintControl.cs" />
     <Compile Include="control\MaintainCourseControl.cs" />
     <Compile Include="control\MaintainExaminationControl.cs" />
