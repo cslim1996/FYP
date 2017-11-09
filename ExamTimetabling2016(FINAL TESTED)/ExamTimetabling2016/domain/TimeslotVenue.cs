@@ -36,7 +36,9 @@ namespace ExamTimetabling2016
             this.location = location;
             this.date = date;
             this.session = session;
-            this.NoOfInvigilatorRequired = NoOfInvigilatorRequired;
+            this.invigilatorList = new List<Staff>();
+            this.courseList = new List<Course>();
+            this.noOfInvigilatorRequired = noOfChiefInvigilatorRequired;
             this.duration = duration;
         }
         
@@ -61,6 +63,8 @@ namespace ExamTimetabling2016
             this.venueID = null;
             this.session = null;
             this.location = null;
+            this.invigilatorList = new List<Staff>();
+            this.courseList = new List<Course>();
             this.duration = 0;
         }
 
@@ -214,12 +218,13 @@ namespace ExamTimetabling2016
         {
             double result = 0;
             double experiencedInvigilatorCount = 0;
-            foreach (Staff invigilator in invigilatorList)
-            {
-                if (invigilator.IsInviAbove2Years.Equals(true))
-                    experiencedInvigilatorCount++;
-            }
-
+                foreach (Staff invigilator in invigilatorList)
+                {
+                    if (invigilator.IsInviAbove2Years.Equals(true))
+                        experiencedInvigilatorCount++;
+                }
+           
+            // return percentage
             result = (experiencedInvigilatorCount / noOfInvigilatorRequired) * 100;
 
             return (int)result;

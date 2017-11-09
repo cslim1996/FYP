@@ -17,6 +17,7 @@ namespace ExamTimetabling2016
         private int duration;
         private List<Examination> examList;
         private List<InvigilatorHeuristic> possibleCandidate;
+        private int constraintInvolved;
 
         public InvigilationDuty()
         {
@@ -35,6 +36,7 @@ namespace ExamTimetabling2016
             this.timeslotID = session + date.Date.ToString("ddMMyy");
             this.examList = mExamControl.searchExaminationByTimeslotAndVenue(this.timeslotID, this.venueID);
             this.possibleCandidate = new List<InvigilatorHeuristic>();
+            this.constraintInvolved = 0;
             mExamControl.shutDown();
         }
 
@@ -176,6 +178,19 @@ namespace ExamTimetabling2016
             set
             {
                 possibleCandidate = value;
+            }
+        }
+
+        public int ConstraintInvolved
+        {
+            get
+            {
+                return constraintInvolved;
+            }
+
+            set
+            {
+                constraintInvolved = value;
             }
         }
     }

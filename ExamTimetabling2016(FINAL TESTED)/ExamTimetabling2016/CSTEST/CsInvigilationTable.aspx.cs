@@ -56,6 +56,11 @@ namespace ExamTimetabling2016.CSTEST
             List<TimeslotVenue> timeslotVenueForRelief = calculateReliefForEachVenue(examTimetable);
             List<TimeslotVenue> timeslotVenueForChief = calculateChiefInvigilatorForEachVenue(examTimetable);
 
+            //Get constraint list from database;
+            MaintainConstraint3Control mConstraintControl = new MaintainConstraint3Control();
+            List<Constraint3> fullConstraintList = mConstraintControl.loadFullConstraintList();
+            mConstraintControl.shutDown();
+
             //combine timeslotvenue list
             List<TimeslotVenue> CombinedTimeslotVenueList = new List<TimeslotVenue>();
             
@@ -69,11 +74,10 @@ namespace ExamTimetabling2016.CSTEST
             }
             foreach (TimeslotVenue tsVenue in timeslotVenueForChief)
             {
-                //need to review the part for checking of location and venue id esp for chief and relief
-                CombinedTimeslotVenueList.Add(tsVenue); 
-                Label1.Text += tsVenue.Location.ToString();
+                CombinedTimeslotVenueList.Add(tsVenue);
             }
             
+
             //create list of invigilation Duty
             List<InvigilationDuty> inviDutyList = createInvigilationDutyList(timeslotVenueForInvigilator, timeslotVenueForChief, timeslotVenueForRelief);
             MaintainFacultyControl mFacultyControl = new MaintainFacultyControl();
@@ -95,56 +99,13 @@ namespace ExamTimetabling2016.CSTEST
                     }
                 }
             }
-
-
             //get invigilator list from database where isInvi = Y
             List<Staff> invigilatorList = maintainStaffControl.getInvigilatorList();
 
             maintainStaffControl.shutDown();
-            
-            List<Constraint3> constraintList = new List<Constraint3>();
-            
-
-
-            Constraint3 constraint = new Constraint3();
-            constraint.Invigilator.FacultyCode = 'A';
-            constraint.InvigilationDuty.Duration = 2;
-            constraintList.Add(constraint);
-            //initialize domain for score calculation
-
-            List<InvigilatorHeuristic> inviHeuristicList = new List<InvigilatorHeuristic>();
-
-            //input
-            foreach (Staff invigilator in invigilatorList)
-            {
-                inviHeuristicList.Add(new InvigilatorHeuristic(invigilator));
-            }
-            
-            //getCanditateList(inviHeuristicList,inviDutyList[1],constraintList,(int)minTotalLoadOfDutyForEachInvigilator, (int)minTotalLoadOfDutyForEachInvigilator,CombinedTimeslotVenueList);
-            //Label1.Text = inviDutyList[1].Duration.ToString() + inviDutyList[1].CategoryOfInvigilator;
-            foreach (Examination exam in inviDutyList[1].ExamList)
-            {
-               // Label1.Text += exam.Faculty.FacultyCode.ToString() + ", " + exam.CourseCode.ToString();
-            }
-            /*  during assignation update staff id on invigilation duty list
-                update staff to timeslot venue
-                update duty into staff*/
-
-
-        }
-
-        //load constraint list
-        public void assignInvigilator(List<InvigilationDuty> inviDutyList, List<Constraint2> constraintList)
-        {
-            MaintainCourseControl mCourseControl = new MaintainCourseControl();
-            foreach (InvigilationDuty invigilationDuty in inviDutyList)
-            {
-                foreach (Constraint2 constraint in constraintList)
-                {
-
-                }
-            }
-            mCourseControl.shutDown();
+                       
+            //assign invigilator
+            assignInvigilator(invigilatorList, inviDutyList, fullConstraintList, (int)minTotalLoadOfDutyForEachInvigilator, (int)minTotalLoadOfDutyForEachChiefInvigilator, CombinedTimeslotVenueList, fullFacultyList);
         }
 
         //create List Of invigilation duty list without staff assigned
@@ -174,6 +135,7 @@ namespace ExamTimetabling2016.CSTEST
                     }
                 }
             }
+
             //create invigilator list for Chief
             foreach (TimeslotVenue tsVenue in tsVenueForChief)
             {
@@ -239,6 +201,7 @@ namespace ExamTimetabling2016.CSTEST
             MaintainVenueControl venueControl = new MaintainVenueControl();
 
             List<TimeslotVenue> tsVenueChiefList = new List<TimeslotVenue>();
+
             foreach (Timetable tt in examTimetableInSameDayAndSession)
             {
                 foreach (Block block in tt.BlocksList)
@@ -250,15 +213,13 @@ namespace ExamTimetabling2016.CSTEST
                     {
                         noOfChiefInvi += 2;
                     }
-                    else
+                    else if(!(block.VenuesList.Count<=0))
                     {
                         noOfChiefInvi++;
                     }
 
                     TimeslotVenue timeslotVenueForChief = new TimeslotVenue(tsVenueControl.getTimeslotID(tt.Date, tt.Session), block.BlockCode, tt.Date, tt.Session, noOfChiefInvi, duration);
                     tsVenueChiefList.Add(timeslotVenueForChief);
-                    //date,session,location,chief,duration
-
                 }
             }
             venueControl.shutDown();
@@ -506,38 +467,13 @@ namespace ExamTimetabling2016.CSTEST
             }
             return freeInvigilatorsIndexList;
         }
-
-        //process constraint
-        public void processConstraint(List<Staff> invigilatorList, List<InvigilationDuty> invigilationDutyList, List<Constraint2> constraintList)
-        {
-         
-            //initialize domain for heuristic calculation
-            List<InvigilatorHeuristic> inviHeuristicList = new List<InvigilatorHeuristic>();
-            
-            //input
-            foreach(Staff invigilator in invigilatorList)
-            {
-                inviHeuristicList.Add(new InvigilatorHeuristic(invigilator));
-            }
-            
-            //for every invigilation duty available check the constraint stored in database (normal invigilator)
-            // if exam is correct                                
-            foreach(InvigilationDuty inviDuty in invigilationDutyList)
-            {
-                // process contraints here and get highest heuristic staff and update the staff
-                
-            }                                      
-            
-        }
-
-        //get updated invigilator assigned to their own faculty duty count
-
-        //get candiate list 
-        public List<InvigilatorHeuristic> getCanditateList(List<InvigilatorHeuristic> invigilators, InvigilationDuty invigilationDuty, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief, List<TimeslotVenue> fullTimeslotVenueList, List<Faculty> facultyList)
+        
+        //get candidate list 
+        public Tuple<List<InvigilatorHeuristic>,int> getCanditateList(List<InvigilatorHeuristic> invigilators, InvigilationDuty invigilationDuty, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief, List<TimeslotVenue> fullTimeslotVenueList, List<Faculty> facultyList)
         {
             MaintainFacultyControl mFacultyControl = new MaintainFacultyControl();
             List<InvigilatorHeuristic> CandidateList = new List<InvigilatorHeuristic>();
-            
+            int constraintCount = 0;
                 foreach (Constraint3 constraint in constraintList)
                 {
                     int maxScoreForInviDutyAndExam = 0;
@@ -553,7 +489,6 @@ namespace ExamTimetabling2016.CSTEST
                         }
                     }
                     
-
                     //category of invigilation
                     if (constraint.InvigilationDuty.CategoryOfInvigilator != "" && constraint.InvigilationDuty.CategoryOfInvigilator != null)
                     {
@@ -575,7 +510,7 @@ namespace ExamTimetabling2016.CSTEST
                     }
 
                     //session of invigilationDuty
-                    if (!constraint.InvigilationDuty.Session.Equals("") && !constraint.Equals(null))
+                    if (constraint.InvigilationDuty.Session!=null &&!constraint.InvigilationDuty.Session.Equals(""))
                     {
                         maxScoreForInviDutyAndExam++;
                         if (invigilationDuty.Session.Equals(constraint.InvigilationDuty.Session))
@@ -707,6 +642,8 @@ namespace ExamTimetabling2016.CSTEST
 
                 if (maxScoreForInviDutyAndExam == scoreForInviDutyAndExam)
                 {
+                    constraintCount++;
+
                     foreach (InvigilatorHeuristic invigilator in invigilators)
                 {
                         int maxHeuristic = 0;
@@ -873,19 +810,38 @@ namespace ExamTimetabling2016.CSTEST
                         }
 
                         TimeslotVenue tsVenue = getTimeslotVenue(fullTimeslotVenueList, invigilationDuty.Date, invigilationDuty.Session, invigilationDuty.VenueID, invigilationDuty.Location);
-
+                        
+                        //min experienced invigilator in a venue
                         if (constraint.MinExperiencedInvigilator != 0)
                         {
-                            if (tsVenue.percentageOfExperiencedInvigilator(tsVenue.InvigilatorList, tsVenue.NoOfInvigilatorRequired) <= constraint.MinExperiencedInvigilator)
+                            int percentageOfExperiencedInvigilator = 0;
+                            if (!tsVenue.InvigilatorList.Equals(null))
                             {
-                                maxHeuristic++;
-                                if (invigilator.Staff.IsInviAbove2Years.Equals(true))
+                                percentageOfExperiencedInvigilator = tsVenue.percentageOfExperiencedInvigilator(tsVenue.InvigilatorList, tsVenue.NoOfInvigilatorRequired);
+                                if (percentageOfExperiencedInvigilator <= constraint.MinExperiencedInvigilator)
                                 {
-                                    score++;
+                                    maxHeuristic++;
+                                    if (invigilator.Staff.IsInviAbove2Years.Equals(true))
+                                    {
+                                        score++;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (percentageOfExperiencedInvigilator <= constraint.MinExperiencedInvigilator)
+                                {
+                                    maxHeuristic++;
+                                    if (invigilator.Staff.IsInviAbove2Years.Equals(true))
+                                    {
+                                        score++;
+                                    }
                                 }
                             }
                         }
 
+
+                        //change to constraint setting
                         foreach (string paperExamined in invigilator.Staff.PaperCodeExamined)
                         {
                             //assign examiner
@@ -934,18 +890,30 @@ namespace ExamTimetabling2016.CSTEST
                 }
 
                 mFacultyControl.shutDown();
-                return CandidateList;
+                return new Tuple<List<InvigilatorHeuristic>,int>(CandidateList,constraintCount);
             
         }
 
         //assign invigilator
-        public void assignInvigilator(List<InvigilatorHeuristic> invigilators, List<InvigilationDuty> invigilationDuties, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief, List<TimeslotVenue> fullTimeslotVenueList, List<Faculty> facultyList)
+        public void assignInvigilator(List<Staff> staffs, List<InvigilationDuty> invigilationDuties, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief, List<TimeslotVenue> fullTimeslotVenueList, List<Faculty> facultyList)
         {
+            
             //assign invigilation duty one by one
-            foreach(InvigilationDuty invigilationDuty in invigilationDuties)
+            foreach( InvigilationDuty invigilationDuty in invigilationDuties)
             {
+                List<InvigilatorHeuristic> emptyInvi = new List<InvigilatorHeuristic>();
+                foreach(Staff staff in staffs)
+                {
+                    emptyInvi.Add(new InvigilatorHeuristic(staff));
+                }
+
                 //get possible candidate for each duty
-                invigilationDuty.PossibleCandidate = getCanditateList(invigilators, invigilationDuty, constraintList, minInvigilationDuty, minInvigilationDutyForChief, fullTimeslotVenueList, facultyList);
+                Tuple<List<InvigilatorHeuristic>, int> tuple = getCanditateList(emptyInvi, invigilationDuty, constraintList, minInvigilationDuty, minInvigilationDutyForChief, fullTimeslotVenueList, facultyList);
+                invigilationDuty.PossibleCandidate = tuple.Item1;
+                if(tuple.Item2 != 0)
+                {
+                    invigilationDuty.ConstraintInvolved = tuple.Item2;
+                }
 
                 //remove exempted or not available candidate
                 List<InvigilatorHeuristic> processedInvigilatorList = removeExemptedAndNotAvailableInvigilator(invigilationDuty.PossibleCandidate, invigilationDuty, minInvigilationDuty, minInvigilationDutyForChief);
@@ -1020,7 +988,7 @@ namespace ExamTimetabling2016.CSTEST
                 invigilationDuty.StaffID = finalInvigilatorCandidate.Staff.StaffID;
 
                 //update staff duty
-                foreach (InvigilatorHeuristic invigilator in invigilators)
+                foreach (InvigilatorHeuristic invigilator in emptyInvi)
                 {
                     if (invigilator.Staff.StaffID.Equals(finalInvigilatorCandidate.Staff.StaffID))
                     {
@@ -1039,11 +1007,14 @@ namespace ExamTimetabling2016.CSTEST
                         }
 
                         //update extra session
-                        if (invigilator.Staff.IsChiefInvi.Equals(true)){
+                        if (invigilator.Staff.IsChiefInvi.Equals(true))
+                        {
                             minInviDuty = minInvigilationDutyForChief;
                         }
                         else
+                        {
                             minInviDuty = minInvigilationDuty;
+                        }
 
                         if (invigilator.Staff.IsTakingSTSPhD.Equals(true))
                         {
@@ -1058,18 +1029,26 @@ namespace ExamTimetabling2016.CSTEST
                 }
 
                 //update timeslotvenue
+                
                 foreach(TimeslotVenue timeslotVenue in fullTimeslotVenueList)
                 {
-                    if(timeslotVenue.Date.Equals(invigilationDuty.Date)&& timeslotVenue.Session.Equals(invigilationDuty.Session)&& timeslotVenue.Location.Equals(invigilationDuty.Location) && timeslotVenue.VenueID.Equals(timeslotVenue.VenueID))
+                    if (timeslotVenue.VenueID == null)
                     {
-                        timeslotVenue.InvigilatorList.Add(finalInvigilatorCandidate.Staff);
+                        if (timeslotVenue.Date.Equals(invigilationDuty.Date) && timeslotVenue.Session.Equals(invigilationDuty.Session) && timeslotVenue.Location.Equals(invigilationDuty.Location))
+                        {
+                            timeslotVenue.InvigilatorList.Add(finalInvigilatorCandidate.Staff);
+                        }
+                    }
+                    else
+                    {
+                        if (timeslotVenue.Date.Equals(invigilationDuty.Date) && timeslotVenue.Session.Equals(invigilationDuty.Session) && timeslotVenue.Location.Equals(invigilationDuty.Location) && timeslotVenue.VenueID.Equals(timeslotVenue.VenueID))
+                        {
+                            timeslotVenue.InvigilatorList.Add(finalInvigilatorCandidate.Staff);
+                        }
                     }
                 }
 
-                //update saturday session count
-                //update evening session count
-                //update extra session count
-
+                Label1.Text += invigilationDuty.TimeslotID + " , "+ finalInvigilatorCandidate.Staff.StaffID + " , " + finalInvigilatorCandidate.Heuristic + " , " + invigilationDuty.ConstraintInvolved + "<br/>";
             }
            
         }
@@ -1080,9 +1059,20 @@ namespace ExamTimetabling2016.CSTEST
             TimeslotVenue tsVenue = new TimeslotVenue();
             foreach(TimeslotVenue timeslotVenue in fullTimeslotVenueList)
             {
-                if (timeslotVenue.Date.Equals(date) && timeslotVenue.Equals(session) && timeslotVenue.Location.Equals(location) && timeslotVenue.VenueID.Equals(venueID))
+
+                if (timeslotVenue.VenueID == null)
                 {
-                    tsVenue = timeslotVenue;
+                    if (timeslotVenue.Date.Equals(timeslotVenue.Date.Equals(date) && timeslotVenue.Equals(session) && timeslotVenue.Location.Equals(location)))
+                    {
+                        tsVenue = timeslotVenue;
+                    }
+                }
+                else
+                {
+                    if (timeslotVenue.Date.Equals(timeslotVenue.Date.Equals(date) && timeslotVenue.Equals(session) && timeslotVenue.Location.Equals(location) && timeslotVenue.VenueID.Equals(venueID)))
+                    {
+                        tsVenue = timeslotVenue;
+                    }
                 }
             }
             return tsVenue;
