@@ -18,6 +18,7 @@ namespace ExamTimetabling2016
         private List<Examination> examList;
         private List<InvigilatorHeuristic> possibleCandidate;
         private int constraintInvolved;
+        private int maxScore;
 
         public InvigilationDuty()
         {
@@ -37,6 +38,7 @@ namespace ExamTimetabling2016
             this.examList = mExamControl.searchExaminationByTimeslotAndVenue(this.timeslotID, this.venueID);
             this.possibleCandidate = new List<InvigilatorHeuristic>();
             this.constraintInvolved = 0;
+            this.maxScore = 0;
             mExamControl.shutDown();
         }
 
@@ -191,6 +193,19 @@ namespace ExamTimetabling2016
             set
             {
                 constraintInvolved = value;
+            }
+        }
+
+        public int MaxScore
+        {
+            get
+            {
+                return maxScore;
+            }
+
+            set
+            {
+                maxScore = value;
             }
         }
     }

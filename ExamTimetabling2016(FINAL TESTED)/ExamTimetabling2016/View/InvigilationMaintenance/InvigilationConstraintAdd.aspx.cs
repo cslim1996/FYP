@@ -23,7 +23,7 @@ namespace ExamTimetabling2016
         {
             get
             {
-                string[] text = System.IO.File.ReadAllLines(@"D:\ExamTimetabling2016(Combined)\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
+                string[] text = System.IO.File.ReadAllLines(@"D:\ExamTimetabling2016(Combined)\FYP\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
                 return new JavaScriptSerializer().Serialize(text);
             }
         }
@@ -42,7 +42,7 @@ namespace ExamTimetabling2016
             if (success == "yes")
             {
                 this.variable = Request.Form["arrVariable"].Split(',');
-                String path = @"D:\ExamTimetabling2016(Combined)\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt";
+                String path = @"D:\ExamTimetabling2016(Combined)\FYP\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt";
                 //int divVariableNumber = 0;
                 //int count = 0;
                 //int match = 0;

@@ -23,6 +23,11 @@ namespace ExamTimetabling2016
         {
             return exemptionDA.searchExemptionList(staffID);
         }
+        
+        public List<string> searchAllSessionAvailable()
+        {
+            return exemptionDA.searchAllSessionAvailable();
+        }
 
         public void shutDown()
         {

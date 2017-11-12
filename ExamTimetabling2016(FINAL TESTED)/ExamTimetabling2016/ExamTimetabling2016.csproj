@@ -113,6 +113,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="CSTEST\ConstraintAndSetting.aspx" />
     <Content Include="CSTEST\CsInvigilationTable.aspx" />
     <Content Include="CSTEST\Test3.aspx" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -154,10 +155,14 @@
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui.css" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\metisMenu.js" />
     <Content Include="Scripts\sb-admin-2.js" />
     <Content Include="Scripts\script.js" />
@@ -184,6 +189,7 @@
     <Content Include="View\InvigilationMaintenance\InvigilationConstraintView.aspx" />
     <Content Include="View\InvigilationMaintenance\InvigilationMaintainInv.aspx" />
     <Content Include="CSTEST\ConstraintSettingPage.aspx" />
+    <Content Include="View\InvigilationMaintenance\InvigilationTable.aspx" />
     <Content Include="View\Report\ReportingInvigilationTimetable.aspx" />
     <Content Include="View\Report\ReportingInvigilatorDutiesMaster.aspx" />
     <Content Include="View\SamplePage\Sample.aspx" />
@@ -221,6 +227,7 @@
     <Compile Include="control\MaintainConstraint2Control.cs" />
     <Compile Include="control\MaintainConstraint3Control.cs" />
     <Compile Include="control\MaintainConstraintControl.cs" />
+    <Compile Include="control\MaintainConstraintSettingControl.cs" />
     <Compile Include="control\MaintainCourseControl.cs" />
     <Compile Include="control\MaintainExaminationControl.cs" />
     <Compile Include="control\MaintainExemptionControl.cs" />
@@ -234,6 +241,13 @@
     <Compile Include="control\MaintainVenueControl.cs" />
     <Compile Include="Course2.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CSTEST\ConstraintAndSetting.aspx.cs">
+      <DependentUpon>ConstraintAndSetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CSTEST\ConstraintAndSetting.aspx.designer.cs">
+      <DependentUpon>ConstraintAndSetting.aspx</DependentUpon>
     </Compile>
     <Compile Include="CSTEST\CsInvigilationTable.aspx.cs">
       <DependentUpon>CsInvigilationTable.aspx</DependentUpon>
@@ -254,6 +268,7 @@
     <Compile Include="da\Constraint2DA.cs" />
     <Compile Include="da\Constraint3DA.cs" />
     <Compile Include="da\ConstraintDA.cs" />
+    <Compile Include="da\ConstraintSettingDA.cs" />
     <Compile Include="da\CourseDA.cs" />
     <Compile Include="da\ExaminationDA.cs" />
     <Compile Include="da\ExemptionDA.cs" />
@@ -267,6 +282,7 @@
     <Compile Include="da\VenueDA.cs" />
     <Compile Include="domain\Block.cs" />
     <Compile Include="domain\Constraint3.cs" />
+    <Compile Include="domain\ConstraintSetting.cs" />
     <Compile Include="domain\Faculty.cs" />
     <Compile Include="domain\InvigilatorHeuristic.cs" />
     <Compile Include="domain\TimeslotVenue.cs" />
@@ -487,6 +503,13 @@
     </Compile>
     <Compile Include="CSTEST\ConstraintSettingPage.aspx.designer.cs">
       <DependentUpon>ConstraintSettingPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\InvigilationMaintenance\InvigilationTable.aspx.cs">
+      <DependentUpon>InvigilationTable.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\InvigilationMaintenance\InvigilationTable.aspx.designer.cs">
+      <DependentUpon>InvigilationTable.aspx</DependentUpon>
     </Compile>
     <Compile Include="View\Report\ReportingInvigilationTimetable.aspx.cs">
       <DependentUpon>ReportingInvigilationTimetable.aspx</DependentUpon>

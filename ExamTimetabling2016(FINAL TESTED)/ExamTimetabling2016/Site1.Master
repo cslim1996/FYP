@@ -22,6 +22,13 @@
     <script src="../../Scripts/metisMenu.js"></script>
     <script src="../../Scripts/sb-admin-2.js"></script>
 
+    <style type="text/css">
+        .auto-style1 {
+            left: 0px;
+            top: 0px;
+        }
+    </style>
+
 </head>
 <body class="bodyfont">
     <form id="form1" runat="server">
@@ -189,9 +196,9 @@
                                 </ul>
                             </li>
                             <li class="bg-success">
-                                <a href="#"><i class="fa fa-calendar-check-o"></i>Invigilation Maintenance<span class="fa arrow"></span></a>
+                                <a href="#" class="auto-style1"><i class="fa fa-calendar-check-o"></i>Invigilation Maintenance<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
-                                    <li><a href="../InvigilationMaintenance/InvigilationMaintainInv.aspx">Maintain Invigilator</a></li>
+                                    <li><a href="../View/InvigilationMaintenance/InvigilationMaintainInv.aspx">Maintain Invigilator</a></li>
                                     <li><a href="#">Constraint Maintenance<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li><a href="../InvigilationMaintenance/InvigilationConstraintAdd.aspx">Add Constraints</a></li>

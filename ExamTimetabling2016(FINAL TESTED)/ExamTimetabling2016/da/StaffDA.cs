@@ -104,7 +104,7 @@ namespace ExamTimetabling2016
             try
             {
                 /*Step 2: Create Sql Search statement and Sql Search Object*/
-                strSearch = "Select * from dbo.Staff where isInvi = 'Y'";
+                strSearch = "Select * From dbo.Staff Where (isInvi = 'Y' or isInviAbove2Years = 'Y' or isChiefInvi ='Y') and TypeOfEmploy = 'F'";
                 cmdSearch = new SqlCommand(strSearch, conn);
 
                 /*Step 3: Execute command to retrieve data*/

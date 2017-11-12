@@ -27,7 +27,7 @@ namespace ExamTimetabling2016
 
         protected void read_all()
         {
-            string[] text = System.IO.File.ReadAllLines(@"D:\ExamTimetabling2016(Combined)\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
+            string[] text = System.IO.File.ReadAllLines(@"D:\ExamTimetabling2016(Combined)\FYP\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
             for (int a = 0; a < text.Length; a++)
             {
                 CreateDiv("constraint" + (a + 1), text[a]);

@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 
-namespace ExamTimetabling2016.CSTEST
+namespace ExamTimetabling2016
 {
     public partial class WebForm3 : System.Web.UI.Page
     {
@@ -25,13 +25,12 @@ namespace ExamTimetabling2016.CSTEST
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            MaintainConstraint3Control mConstraintControl = new MaintainConstraint3Control();
-            List<Constraint3> constraintList = mConstraintControl.loadFullConstraintList();
-
-            foreach (Constraint3 constraint in constraintList)
-            {
-                Label1.Text += (constraint.ConstraintID.ToString() + constraint.ConstraintImportanceValue.ToString());
-            }
+            MaintainConstraintSettingControl mConstraintSetting = new MaintainConstraintSettingControl();
+            ConstraintSetting setting = new ConstraintSetting();
+            setting.AssignToExaminer = true;
+            setting.MaxEveningSession = 2;
+            mConstraintSetting.saveIntoDatabase(setting);
+            mConstraintSetting.shutDown();
         }
     }
 }

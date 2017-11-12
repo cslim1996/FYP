@@ -59,10 +59,10 @@ namespace ExamTimetabling2016
                 String line = null;
                 int line_number = 0;
                 string tempFile = Path.GetTempFileName();
-                string[] currentConstraint = System.IO.File.ReadAllLines(@"D:\ExamTimetabling2016(Combined)\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
+                string[] currentConstraint = System.IO.File.ReadAllLines(@"D:\ExamTimetabling2016(Combined)\FYP\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
                 this.variable = Request.Form["arrVariable"].Split(',');
                 string[] checkVariable = stringPass.Split(' ');
-                using (var sr = new StreamReader(@"D:\ExamTimetabling2016(Combined)\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt"))
+                using (var sr = new StreamReader(@"D:\ExamTimetabling2016(Combined)\FYP\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt"))
                 using (var sw = new StreamWriter(tempFile))
                 {
                     while ((line = sr.ReadLine()) != null)
@@ -81,8 +81,8 @@ namespace ExamTimetabling2016
 
                     }
                 }
-                File.Delete(@"D:\ExamTimetabling2016(Combined)\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
-                File.Move(tempFile, @"D:\ExamTimetabling2016(Combined)\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
+                File.Delete(@"D:\ExamTimetabling2016(Combined)\FYP\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
+                File.Move(tempFile, @"D:\ExamTimetabling2016(Combined)\FYP\ExamTimetabling2016(FINAL TESTED)\ExamTimetabling2016\constraint.txt");
 
                 return " ";
 

@@ -66,6 +66,36 @@ namespace ExamTimetabling2016
             return exemptionList;
         }
 
+        public List<String> searchAllSessionAvailable()
+        {
+            List<string> result = new List<string>();
+            try
+            {
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "select distinct session from dbo.timeslot";
+                cmdSearch = new SqlCommand(strSearch, conn);
+                
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        result.Add(dtr["Session"].ToString());
+                    }
+                }
+                dtr.Close();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return result;
+        }
+
         public List<Exemption> searchExemptionList(string staffID)
         {
             List<Exemption> exemptionList = new List<Exemption>();

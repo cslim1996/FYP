@@ -27,7 +27,19 @@ namespace ExamTimetabling2016
             this.date = date;
             this.session = session;
         }
-        
+
+        public TimeslotVenue(string timeslotID, string venueID, string location, DateTime date, string session, int noOfInvigilatorRequired, List<Course> courseList)
+        {
+            this.timeslotID = timeslotID;
+            this.venueID = venueID;
+            this.noOfInvigilatorRequired = noOfInvigilatorRequired;
+            this.courseList = courseList;
+            this.InvigilatorList = new List<Staff>();
+            this.date = date;
+            this.session = session;
+            this.location = location;
+        }
+
         //for chief
         public TimeslotVenue(string timeslotID, string location, DateTime date,string session, int noOfChiefInvigilatorRequired, int duration)
         {
