@@ -256,6 +256,36 @@ namespace ExamTimetabling2016
 
         }
 
+        public List<int> selectDistinctDuration()
+        {
+            List<int> duration = new List<int>();
+            try
+            {
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "select distinct duration from dbo.course";
+                cmdSearch = new SqlCommand(strSearch, conn);
+
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        duration.Add(Convert.ToInt16(dtr["duration"]));
+                    }
+                }
+                dtr.Close();
+            }
+            catch (SqlException ex)
+            {
+            }
+
+            return duration;
+        }
+
         public void shutDown()
         {
             if (conn != null)

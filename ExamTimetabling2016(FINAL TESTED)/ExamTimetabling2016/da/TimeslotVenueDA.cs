@@ -65,8 +65,39 @@ namespace ExamTimetabling2016
 
             return timeslotID;
         }
+        
+        public List<string> selectAllSession()
+        {
+            List<string> sessionList = new List<string>();
 
-        //untested
+            try
+            {
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "Select distinct session from dbo.timeslot";
+                cmdSearch = new SqlCommand(strSearch, conn);
+                
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        sessionList.Add(dtr["session"].ToString());
+                    }
+                }
+                dtr.Close();
+            }
+            catch (SqlException ex)
+            {
+            }
+
+
+            return sessionList;
+        }
+
         public void insertNoOfInvigilatorsReq(TimeslotVenue timeslotVenue)
         {
             try

@@ -19,6 +19,11 @@ namespace ExamTimetabling2016
             return courseDA.getCourseTitle(courseCode);
         }
 
+        public List<int> selectDistinctDuration()
+        {
+            return courseDA.selectDistinctDuration();
+        }
+
         public List<Course> searchCoursesList(DateTime date, string time, string venueID)
         {
             return courseDA.searchCoursesList(date, time, venueID);

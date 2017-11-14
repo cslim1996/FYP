@@ -13,6 +13,11 @@ namespace ExamTimetabling2016
         {
             timeslotVenueDA = new TimeslotVenueDA();
         }
+        
+        public List<string> selectAllSession()
+        {
+            return timeslotVenueDA.selectAllSession();
+        }
 
         public void insertNoOfInvigilatorRequired(TimeslotVenue timeslotVenue)
         {

@@ -196,6 +196,38 @@ namespace ExamTimetabling2016
                 return result;
     }
 
+        public List<char> getDistinctExamPaperType()
+        {
+
+            List<char> paperTypeList = new List<char>();
+
+            try
+            {
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "select distinct Examination.PaperType from Examination";
+                cmdSearch = new SqlCommand(strSearch, conn);
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        paperTypeList.Add(Convert.ToChar(dtr["PaperType"]));
+                    }
+                    dtr.Close();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return paperTypeList;
+        }
+
         public void shutDown()
         {
             if (conn != null)

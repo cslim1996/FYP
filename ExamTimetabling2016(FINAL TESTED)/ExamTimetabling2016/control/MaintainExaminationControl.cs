@@ -35,6 +35,11 @@ namespace ExamTimetabling2016
             return examinationDA.searchExaminationByTimeslotAndVenue(timeslotID,venueID);
         }
 
+        public List<char> getDistinctExamPaperType()
+        {
+            return examinationDA.getDistinctExamPaperType();
+        }
+
         public void shutDown()
         {
             examinationDA.shutDown();
