@@ -113,9 +113,10 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="CSTEST\ConstraintAndSetting.aspx" />
-    <Content Include="CSTEST\CsInvigilationTable.aspx" />
+    <Content Include="View\InvigilationMaintenance\ConstraintAndSetting.aspx" />
+    <Content Include="View\InvigilationMaintenance\CsInvigilationTable.aspx" />
     <Content Include="CSTEST\Test3.aspx" />
+    <Content Include="CSTEST\WebService1.asmx" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -183,6 +184,7 @@
     <Content Include="View\DataConversion\ExcelInvTimetable.aspx" />
     <Content Include="View\DataConversion\ExcelStaff.aspx" />
     <Content Include="View\DataConversion\ExcelVenue.aspx" />
+    <Content Include="View\InvigilationMaintenance\ExaminationSetting.aspx" />
     <Content Include="View\InvigilationMaintenance\InvigilationConstraintAdd.aspx" />
     <Content Include="View\InvigilationMaintenance\InvigilationConstraintUpdate.aspx" />
     <Content Include="View\InvigilationMaintenance\InvigilationConstraintUpdateDelete.aspx" />
@@ -242,18 +244,18 @@
     <Compile Include="Course2.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CSTEST\ConstraintAndSetting.aspx.cs">
+    <Compile Include="View\InvigilationMaintenance\ConstraintAndSetting.aspx.cs">
       <DependentUpon>ConstraintAndSetting.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CSTEST\ConstraintAndSetting.aspx.designer.cs">
+    <Compile Include="View\InvigilationMaintenance\ConstraintAndSetting.aspx.designer.cs">
       <DependentUpon>ConstraintAndSetting.aspx</DependentUpon>
     </Compile>
-    <Compile Include="CSTEST\CsInvigilationTable.aspx.cs">
+    <Compile Include="View\InvigilationMaintenance\CsInvigilationTable.aspx.cs">
       <DependentUpon>CsInvigilationTable.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="CSTEST\CsInvigilationTable.aspx.designer.cs">
+    <Compile Include="View\InvigilationMaintenance\CsInvigilationTable.aspx.designer.cs">
       <DependentUpon>CsInvigilationTable.aspx</DependentUpon>
     </Compile>
     <Compile Include="CSTEST\Domain\Class1.cs" />
@@ -263,6 +265,10 @@
     </Compile>
     <Compile Include="CSTEST\Test3.aspx.designer.cs">
       <DependentUpon>Test3.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CSTEST\WebService1.asmx.cs">
+      <DependentUpon>WebService1.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="da\BlockDA.cs" />
     <Compile Include="da\Constraint2DA.cs" />
@@ -461,6 +467,13 @@
     </Compile>
     <Compile Include="View\HolidayMaintenance\UpdateHoliday.aspx.designer.cs">
       <DependentUpon>UpdateHoliday.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\InvigilationMaintenance\ExaminationSetting.aspx.cs">
+      <DependentUpon>ExaminationSetting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\InvigilationMaintenance\ExaminationSetting.aspx.designer.cs">
+      <DependentUpon>ExaminationSetting.aspx</DependentUpon>
     </Compile>
     <Compile Include="View\InvigilationMaintenance\InvigilationConstraintAdd.aspx.cs">
       <DependentUpon>InvigilationConstraintAdd.aspx</DependentUpon>

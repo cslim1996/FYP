@@ -198,15 +198,17 @@
                             <li class="bg-success">
                                 <a href="#" class="auto-style1"><i class="fa fa-calendar-check-o"></i>Invigilation Maintenance<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
-                                    <li><a href="../View/InvigilationMaintenance/InvigilationMaintainInv.aspx">Maintain Invigilator</a></li>
+                                    <li><a href="/View/InvigilationMaintenance/InvigilationMaintainInv.aspx">Maintain Invigilator</a></li>
                                     <li><a href="#">Constraint Maintenance<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                             <li><a href="../InvigilationMaintenance/InvigilationConstraintAdd.aspx">Add Constraints</a></li>
                                             <li><a href="../InvigilationMaintenance/InvigilationConstraintView.aspx">View Constraints</a></li>
                                             <li><a href="../InvigilationMaintenance/InvigilationConstraintUpdateDelete.aspx">Update & Delete Constraints</a></li>
+                                            <li><a href="../InvigilationMaintenance/ConstraintAndSetting.aspx">Add New Rules</a></li>
+                                            <li><a href="../InvigilationMaintenance/ExaminationSetting.aspx">Examination Setting</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="../InvigilationMaintenance/InvigilationTable.aspx">Schedule Invigilation</a></li>
+                                    <li><a href="/View/InvigilationMaintenance/CsInvigilationTable.aspx">Schedule Invigilation</a></li>
                                 </ul>
                             </li>
                             <li class="bg-success">

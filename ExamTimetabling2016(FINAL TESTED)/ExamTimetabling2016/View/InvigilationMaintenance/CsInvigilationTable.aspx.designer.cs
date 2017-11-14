@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ExamTimetabling2016.CSTEST {
+namespace ExamTimetabling2016 {
     
     
     public partial class CsInvigilationTable {

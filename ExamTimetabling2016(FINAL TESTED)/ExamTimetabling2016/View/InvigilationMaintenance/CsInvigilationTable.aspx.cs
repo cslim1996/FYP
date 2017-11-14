@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace ExamTimetabling2016.CSTEST
+namespace ExamTimetabling2016
 {
     public partial class CsInvigilationTable : System.Web.UI.Page
     {
@@ -122,7 +122,6 @@ namespace ExamTimetabling2016.CSTEST
             mExemptionControl.shutDown();
 
             //add exemption for examiner
-            /*
             foreach (InvigilationDuty inviDuty in inviDutyList)
             {
                 foreach (Examination exam in inviDuty.ExamList)
@@ -145,9 +144,11 @@ namespace ExamTimetabling2016.CSTEST
                         }
                     }
                 }
-            }    */      
+            }   
             //assign invigilator
             assignInvigilator(invigilatorList, inviDutyList, fullConstraintList, (int)minTotalLoadOfDutyForEachInvigilator, (int)minTotalLoadOfDutyForEachChiefInvigilator, CombinedTimeslotVenueList, fullFacultyList,setting);
+            lblMsg.Text = "Planning Completed Successfully! <br /><br />Please proceed to generate <a href=\"../Report/ReportingInvigilationTimetable.aspx\">Invigilation Timetable</a>.";
+
         }
 
         //create List Of invigilation duty list without staff assigned
@@ -522,7 +523,6 @@ namespace ExamTimetabling2016.CSTEST
             int constraintCount = 0;
             
             //assign to examiner
-            /*
             if(setting.AssignToExaminer == true)
             {
                 foreach(Examination exam in invigilationDuty.ExamList)
@@ -541,7 +541,7 @@ namespace ExamTimetabling2016.CSTEST
                         }
                     }
                 }
-            }*/
+            }
 
                 foreach (Constraint3 constraint in constraintList)
                 {
@@ -602,67 +602,73 @@ namespace ExamTimetabling2016.CSTEST
                     if (!constraint.Examination.Faculty.FacultyCode.Equals('\0') && !constraint.Examination.Faculty.FacultyCode.Equals(null))
                     {
                         maxScoreForInviDutyAndExam++;
-                        int maxScoreForExamFaculty = 0;
+                        bool examHasFaculty = false;
                         foreach (Examination exam in invigilationDuty.ExamList)
                         {
                             if (mFacultyControl.searchFacultyByCourseCode(exam.CourseCode).FacultyCode.Equals(constraint.Examination.Faculty.FacultyCode))
                             {
-                                if (maxScoreForExamFaculty == 0)
-                                {
-                                    scoreForInviDutyAndExam++;
-                                }
-                                maxScoreForExamFaculty++;
+                                    examHasFaculty = true;
                             }
                         }
+                        if(examHasFaculty == true)
+                    {
+                        scoreForInviDutyAndExam++;
+                    }
                     }
 
                     //exam examtype
                     if (!constraint.Examination.ExamType.Equals('\0') && !constraint.Examination.ExamType.Equals(null))
                     {
                         maxScoreForInviDutyAndExam++;
-                        int maxScoreForExamType = 0;
+                        bool hasExamType = false;
                         foreach (Examination exam in invigilationDuty.ExamList)
                         {
                             if (exam.ExamType.Equals(constraint.Examination.ExamType))
                             {
-                                if (maxScoreForExamType == 0)
-                                {
-                                    scoreForInviDutyAndExam++;
-                                }
-                                maxScoreForExamType++;
+                            hasExamType = true;
                             }
                         }
+                            if(hasExamType == true)
+                    {
+
+                        scoreForInviDutyAndExam++;
+                    }
                     }
 
                     //exam papertype
                     if (!constraint.Examination.PaperType.Equals('\0') && !constraint.Examination.PaperType.Equals(null))
                     {
                         maxScoreForInviDutyAndExam++;
-                        int maxScoreForPaperType = 0;
+                        bool isPaperType = false;
                         foreach (Examination exam in invigilationDuty.ExamList)
                         {
                             if (exam.PaperType.Equals(constraint.Examination.PaperType))
                             {
-                                if (maxScoreForPaperType == 0)
-                                {
-                                    scoreForInviDutyAndExam++;
-                                }
-                                maxScoreForPaperType++;
+                                isPaperType = true;
                             }
                         }
+                        if(isPaperType == true)
+                    {
+                        scoreForInviDutyAndExam++;
+                    }
                     }
 
                     //exam year
                     if (constraint.Examination.Year != 0)
                     {
                         maxScoreForInviDutyAndExam++;
+                    bool isExamYear = false;
                         foreach (Examination exam in invigilationDuty.ExamList)
                         {
                             if (exam.Year.Equals(constraint.Examination.Year))
                             {
-                                scoreForInviDutyAndExam++;
+                            isExamYear = true;
                             }
                         }
+                        if(isExamYear == true)
+                    {
+                        scoreForInviDutyAndExam++;
+                    }
                     }
 
 
@@ -670,7 +676,7 @@ namespace ExamTimetabling2016.CSTEST
                     if (!constraint.IsCnblPaper.Equals(null))
                     {
                         maxScoreForInviDutyAndExam++;
-                        int scoreForCnblPaper = 0;
+                        bool isCnblPaper = false;
                         foreach (Examination exam in invigilationDuty.ExamList)
                         {
                             MaintainCourseControl mCourseControl = new MaintainCourseControl();
@@ -678,14 +684,14 @@ namespace ExamTimetabling2016.CSTEST
                             mCourseControl.shutDown();
                             if (course.IsCnblPaper.Equals(constraint.IsCnblPaper))
                             {
-                                if (scoreForCnblPaper == 0)
-                                {
-                                    scoreForInviDutyAndExam++;
-                                }
-                                scoreForCnblPaper++;
-                            }
+                                isCnblPaper = true;
                         }
                     }
+                    if (isCnblPaper == true)
+                    {
+                        scoreForInviDutyAndExam++;
+                    }
+                }
 
                     //exam is double seating
                     if (!constraint.IsDoubleSeating.Equals(null))
@@ -1035,7 +1041,8 @@ namespace ExamTimetabling2016.CSTEST
 
                 //update invigilation duty
                 invigilationDuty.StaffID = finalInvigilatorCandidate.Staff.StaffID;
-
+                //Label1.Text += invigilationDuty.TimeslotID + " , " + finalInvigilatorCandidate.Staff.StaffID + " , " + finalInvigilatorCandidate.Heuristic + " , " + invigilationDuty.ConstraintInvolved + ", " + invigilationDuty.MaxScore + "<br/>";
+                
                 //update staff duty
                 foreach (Staff invigilator in staffs)
                 {
@@ -1099,8 +1106,7 @@ namespace ExamTimetabling2016.CSTEST
                 MaintainInvigilationDutyControl mInvigilationDutyControl = new MaintainInvigilationDutyControl();
                 mInvigilationDutyControl.addInvigilationDuty(finalInvigilatorCandidate.Staff, invigilationDuty);
                 mInvigilationDutyControl.shutDown();
-                Label1.Text += invigilationDuty.TimeslotID + " , "+ finalInvigilatorCandidate.Staff.StaffID + " , " + finalInvigilatorCandidate.Heuristic + " , " + invigilationDuty.ConstraintInvolved + ", " + invigilationDuty.MaxScore + "<br/>";
-            }
+                }
            
         }
         
@@ -1128,8 +1134,7 @@ namespace ExamTimetabling2016.CSTEST
             }
             return tsVenue;
         }
-
-
+        
         // remove exempted and unavailable invigilator before assignation of invigilator
         public List<InvigilatorHeuristic> removeExemptedAndNotAvailableInvigilator(List<InvigilatorHeuristic> candidateInvigilatorList, InvigilationDuty invigilatonDuty, int minInvigilationDuty, int minInvigilationDutyForChief, ConstraintSetting setting, List<Staff> staffs)
         {

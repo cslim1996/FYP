@@ -47,6 +47,7 @@
         <siteMapNode url="View/InvigilationMaintenance/InvigilationConstraintAdd.aspx" title="Add Constraint"  description="" />
         <siteMapNode url="View/InvigilationMaintenance/InvigilationConstraintView.aspx" title="View Constraint"  description="" />
         <siteMapNode url="View/InvigilationMaintenance/InvigilationConstraintUpdateDelete.aspx" title="Update Constraint"  description="" />
+        <siteMapNode url="" title="Add New Rules"  description="" />
       </siteMapNode>
     </siteMapNode>
     <siteMapNode url="" title="Report">
