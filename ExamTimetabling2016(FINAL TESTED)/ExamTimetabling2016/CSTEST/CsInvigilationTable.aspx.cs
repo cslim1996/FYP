@@ -122,6 +122,7 @@ namespace ExamTimetabling2016.CSTEST
             mExemptionControl.shutDown();
 
             //add exemption for examiner
+            /*
             foreach (InvigilationDuty inviDuty in inviDutyList)
             {
                 foreach (Examination exam in inviDuty.ExamList)
@@ -144,7 +145,7 @@ namespace ExamTimetabling2016.CSTEST
                         }
                     }
                 }
-            }          
+            }    */      
             //assign invigilator
             assignInvigilator(invigilatorList, inviDutyList, fullConstraintList, (int)minTotalLoadOfDutyForEachInvigilator, (int)minTotalLoadOfDutyForEachChiefInvigilator, CombinedTimeslotVenueList, fullFacultyList,setting);
         }
@@ -521,6 +522,7 @@ namespace ExamTimetabling2016.CSTEST
             int constraintCount = 0;
             
             //assign to examiner
+            /*
             if(setting.AssignToExaminer == true)
             {
                 foreach(Examination exam in invigilationDuty.ExamList)
@@ -539,7 +541,7 @@ namespace ExamTimetabling2016.CSTEST
                         }
                     }
                 }
-            }
+            }*/
 
                 foreach (Constraint3 constraint in constraintList)
                 {
@@ -689,7 +691,7 @@ namespace ExamTimetabling2016.CSTEST
                     if (!constraint.IsDoubleSeating.Equals(null))
                     {
                         maxScoreForInviDutyAndExam++;
-                        int maxScoreForDoubleSeating = 0;
+                        bool containDoubleSeating= false;
                         foreach (Examination exam in invigilationDuty.ExamList)
                         {
                             MaintainCourseControl mCourseControl = new MaintainCourseControl();
@@ -697,19 +699,21 @@ namespace ExamTimetabling2016.CSTEST
                             mCourseControl.shutDown();
                             if (course.IsDoubleSeating.Equals(constraint.IsDoubleSeating))
                             {
-                                if (maxScoreForDoubleSeating == 0)
-                                {
-                                    scoreForInviDutyAndExam++;
-                                }
-                                maxScoreForDoubleSeating++;
+                            containDoubleSeating = true;
                             }
                         }
+                    if (containDoubleSeating == true)
+                    {
+                        scoreForInviDutyAndExam++;
                     }
+                }
+
                 //finish checking for duty and exam
 
                 if (maxScoreForInviDutyAndExam == scoreForInviDutyAndExam)
                 {
                     constraintCount++;
+                    invigilationDuty.MaxScore += constraint.ConstraintImportanceValue;
 
                     foreach (InvigilatorHeuristic invigilator in invigilators)
                 {
@@ -912,7 +916,6 @@ namespace ExamTimetabling2016.CSTEST
                         if (score == maxHeuristic)
                         {
                             invigilator.Heuristic += constraint.ConstraintImportanceValue;
-                            invigilationDuty.MaxScore += constraint.ConstraintImportanceValue;
                         }
                     }//max
                     }//invi
@@ -956,10 +959,10 @@ namespace ExamTimetabling2016.CSTEST
             }
 
             //sort invigilation duty according to constraint involved
-            invigilationDuties.OrderByDescending(x => x.MaxScore).ThenBy(y => y.ConstraintInvolved);
+            var newInviDutyList = invigilationDuties.OrderByDescending(x => x.MaxScore).ThenBy(y => y.ConstraintInvolved).ToList();
 
             //process assignaton of invigilator
-            foreach (InvigilationDuty invigilationDuty in invigilationDuties) { 
+            foreach (InvigilationDuty invigilationDuty in newInviDutyList) { 
 
                 //remove exempted or not available candidate
                 List<InvigilatorHeuristic> processedInvigilatorList = removeExemptedAndNotAvailableInvigilator(invigilationDuty.PossibleCandidate, invigilationDuty, minInvigilationDuty, minInvigilationDutyForChief,setting, staffs);
@@ -1093,7 +1096,10 @@ namespace ExamTimetabling2016.CSTEST
                     }
                 }
 
-                Label1.Text += invigilationDuty.TimeslotID + " , "+ finalInvigilatorCandidate.Staff.StaffID + " , " + finalInvigilatorCandidate.Heuristic + " , " + invigilationDuty.ConstraintInvolved + "<br/>";
+                MaintainInvigilationDutyControl mInvigilationDutyControl = new MaintainInvigilationDutyControl();
+                mInvigilationDutyControl.addInvigilationDuty(finalInvigilatorCandidate.Staff, invigilationDuty);
+                mInvigilationDutyControl.shutDown();
+                Label1.Text += invigilationDuty.TimeslotID + " , "+ finalInvigilatorCandidate.Staff.StaffID + " , " + finalInvigilatorCandidate.Heuristic + " , " + invigilationDuty.ConstraintInvolved + ", " + invigilationDuty.MaxScore + "<br/>";
             }
            
         }
