@@ -18,6 +18,20 @@ namespace ExamTimetabling2016
         {
             constraint.insertConstraintIntoDatabase(constraints);
         }
+        public void deleteConstraint(int id)
+        {
+            constraint.deleteConstraint(id);
+        }
+
+        public void getConstraintById(int id)
+        {
+            constraint.getConstraintById(id);
+        }
+
+        public void updateConstraint(Constraint3 updatedConstraint, int id)
+        {
+            constraint.updateConstraint(id, updatedConstraint);
+        }
 
         public List<Constraint3> loadFullConstraintList()
         {

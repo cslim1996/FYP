@@ -796,7 +796,37 @@ namespace ExamTimetabling2016
                 throw;
             }
             return facultyCodesList;
-        } 
+        }
+
+        public List<Faculty> getDistinctStaffFacultyCodesList()
+        {
+            List<Faculty> facultyCodesList = new List<Faculty>();
+            try
+            {
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "Select * from Faculty";
+                cmdSearch = new SqlCommand(strSearch, conn);
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        facultyCodesList.Add(new Faculty(Convert.ToChar(dtr["FacultyCode"]), dtr["Faculty"].ToString(), dtr["FacultyName"].ToString()));
+                    }
+                }
+                dtr.Close();
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            return facultyCodesList;
+        }
+
 
         public void shutDown()
         {

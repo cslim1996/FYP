@@ -49,6 +49,11 @@ namespace ExamTimetabling2016
             return staffDA.searchChiefInvigilators(date, time, blockCode);
         }
 
+        public List<Faculty> getDistinctStaffFacultyCodesList()
+        {
+            return staffDA.getDistinctStaffFacultyCodesList();
+        }
+
         public List<Staff> searchReliefInvigilators(DateTime date, string time)
         {
             return staffDA.searchReliefInvigilators(date, time);

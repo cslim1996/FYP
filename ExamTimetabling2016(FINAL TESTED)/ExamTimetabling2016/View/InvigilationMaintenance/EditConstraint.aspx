@@ -1,9 +1,5 @@
-﻿
-<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" MaintainScrollPositionOnPostBack="true" AutoEventWireup="true" CodeBehind="ConstraintAndSetting.aspx.cs" Inherits="ExamTimetabling2016.ConstraintAndSetting" %>
-
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="EditConstraint.aspx.cs" Inherits="ExamTimetabling2016.View.InvigilationMaintenance.WebForm2" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
     <style type="text/css">
         .auto-style7 {
             width: 50%;
@@ -24,22 +20,16 @@
             font-size: xx-small;
         }
         </style>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-        <ContentTemplate>
-    <script type="text/javascript" src="../../Scripts/script.js"></script>
-    <table class="nav-justified">
-        <tr>
-            <td class="auto-style8">
+    <table class="nav-justified" __designer:mapid="2">
+        <tr __designer:mapid="3">
+            <td class="auto-style8" __designer:mapid="4">
                 <asp:Panel ID="Panel1" runat="server">
                     <h3>Exam and Invigilation Duty Property</h3>
                     <table class="nav-justified" border="1">
                         <tr>
-                            <td class="auto-style8">
-                                Session of Invigilation Duty</td>
+                            <td class="auto-style8">Session of Invigilation Duty</td>
                             <td class="auto-style8">
                                 <asp:DropDownList ID="DropDownListSession" runat="server" OnSelectedIndexChanged="DropDownListSession_SelectedIndexChanged">
                                     <asp:ListItem Selected="True" Value="Not Specified">Not Specified</asp:ListItem>
@@ -121,10 +111,9 @@
                 </asp:Panel>
             </td>
         </tr>
-        <tr>
-            <td>
-                <h3>Staff Property<br />
-                </h3>
+        <tr __designer:mapid="3f">
+            <td __designer:mapid="40">
+                <h3 __designer:mapid="41">Staff Property<br __designer:mapid="42" /></h3>
                 <asp:Panel ID="Panel2" runat="server">
                     <table class="nav-justified" border="1">
                         <tr>
@@ -248,11 +237,10 @@
                         </tr>
                     </table>
                 </asp:Panel>
-                <br />
-            </td>
+                <br __designer:mapid="96" /></td>
         </tr>
-        <tr>
-            <td>
+        <tr __designer:mapid="97">
+            <td __designer:mapid="98">
                 <asp:Panel ID="Panel3" runat="server">
                     <h3>Constraint Property</h3>
                     <table class="nav-justified" border="1">
@@ -292,36 +280,21 @@
             </td>
         </tr>
     </table>
-&nbsp;<br />
+&nbsp;<br __designer:mapid="b4" />
     <asp:Panel ID="Panel4" runat="server">
         <div class="text-center">
             <asp:Label ID="lblValidate" runat="server" Font-Italic="True" ForeColor="Red"></asp:Label>
             <br />
             <br />
         </div>
-</asp:Panel>
-            <asp:Panel ID="Panel5" runat="server">
-                <div class="text-center">
-                    <asp:Button ID="btnValidate" runat="server" OnClick="btnValidate_Click" Text="Validate" UseSubmitBehavior="false" />
-                    &nbsp;
-                    <asp:Button ID="btnResetAll" runat="server" OnClick="btnResetAll_Click" Text="Reset All" UseSubmitBehavior="false" />
-                    &nbsp;
-                    <asp:Button ID="btnSubmit0" runat="server" OnClick="btnSubmit_Click" Text="Submit" UseSubmitBehavior="false" />
-                </div>
-            </asp:Panel>
-    <br />
-        </ContentTemplate>
-        <Triggers>
-        </Triggers>
-    </asp:UpdatePanel>
-    <div class="loading" align="center">
-        Processing. Please wait.<br />
-        Do not press anything.<br />
-        <img src="../../images/loader.gif" alt="" />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    </div>
+    </asp:Panel>
+    <asp:Panel ID="Panel5" runat="server">
+        <div class="text-center">
+            <asp:Button ID="btnValidate" runat="server" OnClick="btnValidate_Click" Text="Validate" UseSubmitBehavior="false" />
+            &nbsp;
+            <asp:Button ID="btnResetAll" runat="server" OnClick="btnResetAll_Click" Text="Reset All" UseSubmitBehavior="false" />
+            &nbsp;
+            <asp:Button ID="btnSubmit0" runat="server" OnClick="btnSubmit_Click" Text="Submit" UseSubmitBehavior="false" />
+        </div>
+    </asp:Panel>
 </asp:Content>

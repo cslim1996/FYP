@@ -12,9 +12,7 @@ namespace ExamTimetabling2016
     public partial class CsInvigilationTable : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {/*
-            MaintainFacultyControl mfc = new MaintainFacultyControl();
-            Label1.Text = mfc.getFacultyList()[0].FacultyFullName.ToString();*/
+        {
            
         }
 
@@ -26,17 +24,17 @@ namespace ExamTimetabling2016
             maintainInvDutyControl.clearInvigilationDuty();
             maintainInvDutyControl.shutDown();
 
-            MaintainTimetableControl maintainTimetableControl = new MaintainTimetableControl();
-            //Different session of examtimetable
-            List<Timetable> examTimetable = maintainTimetableControl.selectTimetable();
-            maintainTimetableControl.shutDown();
-
-
+            //get examination list
             MaintainExaminationControl maintainExamControl = new MaintainExaminationControl();
             List<Examination> fullExamList = maintainExamControl.getExaminationList();
             maintainExamControl.shutDown();
 
-            //This part will be unchanged (CS)
+            //get different session of examtimetable
+            MaintainTimetableControl maintainTimetableControl = new MaintainTimetableControl();
+            List<Timetable> examTimetable = maintainTimetableControl.selectTimetable();
+            maintainTimetableControl.shutDown();
+
+            //Invigilation Duty Load calculation
             MaintainStaffControl maintainStaffControl = new MaintainStaffControl();
             double totalLoadOfDutyForEachInvigilator = calculateTotalLoadOfDutyForEachInvigilator(calculateTotalInvigilatorsRequired(examTimetable), maintainStaffControl.countTotalInvigilatorsAvailable());
             double totalLoadOfDutyForEachChiefInvigilator = calculateTotalLoadOfDutyForEachChiefInvigilator(calculateTotalChiefInvigilatorsRequired(examTimetable), maintainStaffControl.countTotalChiefInvigilatorsAvailable());
@@ -50,9 +48,6 @@ namespace ExamTimetabling2016
             double minTotalLoadOfDutyForEachChiefInvigilator = (int)totalLoadOfDutyForEachChiefInvigilator;
             
             MaintainVenueControl venueControl = new MaintainVenueControl();
-            MaintainConstraint2Control examConstraintControl = new MaintainConstraint2Control();
-            
-            
             //get list of venue IDs
             List<String> venueID = venueControl.getListOfAllVenue();
 
@@ -115,7 +110,6 @@ namespace ExamTimetabling2016
 
             //setting for exemption for examiner
             int exemptionForExaminerInDay = 2;
-
             
             MaintainExemptionControl mExemptionControl = new MaintainExemptionControl();
             List<string> distinctSession = mExemptionControl.searchAllSessionAvailable();
@@ -496,24 +490,6 @@ namespace ExamTimetabling2016
         {
             return (double)totalChiefInvigilatorsRequired / (double)totalChiefInvigilatorsAvailable;
         }
-
-        //get the index number of invigilator free for particular session
-        public static List<int> getFreeInvigilatorIndexNumbersList(List<Staff> invigilatorsList, Timetable examTimetableInSameDayAndSession, List<string> allFacultyCodesList)
-        {
-            List<int> freeInvigilatorsIndexList = new List<int>();
-            for (int j = 0; j < allFacultyCodesList.Count; j++)
-            {
-                List<Staff> tempInvigilatorsList = invigilatorsList.Where(staff => staff.Faculty.Equals(allFacultyCodesList[j])
-                    && staff.InvigilationDuty.Where(duty => duty.Date.Equals(examTimetableInSameDayAndSession.Date)
-                    && duty.Session.Equals(examTimetableInSameDayAndSession.Session)).ToList().Count < 1).ToList();
-                if (tempInvigilatorsList.Count > 0 && invigilatorsList.Where(staff => staff.Faculty.Equals(allFacultyCodesList[j])).ToList().Count > 1)
-                {
-                    freeInvigilatorsIndexList.Add(invigilatorsList.IndexOf(tempInvigilatorsList[tempInvigilatorsList.Count - 1]));
-                }
-
-            }
-            return freeInvigilatorsIndexList;
-        }
         
         //get candidate list 
         public Tuple<List<InvigilatorHeuristic>,int> getCanditateList(List<InvigilatorHeuristic> invigilators, InvigilationDuty invigilationDuty, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief, List<TimeslotVenue> fullTimeslotVenueList, List<Faculty> facultyList,ConstraintSetting setting)
@@ -633,6 +609,7 @@ namespace ExamTimetabling2016
 
                         scoreForInviDutyAndExam++;
                     }
+
                     }
 
                     //exam papertype
@@ -715,7 +692,6 @@ namespace ExamTimetabling2016
                 }
 
                 //finish checking for duty and exam
-
                 if (maxScoreForInviDutyAndExam == scoreForInviDutyAndExam)
                 {
                     constraintCount++;
@@ -885,7 +861,6 @@ namespace ExamTimetabling2016
                                     invigilator.PossibleCanditate = false;
                             }
                         }
-                        
 
                         TimeslotVenue tsVenue = getTimeslotVenue(fullTimeslotVenueList, invigilationDuty.Date, invigilationDuty.Session, invigilationDuty.VenueID, invigilationDuty.Location);
                         
@@ -939,7 +914,6 @@ namespace ExamTimetabling2016
 
                 mFacultyControl.shutDown();
                 return new Tuple<List<InvigilatorHeuristic>,int>(CandidateList,constraintCount);
-            
         }
 
         //assign invigilator
@@ -1041,7 +1015,7 @@ namespace ExamTimetabling2016
 
                 //update invigilation duty
                 invigilationDuty.StaffID = finalInvigilatorCandidate.Staff.StaffID;
-                //Label1.Text += invigilationDuty.TimeslotID + " , " + finalInvigilatorCandidate.Staff.StaffID + " , " + finalInvigilatorCandidate.Heuristic + " , " + invigilationDuty.ConstraintInvolved + ", " + invigilationDuty.MaxScore + "<br/>";
+                //lblMsg.Text += invigilationDuty.TimeslotID + " , " + finalInvigilatorCandidate.Staff.StaffID + " , " + finalInvigilatorCandidate.Heuristic + " , " + invigilationDuty.ConstraintInvolved + ", " + invigilationDuty.MaxScore + "<br/>";
                 
                 //update staff duty
                 foreach (Staff invigilator in staffs)
@@ -1140,10 +1114,9 @@ namespace ExamTimetabling2016
         {
             List<InvigilatorHeuristic> finalInvigilatorCandidateList = new List<InvigilatorHeuristic>();
             MaintainExemptionControl exemptionControl = new MaintainExemptionControl();
-
+            
             foreach (InvigilatorHeuristic invigilator in candidateInvigilatorList)
             {
-                
                 foreach (Staff staff in staffs)
                 {
                     if (invigilator.Staff.StaffID.Equals(staff.StaffID))
@@ -1158,6 +1131,31 @@ namespace ExamTimetabling2016
                         }
                         //remove staff from list if already has relief session if relief session is already 1
                         if (staff.NoAsReliefInvi.Equals(setting.MaxReliefSession) && invigilatonDuty.CategoryOfInvigilator.Equals("Relief"))
+                        {
+                            isAvailable = false;
+                        }
+
+                        int maxConsecutiveDay = 3;
+                        bool hasConsecutiveDuty = false;
+                        int currentConsecutiveDay = 0;
+                        //remove staff when staff already have how many consecutive session
+                        maxConsecutiveDay -= 1;
+                        for (int x = 0 - maxConsecutiveDay; x < maxConsecutiveDay; x++) {
+                            DateTime currentDay = invigilatonDuty.Date.AddDays(x);
+                            foreach (InvigilationDuty invigilationDuty in staff.InvigilationDuty)
+                            {
+                                if (invigilationDuty.Date.Equals(currentDay))
+                                {
+                                    currentConsecutiveDay++;
+                                }
+                            }
+                            if(currentConsecutiveDay == maxConsecutiveDay)
+                            {
+                                hasConsecutiveDuty = true;
+                            }
+                        }
+
+                        if(hasConsecutiveDuty == true)
                         {
                             isAvailable = false;
                         }
@@ -1206,13 +1204,7 @@ namespace ExamTimetabling2016
         }*/
         
         
-    }    
-    /*
-    public List<InvigilationDuty> sortDutyList(List<InvigilationDuty> dutylist)
-    {
-        List<InvigilationDuty> newInviDutyList = new List<InvigilationDuty>();
-        return newInviDutyList;
-    }*/
+    }  
     public static class ThreadSafeRandom
     {
         [ThreadStatic]

@@ -192,6 +192,9 @@
     <Content Include="View\InvigilationMaintenance\InvigilationMaintainInv.aspx" />
     <Content Include="CSTEST\ConstraintSettingPage.aspx" />
     <Content Include="View\InvigilationMaintenance\InvigilationTable.aspx" />
+    <Content Include="View\InvigilationMaintenance\SuccessAddConstraint.aspx" />
+    <Content Include="View\InvigilationMaintenance\ViewConstraints.aspx" />
+    <Content Include="View\InvigilationMaintenance\EditConstraint.aspx" />
     <Content Include="View\Report\ReportingInvigilationTimetable.aspx" />
     <Content Include="View\Report\ReportingInvigilatorDutiesMaster.aspx" />
     <Content Include="View\SamplePage\Sample.aspx" />
@@ -226,7 +229,6 @@
     <Compile Include="Controller\AdvancedSearchController.cs" />
     <Compile Include="Controller\ExamSesssionController.cs" />
     <Compile Include="control\MaintainBlockControl.cs" />
-    <Compile Include="control\MaintainConstraint2Control.cs" />
     <Compile Include="control\MaintainConstraint3Control.cs" />
     <Compile Include="control\MaintainConstraintControl.cs" />
     <Compile Include="control\MaintainConstraintSettingControl.cs" />
@@ -271,7 +273,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="da\BlockDA.cs" />
-    <Compile Include="da\Constraint2DA.cs" />
     <Compile Include="da\Constraint3DA.cs" />
     <Compile Include="da\ConstraintDA.cs" />
     <Compile Include="da\ConstraintSettingDA.cs" />
@@ -292,7 +293,6 @@
     <Compile Include="domain\Faculty.cs" />
     <Compile Include="domain\InvigilatorHeuristic.cs" />
     <Compile Include="domain\TimeslotVenue.cs" />
-    <Compile Include="domain\Constraint2.cs" />
     <Compile Include="domain\Course.cs" />
     <Compile Include="domain\Examination.cs" />
     <Compile Include="domain\Exemption.cs" />
@@ -523,6 +523,27 @@
     </Compile>
     <Compile Include="View\InvigilationMaintenance\InvigilationTable.aspx.designer.cs">
       <DependentUpon>InvigilationTable.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\InvigilationMaintenance\SuccessAddConstraint.aspx.cs">
+      <DependentUpon>SuccessAddConstraint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\InvigilationMaintenance\SuccessAddConstraint.aspx.designer.cs">
+      <DependentUpon>SuccessAddConstraint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\InvigilationMaintenance\ViewConstraints.aspx.cs">
+      <DependentUpon>ViewConstraints.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\InvigilationMaintenance\ViewConstraints.aspx.designer.cs">
+      <DependentUpon>ViewConstraints.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\InvigilationMaintenance\EditConstraint.aspx.cs">
+      <DependentUpon>EditConstraint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\InvigilationMaintenance\EditConstraint.aspx.designer.cs">
+      <DependentUpon>EditConstraint.aspx</DependentUpon>
     </Compile>
     <Compile Include="View\Report\ReportingInvigilationTimetable.aspx.cs">
       <DependentUpon>ReportingInvigilationTimetable.aspx</DependentUpon>
