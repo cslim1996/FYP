@@ -70,7 +70,7 @@ namespace ExamTimetabling2016.View.InvigilationMaintenance
                 }
 
                 else if (dr == DialogResult.Cancel)
-                {
+                { 
                 }   
                 
                 
