@@ -163,6 +163,39 @@ namespace ExamTimetabling2016
             return examList;
         }
 
+        public List<Examination> searchExaminationByTimeslotAndLocation(string timeslotID, string location)
+        {
+            List<Examination> examList = new List<Examination>();
+            try
+            {
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "Select * from dbo.Examination a inner join dbo.Venue b on a.VenueID = b.VenueID where TimeslotID = @TimeslotID AND Location = @Location";
+                cmdSearch = new SqlCommand(strSearch, conn);
+
+                cmdSearch.Parameters.AddWithValue("@TimeslotID", timeslotID);
+                cmdSearch.Parameters.AddWithValue("@Location", location);
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        Examination exam = new Examination(timeslotID, dtr["VenueID"].ToString(), dtr["CourseCode"].ToString(), dtr["ProgrammeCode"].ToString(), Convert.ToChar(dtr["PaperType"].ToString()), Convert.ToChar(dtr["ExamType"].ToString()), Int32.Parse(dtr["Year"].ToString()), Int32.Parse(dtr["SitFrom"].ToString()), Int32.Parse(dtr["SitTo"].ToString()));
+                        examList.Add(exam);
+                    }
+                    dtr.Close();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            return examList;
+        }
+        
         public List<Examination> searchExamByQuery(string examQuery)
         {
             List<Examination> result = new List<Examination>();

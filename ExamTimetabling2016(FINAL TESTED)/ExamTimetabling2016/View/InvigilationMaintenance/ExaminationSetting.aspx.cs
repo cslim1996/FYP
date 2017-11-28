@@ -32,6 +32,9 @@ namespace ExamTimetabling2016.View.InvigilationMaintenance
                     tbExtra.Text = setting.MaxExtraSession.ToString();
                     tbRelief.Text = setting.MaxReliefSession.ToString();
                     tbSaturday.Text = setting.MaxSaturdaySession.ToString();
+                    tbExemptionForExaminer.Text = setting.DayOfExemptionForExaminer.ToString();
+                    tbMaxConsecutiveDuty.Text = setting.MaxConsecutiveDayDuty.ToString();
+                    tbMaxStaffToOwnFaculty.Text = setting.MaxInvigilatorAssignToOwnFaculty.ToString();
                 }
             }
         }
@@ -46,10 +49,12 @@ namespace ExamTimetabling2016.View.InvigilationMaintenance
             {
                 if (setting.AssignToExaminer == true)
                 {
+                    ddlAssignToExaminer.ClearSelection();
                     ddlAssignToExaminer.SelectedIndex = 0;
                 }
                 else
                 {
+                    ddlAssignToExaminer.ClearSelection();
                     ddlAssignToExaminer.SelectedIndex = 1;
                 }
 
@@ -57,6 +62,21 @@ namespace ExamTimetabling2016.View.InvigilationMaintenance
                 tbExtra.Text = setting.MaxExtraSession.ToString();
                 tbRelief.Text = setting.MaxReliefSession.ToString();
                 tbSaturday.Text = setting.MaxSaturdaySession.ToString();
+                tbExemptionForExaminer.Text = setting.DayOfExemptionForExaminer.ToString();
+                tbMaxConsecutiveDuty.Text = setting.MaxConsecutiveDayDuty.ToString();
+                tbMaxStaffToOwnFaculty.Text = setting.MaxInvigilatorAssignToOwnFaculty.ToString();
+            }
+            else
+            {
+                ddlAssignToExaminer.ClearSelection();
+                ddlAssignToExaminer.SelectedIndex = 0;
+                tbEvening.Text = "";
+                tbExtra.Text = "";
+                tbRelief.Text = "";
+                tbSaturday.Text = "";
+                tbExemptionForExaminer.Text = "";
+                tbMaxConsecutiveDuty.Text = "";
+                tbMaxStaffToOwnFaculty.Text = "";
             }
 
         }
@@ -77,6 +97,9 @@ namespace ExamTimetabling2016.View.InvigilationMaintenance
             newSetting.MaxExtraSession = Convert.ToInt16(tbExtra.Text);
             newSetting.MaxReliefSession = Convert.ToInt16(tbRelief.Text);
             newSetting.MaxSaturdaySession = Convert.ToInt16(tbSaturday.Text);
+            newSetting.MaxInvigilatorAssignToOwnFaculty = Convert.ToInt16(tbMaxStaffToOwnFaculty.Text);
+            newSetting.MaxConsecutiveDayDuty = Convert.ToInt16(tbMaxConsecutiveDuty.Text);
+            newSetting.DayOfExemptionForExaminer = Convert.ToInt16(tbExemptionForExaminer.Text);
 
             MaintainConstraintSettingControl mSettingControl = new MaintainConstraintSettingControl();
             mSettingControl.saveIntoDatabase(newSetting);

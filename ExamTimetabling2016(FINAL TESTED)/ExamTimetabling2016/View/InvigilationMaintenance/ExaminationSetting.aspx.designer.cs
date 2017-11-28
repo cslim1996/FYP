@@ -58,6 +58,33 @@ namespace ExamTimetabling2016.View.InvigilationMaintenance {
         protected global::System.Web.UI.WebControls.TextBox tbRelief;
         
         /// <summary>
+        /// tbExemptionForExaminer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbExemptionForExaminer;
+        
+        /// <summary>
+        /// tbMaxConsecutiveDuty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMaxConsecutiveDuty;
+        
+        /// <summary>
+        /// tbMaxStaffToOwnFaculty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMaxStaffToOwnFaculty;
+        
+        /// <summary>
         /// btnReset control.
         /// </summary>
         /// <remarks>

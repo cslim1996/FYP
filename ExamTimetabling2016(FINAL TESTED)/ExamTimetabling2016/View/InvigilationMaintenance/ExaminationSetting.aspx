@@ -31,27 +31,45 @@
             </td>
         </tr>
         <tr>
-            <td class="auto-style8">Max Extra Session</td>
+            <td class="auto-style8">Maximum Count Of Extra Session</td>
             <td class="auto-style8">
                 <asp:TextBox ID="tbExtra" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>
-            <td class="auto-style8">Max Evening Session</td>
+            <td class="auto-style8">Maximum Count Of Evening Session</td>
             <td class="auto-style8">
                 <asp:TextBox ID="tbEvening" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>
-            <td class="auto-style8">Max Saturday Sesion </td>
+            <td class="auto-style8">Maximum Count Of Saturday Sesion </td>
             <td class="auto-style8">
                 <asp:TextBox ID="tbSaturday" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>
-            <td class="auto-style8">Max Relief Session</td>
+            <td class="auto-style8">Maximum Count Of Relief Session</td>
             <td class="auto-style8">
                 <asp:TextBox ID="tbRelief" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="auto-style8">Day of Exemption For Examiner</td>
+            <td class="auto-style8">
+                <asp:TextBox ID="tbExemptionForExaminer" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="auto-style8">Maximum Consecutive Day Of Duty</td>
+            <td class="auto-style8">
+                <asp:TextBox ID="tbMaxConsecutiveDuty" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td class="auto-style8">Maximum Percentage Of Staff Assigned To Own Faculty Duty</td>
+            <td class="auto-style8">
+                <asp:TextBox ID="tbMaxStaffToOwnFaculty" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>

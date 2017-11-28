@@ -23,9 +23,9 @@ namespace ExamTimetabling2016
             constraint.deleteConstraint(id);
         }
 
-        public void getConstraintById(int id)
+        public Constraint3 getConstraintById(int id)
         {
-            constraint.getConstraintById(id);
+            return constraint.getConstraintById(id);
         }
 
         public void updateConstraint(Constraint3 updatedConstraint, int id)

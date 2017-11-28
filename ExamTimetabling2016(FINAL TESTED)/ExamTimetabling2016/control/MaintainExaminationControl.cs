@@ -32,7 +32,12 @@ namespace ExamTimetabling2016
 
         public List<Examination> searchExaminationByTimeslotAndVenue(string timeslotID, string venueID)
         {
-            return examinationDA.searchExaminationByTimeslotAndVenue(timeslotID,venueID);
+            return examinationDA.searchExaminationByTimeslotAndVenue(timeslotID, venueID);
+        }
+
+        public List<Examination> searchExaminationByTimeslotAndLocation(string timeslotID, string locationID)
+        {
+            return examinationDA.searchExaminationByTimeslotAndLocation(timeslotID, locationID);
         }
 
         public List<char> getDistinctExamPaperType()

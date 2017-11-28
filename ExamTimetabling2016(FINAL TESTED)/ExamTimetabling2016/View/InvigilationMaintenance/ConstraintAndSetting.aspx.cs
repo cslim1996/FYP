@@ -9,11 +9,10 @@ namespace ExamTimetabling2016
 {
     public partial class ConstraintAndSetting : System.Web.UI.Page
     {
-        bool validate;
+        static bool validate = false;
         Constraint3 previousInput = new Constraint3();
         protected void Page_Load(object sender, EventArgs e)
         {
-            validate = false;
             if (!IsPostBack)
             {
                 tbSession.Enabled = false;
@@ -180,6 +179,8 @@ namespace ExamTimetabling2016
             ddlSessionAndDurationDuty.ClearSelection();
             ddlSessionAndDurationDuty.SelectedIndex = 0;
 
+            tbDuration.Text = "";
+            tbSession.Text = "";
             //disable text box
             tbSession.Enabled = false;
             tbDuration.Enabled = false;
@@ -235,7 +236,7 @@ namespace ExamTimetabling2016
         {
             Constraint3 constraint = new Constraint3();
             constraint = loadInput();
-            if (validate == true)
+            if (validate== true)
             {
                     MaintainConstraint3Control mConstraintControl = new MaintainConstraint3Control();
                     mConstraintControl.insertConstraintIntoDatabase(constraint);

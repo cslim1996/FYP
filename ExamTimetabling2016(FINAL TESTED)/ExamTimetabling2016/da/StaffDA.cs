@@ -65,6 +65,41 @@ namespace ExamTimetabling2016
             return staff;
         }
 
+        public Staff getStaffByID(string staffID)
+        {
+            Staff staff = new Staff();
+
+
+            try
+            {
+                /*Step 2: Create Sql Search statement and Sql Search Object*/
+                strSearch = "Select StaffID, Title, Name, FacultyCode, isChiefInvi, isInvi from dbo.Staff where staffid = @StaffID";
+                cmdSearch = new SqlCommand(strSearch, conn);
+                
+                cmdSearch.Parameters.AddWithValue("@StaffID", staffID);
+
+                /*Step 3: Execute command to retrieve data*/
+                SqlDataReader dtr = cmdSearch.ExecuteReader();
+
+                /*Step 4: Get result set from the query*/
+                if (dtr.HasRows)
+                {
+                    while (dtr.Read())
+                    {
+                        staff = new Staff(dtr["StaffID"].ToString(), dtr["Title"].ToString(), dtr["Name"].ToString(), Convert.ToChar(dtr["FacultyCode"].ToString()), Convert.ToChar(dtr["isChiefInvi"].ToString()), Convert.ToChar(dtr["isInvi"].ToString()));
+
+                    }
+                    dtr.Close();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            return staff;
+        }
+
+        //all staff 
         public List<Staff> getStaffList()
         {
             List<Staff> staffList = new List<Staff>();
@@ -96,7 +131,8 @@ namespace ExamTimetabling2016
 
             return staffList;
         }
-        
+
+        //invigilators only
         public List<Staff> getInvigilatorList()
         {
             List<Staff> staffList = new List<Staff>();
@@ -826,8 +862,7 @@ namespace ExamTimetabling2016
             }
             return facultyCodesList;
         }
-
-
+        
         public void shutDown()
         {
             if (conn != null)

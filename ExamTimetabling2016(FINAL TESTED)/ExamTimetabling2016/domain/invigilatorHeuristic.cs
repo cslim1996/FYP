@@ -11,6 +11,13 @@ namespace ExamTimetabling2016
         int heuristic;
         bool? possibleCanditate;
 
+        public InvigilatorHeuristic()
+        {
+            this.staff = new Staff();
+            this.heuristic = 0;
+            this.possibleCanditate = null;
+        }
+
         public InvigilatorHeuristic(Staff staff)
         {
             this.staff = staff; 

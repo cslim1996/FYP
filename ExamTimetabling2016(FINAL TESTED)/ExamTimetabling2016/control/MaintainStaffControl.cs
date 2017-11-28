@@ -28,6 +28,10 @@ namespace ExamTimetabling2016
             return staffDA.getStaffList();
         }
 
+        public Staff getStaffByID(string StaffID)
+        {
+            return staffDA.getStaffByID(StaffID);
+        }
 
         public List<Staff> searchLecturer(string input, string criteria)
         {

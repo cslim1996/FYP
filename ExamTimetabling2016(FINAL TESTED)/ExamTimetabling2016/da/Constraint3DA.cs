@@ -428,7 +428,7 @@ namespace ExamTimetabling2016
             try
             {
                 /*Step 2: Create Sql Search statement and Sql Search Object*/
-                strSearch = "Select * from dbo.constraints where id = @id";
+                strSearch = "Select * from dbo.constraints where constraintid = @id";
                 cmdSearch = new SqlCommand(strSearch, conn);
                 cmdSearch.Parameters.AddWithValue("@id", id);
 
@@ -608,17 +608,6 @@ namespace ExamTimetabling2016
                     {
                         cmdInsert.Parameters.AddWithValue("@IsDoubleSeating", DBNull.Value);
                     }
-
-                    /*
-                    if (!assignToExaminer.Equals(null))
-                    {
-                        cmdInsert.Parameters.AddWithValue("@AssignExaminerToPaper", assignToExaminer);
-                    }
-                    else
-                    {
-                        cmdInsert.Parameters.AddWithValue("@AssignExaminerToPaper", DBNull.Value);
-                    }*/
-
                     cmdInsert.Parameters.AddWithValue("@ConstraintImportanceValue", constraint.ConstraintImportanceValue);
                     if (!hasOtherDutyOnSameDay.Equals(null))
                     {

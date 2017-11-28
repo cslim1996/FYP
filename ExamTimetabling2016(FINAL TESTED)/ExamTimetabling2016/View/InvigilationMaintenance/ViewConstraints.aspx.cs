@@ -43,7 +43,10 @@ namespace ExamTimetabling2016.View.InvigilationMaintenance
                 int id = Convert.ToInt16(row.Cells[2].Text);
                 Session["id"] = id;
 
-                Response.Redirect("EditConstraint.aspx");
+                lblDetail.Visible = true;
+                DetailsView1.Visible = true;
+
+                //Response.Redirect("EditConstraint.aspx");
 
             }
             else if(e.CommandName == "Delete")

@@ -53,6 +53,9 @@ namespace ExamTimetabling2016
                 setting.MaxExtraSession = Convert.ToInt16(dtr["MaxExtraSession"]);
                 setting.MaxReliefSession = Convert.ToInt16(dtr["MaxReliefSession"]);
                 setting.MaxSaturdaySession = Convert.ToInt16(dtr["MaxSaturdaySession"]);
+                setting.MaxConsecutiveDayDuty = Convert.ToInt16(dtr["MaxConsecutiveDayDuty"]);
+                setting.MaxInvigilatorAssignToOwnFaculty = Convert.ToInt16(dtr["MaxInvigilatorAssignToOwnFaculty"]);
+                setting.DayOfExemptionForExaminer = Convert.ToInt16(dtr["DayOfExemptionForExaminer"]);
                 dtr.Close();
             }
 
@@ -82,7 +85,7 @@ namespace ExamTimetabling2016
             {
                 try
                 {
-                    strUpdate = "update ConstraintSetting set AssignToExaminer = @AssignToExaminer, MaxExtraSession = @MaxExtraSession, MaxSaturdaySession = @MaxSaturdaySession, MaxEveningSession = @MaxEveningSession where SettingID = 1";
+                    strUpdate = "update ConstraintSetting set AssignToExaminer = @AssignToExaminer, MaxExtraSession = @MaxExtraSession, MaxSaturdaySession = @MaxSaturdaySession, MaxEveningSession = @MaxEveningSession, MaxConsecutiveDayDuty = @MaxConsecutiveDayDuty, MaxInvigilatorAssignToOwnFaculty = @MaxInvigilatorAssignToOwnFaculty, DayOfExemptionForExaminer = @DayOfExemptionForExaminer where SettingID = 1";
                     cmdUpdate = new SqlCommand(strUpdate, conn);
 
                     cmdUpdate.Parameters.AddWithValue("@AssignToExaminer", convertToChar(setting.AssignToExaminer));
@@ -90,6 +93,9 @@ namespace ExamTimetabling2016
                     cmdUpdate.Parameters.AddWithValue("@MaxReliefSession", setting.MaxReliefSession);
                     cmdUpdate.Parameters.AddWithValue("@MaxSaturdaySession", setting.MaxSaturdaySession);
                     cmdUpdate.Parameters.AddWithValue("@MaxEveningSession", setting.MaxEveningSession);
+                    cmdUpdate.Parameters.AddWithValue("@MaxInvigilatorAssignToOwnFaculty", setting.MaxInvigilatorAssignToOwnFaculty);
+                    cmdUpdate.Parameters.AddWithValue("MaxConsecutiveDayDuty", setting.MaxConsecutiveDayDuty);
+                    cmdUpdate.Parameters.AddWithValue("@DayOfExemptionForExaminer", setting.DayOfExemptionForExaminer);
 
                     cmdUpdate.ExecuteNonQuery();
                 }
@@ -104,7 +110,7 @@ namespace ExamTimetabling2016
                 try
                 {
                     /*Step 2: Create Sql Search statement and Sql Search Object*/
-                    string strInsert = "INSERT INTO ConstraintSetting(AssignToExaminer,MaxExtraSession,MaxReliefSession,MaxSaturdaySession,MaxEveningSession) VALUES (@AssignToExaminer,@MaxExtraSession,@MaxReliefSession,@MaxSaturdaySession,@MaxEveningSession)";
+                    string strInsert = "INSERT INTO ConstraintSetting(AssignToExaminer,MaxExtraSession,MaxReliefSession,MaxSaturdaySession,MaxEveningSession,MaxInvigilatorAssignToOwnFaculty,MaxConsecutiveDayDuty,DayOfExemptionForExaminer) VALUES (@AssignToExaminer,@MaxExtraSession,@MaxReliefSession,@MaxSaturdaySession,@MaxEveningSession,@MaxInvigilatorAssignToOwnFaculty,@MaxConsecutiveDayDuty,@DayOfExemptionForExaminer)";
                     {
                         cmdInsert = new SqlCommand(strInsert, conn);
 
@@ -113,6 +119,9 @@ namespace ExamTimetabling2016
                         cmdInsert.Parameters.AddWithValue("@MaxReliefSession", setting.MaxReliefSession);
                         cmdInsert.Parameters.AddWithValue("@MaxSaturdaySession", setting.MaxSaturdaySession);
                         cmdInsert.Parameters.AddWithValue("@MaxEveningSession", setting.MaxEveningSession);
+                        cmdUpdate.Parameters.AddWithValue("@MaxInvigilatorAssignToOwnFaculty", setting.MaxInvigilatorAssignToOwnFaculty);
+                        cmdUpdate.Parameters.AddWithValue("@MaxConsecutiveDayDuty", setting.MaxConsecutiveDayDuty);
+                        cmdUpdate.Parameters.AddWithValue("@DayOfExemptionForExaminer", setting.DayOfExemptionForExaminer);
 
                         cmdInsert.ExecuteNonQuery();
                     }

@@ -103,6 +103,7 @@ namespace ExamTimetabling2016
             List<Staff> invigilatorList = maintainStaffControl.getInvigilatorList();
             maintainStaffControl.shutDown();
 
+
             //load constraint setting
             MaintainConstraintSettingControl mSettingControl = new MaintainConstraintSettingControl();
             ConstraintSetting setting = mSettingControl.readSettingFromDatabase();
@@ -110,8 +111,13 @@ namespace ExamTimetabling2016
 
             //setting for exemption for examiner
             int exemptionForExaminerInDay = 2;
-            
+
+            //load exemption list for each invigilator
             MaintainExemptionControl mExemptionControl = new MaintainExemptionControl();
+            foreach(Staff invigilator in invigilatorList)
+            {
+                invigilator.ExemptionList = mExemptionControl.searchExemption(invigilator.StaffID);
+            }
             List<string> distinctSession = mExemptionControl.searchAllSessionAvailable();
             mExemptionControl.shutDown();
 
@@ -670,11 +676,13 @@ namespace ExamTimetabling2016
                     }
                 }
 
+                if (invigilationDuty.CategoryOfInvigilator != "Chief")
+                {
                     //exam is double seating
                     if (!constraint.IsDoubleSeating.Equals(null))
                     {
                         maxScoreForInviDutyAndExam++;
-                        bool containDoubleSeating= false;
+                        bool containDoubleSeating = false;
                         foreach (Examination exam in invigilationDuty.ExamList)
                         {
                             MaintainCourseControl mCourseControl = new MaintainCourseControl();
@@ -682,14 +690,50 @@ namespace ExamTimetabling2016
                             mCourseControl.shutDown();
                             if (course.IsDoubleSeating.Equals(constraint.IsDoubleSeating))
                             {
-                            containDoubleSeating = true;
+                                containDoubleSeating = true;
                             }
                         }
-                    if (containDoubleSeating == true)
+                        if (containDoubleSeating == true)
+                        {
+                            scoreForInviDutyAndExam++;
+                        }
+                    }
+                }else 
+                {
+                    //exam is double seating
+                    if (!constraint.IsDoubleSeating.Equals(null))
                     {
-                        scoreForInviDutyAndExam++;
+                        maxScoreForInviDutyAndExam++;
+                        bool containDoubleSeating = false;
+                        //examination from database containing location
+                        foreach (TimeslotVenue tsVenue in fullTimeslotVenueList)
+                        {
+                            if (tsVenue.TimeslotID.Equals(invigilationDuty.TimeslotID) && tsVenue.Location.Equals(invigilationDuty.Location))
+                            {
+                                MaintainExaminationControl mExamControl = new MaintainExaminationControl();
+                                List<Examination> examList = new List<Examination>();
+                                examList = mExamControl.searchExaminationByTimeslotAndLocation(tsVenue.VenueID, tsVenue.Location);
+
+                                foreach (Examination exam in examList)
+                                {
+                                    MaintainCourseControl mCourseControl = new MaintainCourseControl();
+                                    Course course = mCourseControl.searchCourseByCourseCode(exam.CourseCode);
+                                    mCourseControl.shutDown();
+                                    if (course.IsDoubleSeating.Equals(constraint.IsDoubleSeating))
+                                    {
+                                        containDoubleSeating = true;
+                                    }
+                                }
+                            }
+                        }
+                        if (containDoubleSeating == true)
+                        {
+                            scoreForInviDutyAndExam++;
+                        }
                     }
                 }
+                
+                
 
                 //finish checking for duty and exam
                 if (maxScoreForInviDutyAndExam == scoreForInviDutyAndExam)
@@ -701,6 +745,7 @@ namespace ExamTimetabling2016
                 {
                         int maxHeuristic = 0;
                         int score = 0;
+
                         //if exempted invigilator will not be assigned as invigilator
                         if (invigilator.Staff.ExemptionList != null)
                         {
@@ -919,6 +964,8 @@ namespace ExamTimetabling2016
         //assign invigilator
         public void assignInvigilator(List<Staff> staffs, List<InvigilationDuty> invigilationDuties, List<Constraint3> constraintList, int minInvigilationDuty, int minInvigilationDutyForChief, List<TimeslotVenue> fullTimeslotVenueList, List<Faculty> facultyList,ConstraintSetting setting)
         {
+            List<Tuple<InvigilationDuty, List<InvigilatorHeuristic>>> otherPossibleCandidate = new List<Tuple<InvigilationDuty, List<InvigilatorHeuristic>>>();
+            
             //get candidate list and calculate constraint involved
             foreach (InvigilationDuty invigilationDuty in invigilationDuties)
             {
@@ -945,7 +992,7 @@ namespace ExamTimetabling2016
             foreach (InvigilationDuty invigilationDuty in newInviDutyList) { 
 
                 //remove exempted or not available candidate
-                List<InvigilatorHeuristic> processedInvigilatorList = removeExemptedAndNotAvailableInvigilator(invigilationDuty.PossibleCandidate, invigilationDuty, minInvigilationDuty, minInvigilationDutyForChief,setting, staffs);
+                List<InvigilatorHeuristic> processedInvigilatorList = removeExemptedAndNotAvailableInvigilator(invigilationDuty.PossibleCandidate, invigilationDuty, minInvigilationDuty, minInvigilationDutyForChief,setting, staffs,facultyList);
 
                 //field for the highest scoring candidate to be keep in
                 List<InvigilatorHeuristic> finalCandidateList = new List<InvigilatorHeuristic>();
@@ -975,112 +1022,130 @@ namespace ExamTimetabling2016
                 if (finalCandidateList.Count > 1) {
                     finalCandidateList.Shuffle();
                 }
-
-                InvigilatorHeuristic finalInvigilatorCandidate = finalCandidateList[0];
                 
-                //updating from here on
-
-                //update invigilator assigned to own faculty count;
-                List<char> repeatedFaculty = new List<char>();
-                foreach(Examination exam in invigilationDuty.ExamList)
-                {
-                    //for preventing multiple exam that has similar faculty code by checking  with is repeated faculty list
-                    bool isRepeated = false;
-                    foreach (char facultyCode in repeatedFaculty)
+                 
+                    InvigilatorHeuristic finalInvigilatorCandidate = new InvigilatorHeuristic();
+                    finalInvigilatorCandidate = finalCandidateList[0];
+                    List<InvigilatorHeuristic> otherCandidate = new List<InvigilatorHeuristic>();
+                    //add other candidate to other candidatelist
+                    for (int x= 1; x < finalCandidateList.Count; x++)
                     {
-                        if (exam.Faculty.FacultyCode.Equals(facultyCode))
+                        otherCandidate.Add(finalCandidateList[x]);
+                    }
+
+                    //add into tuple to store each other candidate possible for each duty
+                    otherPossibleCandidate.Add(Tuple.Create(invigilationDuty, otherCandidate));
+                
+                    //updating from here on
+
+                    //update invigilator assigned to own faculty count;
+                    List<char> repeatedFaculty = new List<char>();
+
+                    foreach (Examination exam in invigilationDuty.ExamList)
+                    {
+                        //for preventing multiple exam that has similar faculty code by checking  with is repeated faculty list
+                        bool isRepeated = false;
+                        foreach (char facultyCode in repeatedFaculty)
                         {
-                            isRepeated = true;
+                            if (exam.Faculty.FacultyCode.Equals(facultyCode))
+                            {
+                                isRepeated = true;
+                            }
+                        }
+
+                        // if the faculty code matches with the staff faculty code and the faculty code is not repeated then increase the number of invigilator assigned to their own faculty
+                        if (exam.Faculty.FacultyCode.Equals(finalInvigilatorCandidate.Staff.FacultyCode) && isRepeated.Equals(false))
+                        {
+                            foreach (Faculty faculty in facultyList)
+                            {
+                                if (faculty.FacultyCode.Equals(finalInvigilatorCandidate.Staff.FacultyCode))
+                                {
+                                    faculty.InvigilatorAssignedToOwnFacultyDutyCount++;
+                                }
+                            }
+                        }
+
+                        //if the faculty code is a new faculty code then add it into the list of existed faculty code
+                        if (isRepeated.Equals(false) && exam.Faculty.FacultyCode.Equals('\0') && exam.Faculty.Equals(null))
+                        {
+                            repeatedFaculty.Add(exam.Faculty.FacultyCode);
                         }
                     }
 
-                    // if the faculty code matches with the staff faculty code and the faculty code is not repeated then increase the number of invigilator assigned to their own faculty
-                    if (exam.Faculty.FacultyCode.Equals(finalInvigilatorCandidate.Staff.FacultyCode) && isRepeated.Equals(false))
+                    //update invigilation duty
+                    invigilationDuty.StaffID = finalInvigilatorCandidate.Staff.StaffID;
+                    //lblMsg.Text += invigilationDuty.TimeslotID + " , " + finalInvigilatorCandidate.Staff.StaffID + " , " + finalInvigilatorCandidate.Heuristic + " , " + invigilationDuty.ConstraintInvolved + ", " + invigilationDuty.MaxScore + "<br/>";
+
+                    //update staff duty
+                    foreach (Staff invigilator in staffs)
                     {
-                        foreach(Faculty faculty in facultyList)
+                        if (invigilator.StaffID.Equals(finalInvigilatorCandidate.Staff.StaffID))
                         {
-                            if (faculty.FacultyCode.Equals(finalInvigilatorCandidate.Staff.FacultyCode))
+                            int minInviDuty = 0;
+
+                            invigilator.InvigilationDuty.Add(invigilationDuty);
+                            if (invigilationDuty.Date.DayOfWeek.Equals("Saturday"))
                             {
-                                faculty.InvigilatorAssignedToOwnFacultyDutyCount++;
+                                invigilator.NoOfSatSession++;
+                            }
+
+                            //no of evening session update
+                            if (invigilationDuty.Session.Equals("VM"))
+                            {
+                                invigilator.NoOfEveningSession++;
+                            }
+
+                            //update extra session
+                            if (invigilator.IsChiefInvi.Equals(true))
+                            {
+                                minInviDuty = minInvigilationDutyForChief;
+                            }
+                            else
+                            {
+                                minInviDuty = minInvigilationDuty;
+                            }
+
+                            if (invigilator.IsTakingSTSPhD.Equals(true))
+                            {
+                                minInviDuty = (int)(((double)minInviDuty * 2) / 3);
+                            }
+
+                            if (invigilator.InvigilationDuty.Count >= minInviDuty)
+                            {
+                                invigilator.NoOfExtraSession++;
                             }
                         }
                     }
 
-                    //if the faculty code is a new faculty code then add it into the list of existed faculty code
-                    if (isRepeated.Equals(false) && exam.Faculty.FacultyCode.Equals('\0') && exam.Faculty.Equals(null))
+                    //update timeslotvenue
+                    foreach (TimeslotVenue timeslotVenue in fullTimeslotVenueList)
                     {
-                        repeatedFaculty.Add(exam.Faculty.FacultyCode);
-                    }
-                }
-
-                //update invigilation duty
-                invigilationDuty.StaffID = finalInvigilatorCandidate.Staff.StaffID;
-                //lblMsg.Text += invigilationDuty.TimeslotID + " , " + finalInvigilatorCandidate.Staff.StaffID + " , " + finalInvigilatorCandidate.Heuristic + " , " + invigilationDuty.ConstraintInvolved + ", " + invigilationDuty.MaxScore + "<br/>";
-                
-                //update staff duty
-                foreach (Staff invigilator in staffs)
-                {
-                    if (invigilator.StaffID.Equals(finalInvigilatorCandidate.Staff.StaffID))
-                    {
-                        int minInviDuty = 0;
-
-                        invigilator.InvigilationDuty.Add(invigilationDuty);
-                        if (invigilationDuty.Date.DayOfWeek.Equals("Saturday"))
+                        if (timeslotVenue.VenueID == null)
                         {
-                            invigilator.NoOfSatSession++;
-                        }
-
-                        //unfortunate hard code
-                        if (invigilationDuty.Session.Equals("VM"))
-                        {
-                            invigilator.NoOfEveningSession++;
-                        }
-
-                        //update extra session
-                        if (invigilator.IsChiefInvi.Equals(true))
-                        {
-                            minInviDuty = minInvigilationDutyForChief;
+                            if (timeslotVenue.Date.Equals(invigilationDuty.Date) && timeslotVenue.Session.Equals(invigilationDuty.Session) && timeslotVenue.Location.Equals(invigilationDuty.Location))
+                            {
+                                timeslotVenue.InvigilatorList.Add(finalInvigilatorCandidate.Staff);
+                            }
                         }
                         else
                         {
-                            minInviDuty = minInvigilationDuty;
-                        }
-
-                        if (invigilator.IsTakingSTSPhD.Equals(true))
-                        {
-                            minInviDuty = (int)(((double)minInviDuty * 2) / 3);
-                        }
-
-                        if(invigilator.InvigilationDuty.Count >= minInviDuty)
-                        {
-                            invigilator.NoOfExtraSession++;
+                            if (timeslotVenue.Date.Equals(invigilationDuty.Date) && timeslotVenue.Session.Equals(invigilationDuty.Session) && timeslotVenue.Location.Equals(invigilationDuty.Location) && timeslotVenue.VenueID.Equals(timeslotVenue.VenueID))
+                            {
+                                timeslotVenue.InvigilatorList.Add(finalInvigilatorCandidate.Staff);
+                            }
                         }
                     }
                 }
 
-                //update timeslotvenue
-                foreach (TimeslotVenue timeslotVenue in fullTimeslotVenueList)
-                {
-                    if (timeslotVenue.VenueID == null)
-                    {
-                        if (timeslotVenue.Date.Equals(invigilationDuty.Date) && timeslotVenue.Session.Equals(invigilationDuty.Session) && timeslotVenue.Location.Equals(invigilationDuty.Location))
-                        {
-                            timeslotVenue.InvigilatorList.Add(finalInvigilatorCandidate.Staff);
-                        }
-                    }
-                    else
-                    {
-                        if (timeslotVenue.Date.Equals(invigilationDuty.Date) && timeslotVenue.Session.Equals(invigilationDuty.Session) && timeslotVenue.Location.Equals(invigilationDuty.Location) && timeslotVenue.VenueID.Equals(timeslotVenue.VenueID))
-                        {
-                            timeslotVenue.InvigilatorList.Add(finalInvigilatorCandidate.Staff);
-                        }
-                    }
-                }
-
+            foreach(InvigilationDuty assignedInviDuties in newInviDutyList)
+            {
+                Staff staff = new Staff();
+                MaintainStaffControl mStaffControl = new MaintainStaffControl();
+                staff = mStaffControl.getStaffByID(assignedInviDuties.StaffID);
                 MaintainInvigilationDutyControl mInvigilationDutyControl = new MaintainInvigilationDutyControl();
-                mInvigilationDutyControl.addInvigilationDuty(finalInvigilatorCandidate.Staff, invigilationDuty);
+                mInvigilationDutyControl.addInvigilationDuty(staff, assignedInviDuties);
                 mInvigilationDutyControl.shutDown();
-                }
+            }
            
         }
         
@@ -1110,7 +1175,7 @@ namespace ExamTimetabling2016
         }
         
         // remove exempted and unavailable invigilator before assignation of invigilator
-        public List<InvigilatorHeuristic> removeExemptedAndNotAvailableInvigilator(List<InvigilatorHeuristic> candidateInvigilatorList, InvigilationDuty invigilatonDuty, int minInvigilationDuty, int minInvigilationDutyForChief, ConstraintSetting setting, List<Staff> staffs)
+        public List<InvigilatorHeuristic> removeExemptedAndNotAvailableInvigilator(List<InvigilatorHeuristic> candidateInvigilatorList, InvigilationDuty invigilatonDuty, int minInvigilationDuty, int minInvigilationDutyForChief, ConstraintSetting setting, List<Staff> staffs, List<Faculty> facultyList)
         {
             List<InvigilatorHeuristic> finalInvigilatorCandidateList = new List<InvigilatorHeuristic>();
             MaintainExemptionControl exemptionControl = new MaintainExemptionControl();
